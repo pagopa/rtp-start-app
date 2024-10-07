@@ -1,4 +1,4 @@
-# rtp-smart-app
+# rtp-start-app
 Web page to manually send a RTP.
 
 # Getting Started with Create React App
