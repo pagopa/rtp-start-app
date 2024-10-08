@@ -1,0 +1,19 @@
+# Azure DevOps pipeline template used to build bundle.
+parameters:
+  - name: 'env'
+    type: string
+    default: ''
+
+  - name: 'version'
+    type: string
+    default: ''
+
+steps:
+- bash: |
+    chmod +x env.sh
+    env -i \
+      RTP_FE_ENV=${{ parameters.env }} \
+      RTP_FE_VERSION=${{ parameters.version }} \
+      bash env.sh
+
+  displayName: 'Populate environment file'
