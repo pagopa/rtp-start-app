@@ -27,6 +27,7 @@ pool:
 stages:
 
   - stage: build_dev_artifact
+    dependsOn: []
     displayName: 'Build DEV artifact'
     jobs:
       - job: job_build
@@ -76,11 +77,15 @@ stages:
                 az cdn endpoint purge -g $(DEV_STORAGE_ACCOUNT_RG) -n $(DEV_CDN_ENDPOINT) --profile-name $(DEV_CDN_PROFILE) --content-paths "/*"
 
   - stage: build_uat_artifact
+    dependsOn: []
     displayName: 'Build UAT artifact'
     condition: 
-      or(
-        contains(variables['Build.SourceBranch'], 'refs/tags/'),
-        eq(${{parameters.UAT_PROD_DEPLOY}}, true)
+      and(
+        succeeded(),
+        or(
+          contains(variables['Build.SourceBranch'], 'refs/tags/'),
+          eq(${{parameters.UAT_PROD_DEPLOY}}, true)
+        )
       )
     pool:
       vmImage: 'ubuntu-latest'
@@ -134,6 +139,7 @@ stages:
             
   - stage: build_prod_artifact
     displayName: 'Build PROD artifact'
+    dependsOn: [ "deploy_uat" ]
     condition: 
       or(
         contains(variables['Build.SourceBranch'], 'refs/tags/'),
@@ -160,6 +166,7 @@ stages:
             artifact: Bundle_PROD
 
   - stage: prod_approve
+    displayName: "Pending PROD deploy approval"
     dependsOn: ["build_prod_artifact"]
     jobs:
       - job: Deploy_Prod_WaitForApproval
@@ -172,33 +179,33 @@ stages:
           inputs:
             onTimeout: 'skip'
   
-  # - stage: deploy_prod
-  #   displayName: 'Deploy to PROD'
-  #   dependsOn: [ 'prod_approve' ]
-  #   condition: succeeded()
-  #   jobs:
-  #     - job: job_deploy
-  #       displayName: 'Deploy'
-  #       steps:
-  #         - checkout: none
+  - stage: deploy_prod
+    displayName: 'Deploy to PROD'
+    dependsOn: [ 'prod_approve' ]
+    condition: succeeded()
+    jobs:
+      - job: job_deploy
+        displayName: 'Deploy'
+        steps:
+          - checkout: none
 
-  #         - download: current
-  #           artifact: Bundle
+          - download: current
+            artifact: Bundle
 
-  #         - task: AzureCLI@2
-  #           displayName: 'Sync storage'
-  #           inputs:
-  #             azureSubscription: '$(PROD_AZURE_SUBSCRIPTION)'
-  #             scriptType: 'bash'
-  #             scriptLocation: inlineScript
-  #             inlineScript: |
-  #               az storage blob sync --container '$web' --account-name $(PROD_STORAGE_ACCOUNT_NAME) --source "$(Pipeline.Workspace)/Bundle"
+          - task: AzureCLI@2
+            displayName: 'Sync storage'
+            inputs:
+              azureSubscription: '$(PROD_AZURE_SUBSCRIPTION)'
+              scriptType: 'bash'
+              scriptLocation: inlineScript
+              inlineScript: |
+                az storage blob sync --container '$web' --account-name $(PROD_STORAGE_ACCOUNT_NAME) --source "$(Pipeline.Workspace)/Bundle"
 
-  #         - task: AzureCLI@1
-  #           displayName: 'Purge CDN endpoint'
-  #           inputs:
-  #             azureSubscription: '$(PROD_AZURE_SUBSCRIPTION)'
-  #             scriptLocation: inlineScript
-  #             inlineScript: |
-  #               az cdn endpoint purge -g $(PROD_STORAGE_ACCOUNT_RG) -n $(PROD_CDN_ENDPOINT) --profile-name $(PROD_CDN_PROFILE) --content-paths "/*"
+          - task: AzureCLI@1
+            displayName: 'Purge CDN endpoint'
+            inputs:
+              azureSubscription: '$(PROD_AZURE_SUBSCRIPTION)'
+              scriptLocation: inlineScript
+              inlineScript: |
+                az cdn endpoint purge -g $(PROD_STORAGE_ACCOUNT_RG) -n $(PROD_CDN_ENDPOINT) --profile-name $(PROD_CDN_PROFILE) --content-paths "/*"
             
