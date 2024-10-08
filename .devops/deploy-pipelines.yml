@@ -1,5 +1,14 @@
 # Azure DevOps pipeline to release a new version and deploy to production.
 
+parameters:
+  - name: 'UAT_PROD_DEPLOY'
+    displayName: 'Deploy on UAT then PROD environments'
+    type: boolean
+    default: False
+    values:
+      - False
+      - True
+
 # Triggers solo su tag
 trigger:
   tags:
@@ -67,8 +76,12 @@ stages:
                 az cdn endpoint purge -g $(DEV_STORAGE_ACCOUNT_RG) -n $(DEV_CDN_ENDPOINT) --profile-name $(DEV_CDN_PROFILE) --content-paths "/*"
 
   - stage: build_uat_artifact
-    displayName: 'Build DEV artifact'
-    condition: contains(variables['Build.SourceBranch'], 'refs/tags/')
+    displayName: 'Build UAT artifact'
+    condition: 
+      or(
+        contains(variables['Build.SourceBranch'], 'refs/tags/'),
+        eq(${{parameters.UAT_PROD_DEPLOY}}, true)
+      )
     pool:
       vmImage: 'ubuntu-latest'
     jobs:
@@ -121,7 +134,11 @@ stages:
             
   - stage: build_prod_artifact
     displayName: 'Build PROD artifact'
-    condition: contains(variables['Build.SourceBranch'], 'refs/tags/')
+    condition: 
+      or(
+        contains(variables['Build.SourceBranch'], 'refs/tags/'),
+        eq(${{parameters.UAT_PROD_DEPLOY}}, true)
+      )
     pool:
       vmImage: 'ubuntu-latest'
     jobs:
