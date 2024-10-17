@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, act } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import FormPage from './FormPage';
 
@@ -30,18 +30,29 @@ describe('FormPage', () => {
     render(<FormPage />);
 
     // Simulate user input
-    fireEvent.change(screen.getByLabelText(/Notice Number/i), { target: { value: '123456789012345678' } });
-    fireEvent.change(screen.getByLabelText(/Amount/i), { target: { value: '1000' } });
-    fireEvent.change(screen.getByLabelText(/Description/i), { target: { value: 'Test description' } });
-    fireEvent.change(screen.getByLabelText(/Expiry Date/i), { target: { value: '2024-12-31' } });
-    fireEvent.change(screen.getByLabelText(/Payee ID/i), { target: { value: '12345678901' } });
-    fireEvent.change(screen.getByLabelText(/Payer ID/i), { target: { value: '98765432101' } });
+    await act(async () => {
+        fireEvent.change(screen.getByLabelText(/Notice Number/i), { target: { value: '123456789012345678' } });
+        fireEvent.change(screen.getByLabelText(/Amount/i), { target: { value: 10.50 } });
+        fireEvent.change(screen.getByLabelText(/Description/i), { target: { value: 'Test description' } });
+        fireEvent.change(screen.getByLabelText(/Expiry Date/i), { target: { value: '2024-12-31' } });
+        fireEvent.change(screen.getByLabelText(/Payee ID/i), { target: { value: '12345678901' } });
+        fireEvent.change(screen.getByLabelText(/Payer ID/i), { target: { value: '98765432101' } });
 
-    // Submit the form
-    fireEvent.click(screen.getByText(/Submit Request/i));
-
+        // Submit the form
+        fireEvent.click(screen.getByText(/Submit Request/i));
+    });
+    
     // Check if the fetch call was made with correct data
-    expect(global.fetch).toHaveBeenCalledWith(`${API_URL}/rtps`, expect.anything());
+    expect(global.fetch).toHaveBeenCalledWith(`${API_URL}/rtps`, expect.objectContaining({
+        body: JSON.stringify({
+            noticeNumber:"123456789012345678",
+            amount: 1050,   // Converted to cents
+            description: 'Test description',
+            expiryDate: '2024-12-31',
+            payeeId: '12345678901',
+            payerId: '98765432101'
+        }),
+    }));
 
     // Check if success message is displayed
     expect(await screen.findByText(/Request to pay created successfully!/i)).toBeInTheDocument();

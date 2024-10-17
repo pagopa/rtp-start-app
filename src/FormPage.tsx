@@ -5,7 +5,7 @@ const API_URL = process.env.API_URL;
 // Define an interface to represent the form data structure
 interface FormData {
   noticeNumber: string;
-  amount: number;
+  amount: string;
   description: string;
   expiryDate: string;
   payeeId: string;
@@ -16,7 +16,7 @@ const FormPage: React.FC = () => {
   // Set up state for form data
   const [formData, setFormData] = useState<FormData>({
     noticeNumber: "",
-    amount: 0,
+    amount: "",
     description: "",
     expiryDate: "",
     payeeId: "",
@@ -28,16 +28,20 @@ const FormPage: React.FC = () => {
 
   // Handle changes in the form fields (input and textarea)
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: name === "amount" ? parseInt(value) : value, // Parse amount as integer
-    });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   // Handle form submission
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
+
+    const amountInEuro = parseFloat(formData.amount);
+    const amountInCents = Math.floor(amountInEuro * 100); // Convert to cents
+
+    const requestBody = {
+      ...formData,
+      amount: amountInCents,  // Send amount in cents
+    };
 
     try {
       // Send form data to a specified endpoint
@@ -46,7 +50,7 @@ const FormPage: React.FC = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(requestBody),
       });
 
       // Handle response from the server
@@ -80,17 +84,18 @@ const FormPage: React.FC = () => {
         </div>
 
         <div>
-          <label htmlFor="amount">Amount (in euro cents):</label>
+          <label htmlFor="amount">Amount:</label>
           <input
             type="number"
             id="amount"
             name="amount"
+            step="0.01"
             min="0"
             max="99999999"
             value={formData.amount}
             onChange={handleChange}
             // required
-            placeholder="Amount in cents"
+            placeholder="Amount in euro"
           />
         </div>
 
