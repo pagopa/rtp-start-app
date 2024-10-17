@@ -146,11 +146,11 @@ const FormPage: React.FC = () => {
           />
         </div>
 
-        <button type="submit">Submit Request</button>
+        <button type="submit" id="submit">Submit Request</button>
       </form>
 
       {/* Display the response message */}
-      {responseMessage && <p>{responseMessage}</p>}
+      {responseMessage && <p id="response">{responseMessage}</p>}
     </div>
   );
 };
