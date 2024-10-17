@@ -91,7 +91,7 @@ stages:
     displayName: 'Build UAT artifact'
     condition: 
       and(
-        succeded(),
+        succeeded(),
         or(
           contains(variables['Build.SourceBranch'], 'refs/tags/'),
           contains(variables['Build.SourceBranch'], 'refs/heads/main'),
