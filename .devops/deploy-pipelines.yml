@@ -94,7 +94,7 @@ stages:
         succeeded(),
         or(
           contains(variables['Build.SourceBranch'], 'refs/tags/'),
-          contains(variables['Build.SourceBranch'], 'refs/heads/main'),
+          contains(variables['Build.SourceBranch'], 'refs/heads/main')
         ),
         eq(${{parameters.UAT_PROD_DEPLOY}}, true)
       )
@@ -156,7 +156,7 @@ stages:
       and(
         or(
           contains(variables['Build.SourceBranch'], 'refs/tags/'),
-          contains(variables['Build.SourceBranch'], 'refs/heads/main'),
+          contains(variables['Build.SourceBranch'], 'refs/heads/main')
         ),
         eq(${{parameters.UAT_PROD_DEPLOY}}, true)
       )
