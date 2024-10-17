@@ -1,6 +1,14 @@
 # Azure DevOps pipeline to release a new version and deploy to production.
 
 parameters:
+  - name: 'DEV_DEPLOY'
+    displayName: 'Deploy on DEV environment'
+    type: boolean
+    default: True
+    values:
+      - False
+      - True
+
   - name: 'UAT_PROD_DEPLOY'
     displayName: 'Deploy on UAT then PROD environments'
     type: boolean
@@ -28,6 +36,7 @@ stages:
 
   - stage: build_dev_artifact
     dependsOn: []
+    condition: eq(${{parameters.DEV_DEPLOY}}, true)
     displayName: 'Build DEV artifact'
     jobs:
       - job: job_build
@@ -82,11 +91,12 @@ stages:
     displayName: 'Build UAT artifact'
     condition: 
       and(
-        succeeded(),
+        succeded(),
         or(
           contains(variables['Build.SourceBranch'], 'refs/tags/'),
-          eq(${{parameters.UAT_PROD_DEPLOY}}, true)
-        )
+          contains(variables['Build.SourceBranch'], 'refs/heads/main'),
+        ),
+        eq(${{parameters.UAT_PROD_DEPLOY}}, true)
       )
     pool:
       vmImage: 'ubuntu-latest'
@@ -143,8 +153,11 @@ stages:
     displayName: 'Build PROD artifact'
     dependsOn: [ "deploy_uat" ]
     condition: 
-      or(
-        contains(variables['Build.SourceBranch'], 'refs/tags/'),
+      and(
+        or(
+          contains(variables['Build.SourceBranch'], 'refs/tags/'),
+          contains(variables['Build.SourceBranch'], 'refs/heads/main'),
+        ),
         eq(${{parameters.UAT_PROD_DEPLOY}}, true)
       )
     pool:
