@@ -8,12 +8,17 @@ parameters:
     type: string
     default: ''
 
+  - name: 'api_url'
+    type: string
+    default: ''
+
 steps:
 - bash: |
     chmod +x env.sh
     env -i \
       RTP_FE_ENV=${{ parameters.env }} \
       RTP_FE_VERSION=${{ parameters.version }} \
+      RTP_FE_API_URL=${{ parameters.api_url }}
       bash env.sh
 
   displayName: 'Populate environment file'
