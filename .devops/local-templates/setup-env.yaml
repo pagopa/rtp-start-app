@@ -18,7 +18,7 @@ steps:
     env -i \
       RTP_FE_ENV=${{ parameters.env }} \
       RTP_FE_VERSION=${{ parameters.version }} \
-      RTP_FE_API_URL=${{ parameters.api_url }}
+      RTP_FE_API_URL=${{ parameters.api_url }} \
       bash env.sh
 
   displayName: 'Populate environment file'
