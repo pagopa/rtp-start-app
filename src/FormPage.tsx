@@ -5,11 +5,10 @@ const API_URL = process.env.API_URL;
 // Define an interface to represent the form data structure
 interface FormData {
   noticeNumber: string;
-  companyName: string;
   amount: string;
   description: string;
   expiryDate: string;
-  payeeId: string;
+  payee: {id: string, name: string};
   payerId: string;
 }
 
@@ -17,11 +16,10 @@ const FormPage: React.FC = () => {
   // Set up state for form data
   const [formData, setFormData] = useState<FormData>({
     noticeNumber: "",
-    companyName: "",
     amount: "",
     description: "",
     expiryDate: "",
-    payeeId: "",
+    payee: {id: "", name: ""},
     payerId: "",
   });
 
@@ -30,7 +28,23 @@ const FormPage: React.FC = () => {
 
   // Handle changes in the form fields (input and textarea)
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+
+    if (name.includes('payee')) {
+      const [party, field] = name.split('.');
+      if (field) {
+        setFormData({
+          ...formData,
+          [party]: {
+            ...formData[party as 'payee'],
+            [field]: value
+          },
+        });
+      }
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
+    // setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   // Handle form submission
@@ -84,18 +98,6 @@ const FormPage: React.FC = () => {
             placeholder="18-digit Notice Number"
           />
         </div>
-        <div>
-          <label htmlFor="companyName">Company Name:</label>
-          <input
-            type="text"
-            id="companyName"
-            name="companyName"
-            value={formData.companyName}
-            onChange={handleChange}
-            // required
-            placeholder="Company Name / Ragione Sociale Ente"
-          />
-        </div>
 
         <div>
           <label htmlFor="amount">Amount:</label>
@@ -139,13 +141,26 @@ const FormPage: React.FC = () => {
         </div>
 
         <div>
-          <label htmlFor="payeeId">Payee ID (Fiscal Code):</label>
+          <label htmlFor="payee.name">Payee Company Name:</label>
           <input
             type="text"
-            id="payeeId"
-            name="payeeId"
+            id="payee.name"
+            name="payee.name"
+            value={formData.payee.name}
+            onChange={handleChange}
+            // required
+            placeholder="Company Name / Ragione Sociale Ente"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="payee.id">Payee ID (Fiscal Code):</label>
+          <input
+            type="text"
+            id="payee.id"
+            name="payee.id"
             pattern="\d{11}"
-            value={formData.payeeId}
+            value={formData.payee.id}
             onChange={handleChange}
             // required
             placeholder="11-digit Fiscal Code"

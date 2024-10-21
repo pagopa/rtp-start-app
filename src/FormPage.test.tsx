@@ -48,11 +48,13 @@ describe('FormPage', () => {
     expect(global.fetch).toHaveBeenCalledWith(`${API_URL}/rtps`, expect.objectContaining({
         body: JSON.stringify({
             noticeNumber: '123456789012345678',
-            companyName: 'Ente Test',
             amount: 1050,   // Converted to cents
             description: 'Test description',
             expiryDate: '2024-12-31',
-            payeeId: '12345678901',
+            payee: {
+                id: '12345678901',
+                name: 'Ente Test'
+            },
             payerId: '98765432101'
         }),
     }));
