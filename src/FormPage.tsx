@@ -158,7 +158,7 @@ const FormPage: React.FC = () => {
             type="text"
             id="payee.id"
             name="payee.id"
-            pattern="\d{11}"
+            pattern="\d{11}|\d{16}"
             value={formData.payee.id}
             onChange={handleChange}
             // required
