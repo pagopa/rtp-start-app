@@ -5,6 +5,7 @@ const API_URL = process.env.API_URL;
 // Define an interface to represent the form data structure
 interface FormData {
   noticeNumber: string;
+  companyName: string;
   amount: string;
   description: string;
   expiryDate: string;
@@ -16,6 +17,7 @@ const FormPage: React.FC = () => {
   // Set up state for form data
   const [formData, setFormData] = useState<FormData>({
     noticeNumber: "",
+    companyName: "",
     amount: "",
     description: "",
     expiryDate: "",
@@ -80,6 +82,18 @@ const FormPage: React.FC = () => {
             onChange={handleChange}
             // required
             placeholder="18-digit Notice Number"
+          />
+        </div>
+        <div>
+          <label htmlFor="companyName">Company Name:</label>
+          <input
+            type="text"
+            id="companyName"
+            name="companyName"
+            value={formData.companyName}
+            onChange={handleChange}
+            // required
+            placeholder="Company Name / Ragione Sociale Ente"
           />
         </div>
 
