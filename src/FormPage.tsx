@@ -44,7 +44,6 @@ const FormPage: React.FC = () => {
     } else {
       setFormData({ ...formData, [name]: value });
     }
-    // setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   // Handle form submission
