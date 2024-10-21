@@ -5,7 +5,7 @@ const API_URL = process.env.API_URL;
 // Define an interface to represent the form data structure
 interface FormData {
   noticeNumber: string;
-  amount: string;
+  amount: number;
   description: string;
   expiryDate: string;
   payee: {id: string, name: string};
@@ -16,7 +16,7 @@ const FormPage: React.FC = () => {
   // Set up state for form data
   const [formData, setFormData] = useState<FormData>({
     noticeNumber: "",
-    amount: "",
+    amount: 0,
     description: "",
     expiryDate: "",
     payee: {id: "", name: ""},
@@ -50,8 +50,7 @@ const FormPage: React.FC = () => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
 
-    const amountInEuro = parseFloat(formData.amount);
-    const amountInCents = Math.floor(amountInEuro * 100); // Convert to cents
+    const amountInCents = Math.floor(formData.amount * 100); // Convert to cents
 
     const requestBody = {
       ...formData,
