@@ -46,7 +46,7 @@ stages:
           - template: local-templates/node-job-setup.yaml
           - template: local-templates/setup-env.yaml
             parameters:
-              env: '$(environment)'
+              env: 'DEV'
               version: '$(Build.SourceBranchName):$(Build.SourceVersion)'
               api_url: 'https://api-rtp.dev.cstar.pagopa.it/rtp/v1'
 
@@ -139,7 +139,7 @@ stages:
               scriptType: 'bash'
               scriptLocation: inlineScript
               inlineScript: |
-                az storage blob sync --container '$web' --account-name $(UAT_STORAGE_ACCOUNT_NAME) --source "$(Pipeline.Workspace)/Bundle"
+                az storage blob sync --container '$web' --account-name $(UAT_STORAGE_ACCOUNT_NAME) --source "$(Pipeline.Workspace)/Bundle_UAT"
 
           - task: AzureCLI@1
             displayName: 'Purge CDN endpoint'
@@ -215,7 +215,7 @@ stages:
               scriptType: 'bash'
               scriptLocation: inlineScript
               inlineScript: |
-                az storage blob sync --container '$web' --account-name $(PROD_STORAGE_ACCOUNT_NAME) --source "$(Pipeline.Workspace)/Bundle"
+                az storage blob sync --container '$web' --account-name $(PROD_STORAGE_ACCOUNT_NAME) --source "$(Pipeline.Workspace)/Bundle_PROD"
 
           - task: AzureCLI@1
             displayName: 'Purge CDN endpoint'
