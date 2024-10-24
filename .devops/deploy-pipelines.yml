@@ -130,7 +130,7 @@ stages:
           - checkout: none
 
           - download: current
-            artifact: Bundle
+            artifact: Bundle_UAT
 
           - task: AzureCLI@2
             displayName: 'Sync storage'
@@ -139,7 +139,7 @@ stages:
               scriptType: 'bash'
               scriptLocation: inlineScript
               inlineScript: |
-                az storage blob sync --container '$web' --account-name $(UAT_STORAGE_ACCOUNT_NAME) --source "$(Pipeline.Workspace)/Bundle_UAT"
+                az storage blob sync --container '$web' --account-name $(UAT_STORAGE_ACCOUNT_NAME) --source "$(Pipeline.Workspace)/Bundle"
 
           - task: AzureCLI@1
             displayName: 'Purge CDN endpoint'
@@ -206,7 +206,7 @@ stages:
           - checkout: none
 
           - download: current
-            artifact: Bundle
+            artifact: Bundle_PROD
 
           - task: AzureCLI@2
             displayName: 'Sync storage'
@@ -215,7 +215,7 @@ stages:
               scriptType: 'bash'
               scriptLocation: inlineScript
               inlineScript: |
-                az storage blob sync --container '$web' --account-name $(PROD_STORAGE_ACCOUNT_NAME) --source "$(Pipeline.Workspace)/Bundle_PROD"
+                az storage blob sync --container '$web' --account-name $(PROD_STORAGE_ACCOUNT_NAME) --source "$(Pipeline.Workspace)/Bundle"
 
           - task: AzureCLI@1
             displayName: 'Purge CDN endpoint'
