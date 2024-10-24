@@ -46,7 +46,7 @@ stages:
           - template: local-templates/node-job-setup.yaml
           - template: local-templates/setup-env.yaml
             parameters:
-              env: '$(environment)'
+              env: 'DEV'
               version: '$(Build.SourceBranchName):$(Build.SourceVersion)'
               api_url: 'https://api-rtp.dev.cstar.pagopa.it/rtp/v1'
 
