@@ -1,4 +1,4 @@
-import { Box, Button } from "@mui/material";
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText } from "@mui/material";
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import RTPLoader from "../components/RTPLoader";
@@ -15,6 +15,7 @@ export default function RTPPage() {
 
     // Set up state for the response message from the server
     const [responseMessage, setResponseMessage] = useState<string>("");
+    const [isDialogVisible, setDialogVisible] = useState(false);
 
     const onSubmit = async (e: RTPFormFields): Promise<void> => {
 
@@ -47,6 +48,8 @@ export default function RTPPage() {
             }
         } catch (error: any) {
             setResponseMessage("An error occurred: " + error.message);
+        } finally {
+            setDialogVisible(true);
         }
     };
 
@@ -70,7 +73,16 @@ export default function RTPPage() {
                     />
                 </Box>
                 {/* Display the response message */}
-                {responseMessage && <p id="response">{responseMessage}</p>}
+                {responseMessage && 
+                    <Dialog open={isDialogVisible}>
+                        <DialogContent>
+                            <DialogContentText>{responseMessage}</DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={() => setDialogVisible(false)}>OK</Button>
+                        </DialogActions>
+                    </Dialog>
+                }
             </PageContainer>
         </>
     );
