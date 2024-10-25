@@ -157,6 +157,7 @@ export function RTPForm(props: {
               />
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <FormikDatePicker 
+                  slotProps={{ textField: { fullWidth: true } }}
                   format="DD/MM/YYYY"
                   name="expiryDate"
                   label={t("rtp.expiryDate")}
