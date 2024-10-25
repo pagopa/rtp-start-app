@@ -60,13 +60,6 @@ export default function RTPPage() {
                 title="rtp.pageTitle"
                 description="rtp.pageDescription"
             >
-                <Button
-                    variant="text"
-                    sx={{ p: 0 }}
-                    aria-hidden="true"
-                    tabIndex={-1}
-                >
-                </Button>
                 <Box sx={{ mt: 6 }}>
                     <RTPForm
                         onSubmit={onSubmit}
