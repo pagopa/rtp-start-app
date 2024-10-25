@@ -8,9 +8,10 @@ import { RTPFormFields } from "./rtpModel";
 
 const API_URL = process.env.API_URL;
 
+const DATE_FORMAT = "YYYY-MM-DD";
+
 export default function RTPPage() {
     const { rptid } = useParams();
-
 
     // Set up state for the response message from the server
     const [responseMessage, setResponseMessage] = useState<string>("");
@@ -23,7 +24,7 @@ export default function RTPPage() {
             noticeNumber: e.noticeNumber,
             amount: amountInCents,
             description: e.description,
-            expiryDate: e.expiryDate,
+            expiryDate: e.expiryDate?.format(DATE_FORMAT),
             payee: {id: e.payee, name: e.payeeCompanyName},
             payerId: e.payerId,
         };

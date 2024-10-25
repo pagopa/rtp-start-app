@@ -17,7 +17,7 @@ import {
 } from "../components/rtpModel";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { FormikDatePicker } from "./DataPickerField";
 
 export function RTPForm(props: {
   defaultValues?: RTPFormFields;
@@ -67,7 +67,7 @@ export function RTPForm(props: {
             noticeNumber: "",
             amount: 0,
             description: "",
-            expiryDate: "",
+            expiryDate: undefined,
             payeeCompanyName: "",
             payee: "",
             payerId: "",
@@ -156,7 +156,9 @@ export function RTPForm(props: {
                 }
               />
               <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DatePicker
+                <FormikDatePicker 
+                  format="DD/MM/YYYY"
+                  name="expiryDate"
                   label={t("rtp.expiryDate")}
                   sx={{ mb: 4 }}
                 />

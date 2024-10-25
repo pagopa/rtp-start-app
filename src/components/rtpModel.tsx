@@ -1,9 +1,10 @@
+import dayjs from "dayjs";
 
 export interface RTPFormFields {
     noticeNumber: string;
     amount: number;
     description: string;
-    expiryDate: string
+    expiryDate?: dayjs.Dayjs;
     payeeCompanyName: string;
     payee: string;
     payerId: string;

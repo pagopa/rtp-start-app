@@ -1,19 +1,21 @@
-import { DatePicker, DatePickerProps } from "@mui/x-date-pickers/DatePicker";
+import { DatePicker, DatePickerProps, PickerValidDate } from "@mui/x-date-pickers";
 import { useField, useFormikContext } from "formik";
-import React from "react";
 
+type Props<TInputDate extends PickerValidDate> = {
+  name: string;
+} & Omit<DatePickerProps<TInputDate, boolean>, "onChange" | "value">;
 
-const DatePickerField = ({ ...props }) => {
+export const FormikDatePicker = <TInputDate extends PickerValidDate>(
+  props: Props<TInputDate>
+) => {
+  const { name, ...restProps } = props;
+  const [field] = useField(name);
   const { setFieldValue } = useFormikContext();
-  const [field] = useField(props.name);
   return (
     <DatePicker
-      {...field}
-      {...props}
-      //selected={(field.value && new Date(field.value)) || null}
-      onChange={(val) => {
-        setFieldValue(field.name, val);
-      }}
+      {...restProps}
+      value={field.value ?? null}
+      onChange={(val) => setFieldValue(name, val)}
     />
   );
 };
