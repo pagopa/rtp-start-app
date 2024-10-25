@@ -1,0 +1,31 @@
+{
+  "rtp":{
+    "noticeNumber": "Codice Avviso",
+    "amount": "Importo",
+    "description": "Descrizione",
+    "payeeCompanyName" : "Nome Ente Creditore",
+    "payee": "Codice Fiscale Ente Creditore",
+    "payerId": "Codice Fiscale Debitore",
+    "expiryDate": "Data",
+    "pageDescription": "Inserisci i dati come mostrato sull'avviso di pagamento.",
+    "pageTitle": "Create a RTP (Request To Pay)"
+  },
+  "paymentNoticePage": {
+    "formButtons": {
+      "cancel": "Indietro",
+      "submit": "Continua"
+    },
+    "formErrors": {
+      "minCf": "Inserisci 11 cifre",
+      "minCode": "Inserisci 18 cifre",
+      "required": "Campo obbligatorio",
+      "number": "Inserisci un numero valido"
+      
+    },
+    "formFields": {
+      "billCode": "Codice Avviso",
+      "cf": "Codice Fiscale Ente Creditore"
+    },
+    "helpLink": "Vedi un esempio"
+  }
+}
