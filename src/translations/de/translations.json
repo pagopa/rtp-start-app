@@ -1,0 +1,30 @@
+{
+  "rtp": {
+    "noticeNumber": "Benachrichtigungscode",
+    "amount": "Betrag",
+    "description": "Beschreibung",
+    "payeeCompanyName": "Name des Zahlungsempfängers:",
+    "payee": "Steuernummer des Zahlungsempfängers",
+    "payerId": "Steuernummer des Zahlers",
+    "expiryDate": "Datum",
+    "pageDescription": "Geben Sie die Daten ein, wie sie auf der Zahlungsanzeige angezeigt werden.",
+    "pageTitle": "Erstellen Sie eine RTP (Zahlungsanforderung)"
+  },
+  "paymentNoticePage": {
+    "formButtons": {
+      "cancel": "Zurück",
+      "submit": "Weiter"
+    },
+    "formErrors": {
+      "minCf": "11 Ziffern eingeben",
+      "minCode": "18 Ziffern eingeben",
+      "required": "Pflichtfeld",
+      "number": "Gültige Nummer eingeben"
+    },
+    "formFields": {
+      "billCode": "Zahlungsaufforderungsnr.",
+      "cf": "Steuernummer des Empfängers"
+    },
+    "helpLink": "Beispiel anzeigen"
+  }
+}
