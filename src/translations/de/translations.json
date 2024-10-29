@@ -16,7 +16,7 @@
       "submit": "Weiter"
     },
     "formErrors": {
-      "minCf": "11 Ziffern eingeben",
+      "minCf": "11 oder 16 Ziffern eingeben",
       "minCode": "18 Ziffern eingeben",
       "required": "Pflichtfeld",
       "number": "Gültige Nummer eingeben"

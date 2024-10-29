@@ -17,6 +17,16 @@ export default function RTPPage() {
     const [responseMessage, setResponseMessage] = useState<string>("");
     const [isDialogVisible, setDialogVisible] = useState(false);
 
+    const resetValues = (e: RTPFormFields): void => {
+        e.noticeNumber=  "";
+        e.amount= 0;
+        e.description= "";
+        e.expiryDate= undefined;
+        e.payeeCompanyName= "";
+        e.payee= "";
+        e.payerId= "";
+    }
+
     const onSubmit = async (e: RTPFormFields): Promise<void> => {
 
         const amountInCents = Math.floor(e.amount * 100); // Convert to cents
@@ -49,6 +59,7 @@ export default function RTPPage() {
         } catch (error: any) {
             setResponseMessage("An error occurred: " + error.message);
         } finally {
+            resetValues(e);
             setDialogVisible(true);
         }
     };
