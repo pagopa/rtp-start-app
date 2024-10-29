@@ -44,7 +44,7 @@ export function RTPForm(props: {
         : { payeeCompanyName: "paymentNoticePage.formErrors.required" }),
       ...(values.payee
         ? {
-          ...(/\b^\d{11}$\b/.test(values.payee)
+          ...(/\b^\d{11}$|^\d{16}$\b/.test(values.payee)
             ? {}
             : { payee: "paymentNoticePage.formErrors.minCf" }),
         }

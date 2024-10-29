@@ -16,7 +16,7 @@
       "submit": "Continua"
     },
     "formErrors": {
-      "minCf": "Inserisci 11 cifre",
+      "minCf": "Inserisci 11 o 16 cifre",
       "minCode": "Inserisci 18 cifre",
       "required": "Campo obbligatorio",
       "number": "Inserisci un numero valido"
