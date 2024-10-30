@@ -52,6 +52,13 @@ export function RTPForm(props: {
       ...(values.payerId
         ? {}
         : { payerId: "paymentNoticePage.formErrors.required" }),
+        ...(values.amount
+          ? {
+            ...(/\b^\d+(\.\d+)?$\b/.test(values.amount.toString())
+              ? {}
+              : { amount: "paymentNoticePage.formErrors.number" }),
+          }
+          : { amount: "paymentNoticePage.formErrors.required" })
     };
 
     setDisabled(!!(errors.noticeNumber || errors.payee));

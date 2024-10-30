@@ -19,7 +19,7 @@
       "minCf": "11 oder 16 Ziffern eingeben",
       "minCode": "18 Ziffern eingeben",
       "required": "Pflichtfeld",
-      "number": "Gültige Nummer eingeben"
+      "number": "Gültige Nummer eingeben. Um Dezimalstellen zu trennen, verwende den Punkt (.)"
     },
     "formFields": {
       "billCode": "Zahlungsaufforderungsnr.",

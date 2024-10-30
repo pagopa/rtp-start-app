@@ -19,7 +19,7 @@
       "minCf": "Inserisci 11 o 16 cifre",
       "minCode": "Inserisci 18 cifre",
       "required": "Campo obbligatorio",
-      "number": "Inserisci un numero valido"
+      "number": "Inserisci un numero valido. Per separare le decine utilizza il punto (.)"
       
     },
     "formFields": {
