@@ -49,7 +49,7 @@ const FormPage: React.FC = () => {
   // Handle form submission
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
-
+    
     const amountInCents = Math.floor(formData.amount * 100); // Convert to cents
 
     const requestBody = {
