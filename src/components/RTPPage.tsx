@@ -26,7 +26,7 @@ export default function RTPPage() {
             amount: amountInCents,
             description: e.description,
             expiryDate: e.expiryDate?.format(DATE_FORMAT),
-            payee: {id: e.payee, name: e.payeeCompanyName},
+            payee: {payeeId: e.payee, name: e.payeeCompanyName},
             payerId: e.payerId,
         };
 
