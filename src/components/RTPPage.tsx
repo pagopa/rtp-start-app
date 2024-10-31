@@ -29,6 +29,7 @@ export default function RTPPage() {
 
     const onSubmit = async (e: RTPFormFields): Promise<void> => {
 
+        
         const amountInCents = Math.floor(e.amount * 100); // Convert to cents
 
         const requestBody = {

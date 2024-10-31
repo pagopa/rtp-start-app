@@ -12,7 +12,7 @@ export interface RTPFormFields {
 
 export interface RTPFormErrors {
     noticeNumber?: string;
-    amount?: number;
+    amount?: string;
     description?: string;
     expiryDate?: string
     payeeCompanyName?: string;

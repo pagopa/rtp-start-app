@@ -19,7 +19,7 @@
       "minCf": "Enter 11 or 16 numbers",
       "minCode": "Enter 18 numbers",
       "required": "Required field",
-      "number": "Enter a valid number"
+      "number": "Enter a valid number. To separate decimals use the dot (.)"
     },
     "formFields": {
       "billCode": "Notice code",
