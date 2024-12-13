@@ -148,11 +148,10 @@ export function RTPForm(props: {
                 label="rtp.description"
                 id="description"
                 type="text"
-                inputMode="numeric"
+                inputMode="text"
                 sx={{ mb: 4 }}
                 value={values.description}
                 handleChange={(e) => {
-                  e.currentTarget.value = cleanSpaces(e.currentTarget.value);
                   handleChange(e);
                 }}
                 handleBlur={handleBlur}
@@ -179,11 +178,10 @@ export function RTPForm(props: {
                 label="rtp.payeeCompanyName"
                 id="payeeCompanyName"
                 type="text"
-                inputMode="numeric"
+                inputMode="text"
                 sx={{ mb: 4 }}
                 value={values.payeeCompanyName}
                 handleChange={(e) => {
-                  e.currentTarget.value = cleanSpaces(e.currentTarget.value);
                   handleChange(e);
                 }}
                 handleBlur={handleBlur}
