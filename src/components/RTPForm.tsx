@@ -152,7 +152,6 @@ export function RTPForm(props: {
                 sx={{ mb: 4 }}
                 value={values.description}
                 handleChange={(e) => {
-                  e.currentTarget.value = e.currentTarget.value;
                   handleChange(e);
                 }}
                 handleBlur={handleBlur}
@@ -183,7 +182,6 @@ export function RTPForm(props: {
                 sx={{ mb: 4 }}
                 value={values.payeeCompanyName}
                 handleChange={(e) => {
-                  e.currentTarget.value = e.currentTarget.value;
                   handleChange(e);
                 }}
                 handleBlur={handleBlur}
