@@ -1,7 +1,7 @@
-
 import translationIT from "./it/translations.json";
 import translationEN from "./en/translations.json";
 import translationDE from "./de/translations.json";
+import { Languages } from "./translations";
 
 const lang: Languages = {
   it: {
@@ -20,20 +20,5 @@ const lang: Languages = {
     translation: translationDE,
   },
 };
-
-export function getSortedLang(): Array<{
-  label: string;
-  lang: string;
-}> {
-  // eslint-disable-next-line functional/immutable-data
-  return Object.keys(lang)
-    .sort()
-    .reduce((obj: Array<{ label: string; lang: string }>, key: string) => {
-      // eslint-disable-next-line functional/immutable-data
-      obj.push(lang[key]);
-      return obj;
-    }, []);
-}
-
 
 export default lang;

@@ -1,6 +1,5 @@
 import Check from "@mui/icons-material/Check";
 import Close from "@mui/icons-material/Close";
-import React from "react";
 
 export const getFormValidationIcon = (
   touched: boolean | undefined,

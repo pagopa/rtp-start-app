@@ -1,4 +1,3 @@
-/* eslint-disable functional/immutable-data */
 import { LoadingButton } from "@mui/lab";
 import { Grid } from "@mui/material";
 import { default as React } from "react";

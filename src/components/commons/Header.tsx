@@ -1,6 +1,4 @@
-/* eslint-disable sonarjs/cognitive-complexity */
 import { Box, Stack } from "@mui/material";
-import React from "react";
 import pagopaLogo from "./pagopa-logo.svg";
 
 export default function Header() {

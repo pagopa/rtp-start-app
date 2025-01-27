@@ -1,12 +1,12 @@
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText } from "@mui/material";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import RTPLoader from "../components/RTPLoader";
 import PageContainer from "../components/PageContainer";
 import { RTPForm } from "../components/RTPForm";
 import { RTPFormFields } from "./rtpModel";
 
-const API_URL = process.env.API_URL;
+const API_URL = import.meta.env.API_URL;
 
 const DATE_FORMAT = "YYYY-MM-DD";
 
@@ -29,7 +29,7 @@ export default function RTPPage() {
 
     const onSubmit = async (e: RTPFormFields): Promise<void> => {
 
-        
+
         const amountInCents = Math.floor(e.amount * 100); // Convert to cents
 
         const requestBody = {
@@ -78,7 +78,7 @@ export default function RTPPage() {
                     />
                 </Box>
                 {/* Display the response message */}
-                {responseMessage && 
+                {responseMessage &&
                     <Dialog open={isDialogVisible}>
                         <DialogContent>
                             <DialogContentText>{responseMessage}</DialogContentText>

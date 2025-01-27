@@ -1,5 +1,4 @@
 import { Box, CircularProgress } from "@mui/material";
-import React from "react";
 import { useTranslation } from "react-i18next";
 
 export default function CheckoutLoader() {
