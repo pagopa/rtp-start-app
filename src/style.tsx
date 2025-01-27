@@ -1,8 +1,15 @@
-import { createTheme } from '@mui/material';
-import { theme } from '@pagopa/mui-italia';
+import { createTheme } from "@mui/material";
+import { theme } from "@pagopa/mui-italia";
 
 export const checkoutTheme = createTheme({
   ...theme,
+  palette: {
+    ...theme.palette,
+    background: {
+      paper: theme.palette.background.default,
+      default: theme.palette.background.paper,
+    },
+  },
   components: {
     ...theme.components,
     MuiFormHelperText: {
@@ -16,9 +23,9 @@ export const checkoutTheme = createTheme({
     MuiAlert: {
       styleOverrides: {
         message: {
-          whiteSpace: 'nowrap',
-          overflow: 'hidden',
-          textOverflow: 'ellipsis',
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+          textOverflow: "ellipsis",
         },
       },
     },

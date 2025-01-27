@@ -1,8 +1,7 @@
-import { Container, useTheme } from '@mui/material';
-import { Box, SxProps } from '@mui/system';
-import React from 'react';
-import { Footer } from './Footer';
-import { Header } from './Header';
+import { Container, useTheme } from "@mui/material";
+import { Box, SxProps } from "@mui/system";
+import React from "react";
+import Footer from "./Footer";
 
 interface LayoutProps {
   sx?: SxProps;
@@ -20,7 +19,6 @@ export function Layout({ sx, children }: LayoutProps) {
         bgcolor: theme.palette.background.default,
       }}
     >
-      <Header />
       <Container
         sx={{
           ...sx,
