@@ -4,8 +4,10 @@ import { AxiosError, InternalAxiosRequestConfig } from 'axios';
 export const setupInterceptors = (client: Client) => {
   client.instance.interceptors.request.use(
     (request: InternalAxiosRequestConfig) => {
+      const tokenHeaderExcludePaths: string[] = [];
+      const routeUrl = request.url || '';
       const accessToken = window.localStorage.getItem('accessToken');
-      if (accessToken) {
+      if (accessToken && !tokenHeaderExcludePaths.includes(routeUrl)) {
         request.headers['Authorization'] = `Bearer ${accessToken}`;
       }
       return request;
