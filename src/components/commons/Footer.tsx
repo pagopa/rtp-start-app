@@ -1,13 +1,6 @@
-import { Box, Link, Typography, useTheme } from "@mui/material";
-import React from "react";
-import { useTranslation } from "react-i18next";
-import { useLocation } from "react-router-dom";
-import pagopaLogo from "./logo-pagopa-spa.svg";
+import { Box } from "@mui/material";
 
 export default function Footer() {
-  const { t } = useTranslation();
-  const theme = useTheme();
-
   return (
     <Box
       display={"flex"}

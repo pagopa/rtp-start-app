@@ -1,4 +1,3 @@
-/* eslint-disable functional/immutable-data */
 import { TextField } from "@mui/material";
 import { SxProps } from "@mui/system";
 import React, { FocusEventHandler, FormEventHandler } from "react";

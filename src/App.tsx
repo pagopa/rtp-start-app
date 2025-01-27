@@ -1,10 +1,9 @@
 import { createTheme, ThemeProvider } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
 import { theme } from "@pagopa/mui-italia";
-import React from "react";
-import RTPPage from 'components/RTPPage';
-import "./translations/i18n";
-import { Layout } from "components/commons/Layout";
+import "src/translations/i18n";
+import RTPPage from "src/components/RTPPage";
+import { Layout } from "src/components/commons/Layout";
 
 const checkoutTheme = createTheme({
   ...theme,
@@ -37,16 +36,13 @@ const checkoutTheme = createTheme({
   },
 });
 
-
-
 export function App() {
   return (
     <ThemeProvider theme={checkoutTheme}>
       <CssBaseline />
-      <Layout >
+      <Layout>
         <RTPPage />
       </Layout>
     </ThemeProvider>
   );
 }
-

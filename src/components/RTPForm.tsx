@@ -1,7 +1,3 @@
-/* eslint-disable sonarjs/no-identical-functions */
-/* eslint-disable functional/immutable-data */
-/* eslint-disable @typescript-eslint/no-empty-function */
-
 import { Box, InputAdornment } from "@mui/material";
 import { Formik, FormikProps } from "formik";
 import React from "react";
@@ -162,7 +158,7 @@ export function RTPForm(props: {
                 }
               />
               <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <FormikDatePicker 
+                <FormikDatePicker
                   slotProps={{ textField: { fullWidth: true } }}
                   format="DD/MM/YYYY"
                   name="expiryDate"
