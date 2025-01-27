@@ -1,48 +1,15 @@
-import { createTheme, ThemeProvider } from "@mui/material";
+import { ThemeProvider } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
-import { theme } from "@pagopa/mui-italia";
 import "src/translations/i18n";
-import RTPPage from "src/components/RTPPage";
 import { Layout } from "src/components/commons/Layout";
+import { checkoutTheme } from "./style";
+import { CreateRtp } from "src/feature/createRtp/pages/createRtp";
 
-const checkoutTheme = createTheme({
-  ...theme,
-  palette: {
-    ...theme.palette,
-    background: {
-      paper: theme.palette.background.default,
-      default: theme.palette.background.paper,
-    },
-  },
-  components: {
-    ...theme.components,
-    MuiFormHelperText: {
-      styleOverrides: {
-        root: {
-          marginTop: 0,
-          height: 0,
-        },
-      },
-    },
-    MuiAlert: {
-      styleOverrides: {
-        message: {
-          whiteSpace: "nowrap",
-          overflow: "hidden",
-          textOverflow: "ellipsis",
-        },
-      },
-    },
-  },
-});
-
-export function App() {
-  return (
-    <ThemeProvider theme={checkoutTheme}>
-      <CssBaseline />
-      <Layout>
-        <RTPPage />
-      </Layout>
-    </ThemeProvider>
-  );
-}
+export const App = () => (
+  <ThemeProvider theme={checkoutTheme}>
+    <CssBaseline />
+    <Layout>
+      <CreateRtp />
+    </Layout>
+  </ThemeProvider>
+);
