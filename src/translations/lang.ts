@@ -1,24 +1,31 @@
-import translationIT from "./it/translations.json";
-import translationEN from "./en/translations.json";
-import translationDE from "./de/translations.json";
-import { Languages } from "./translations";
+import translationIT from './it/translations.json';
+import translationEN from './en/translations.json';
+import translationDE from './de/translations.json';
+import { Languages } from './translations';
 
-const lang: Languages = {
+export const lang: Languages = {
   it: {
-    label: "Italiano",
-    lang: "it-IT",
+    label: 'Italiano',
+    lang: 'it-IT',
+    it: 'Italano',
+    en: 'Inglese',
+    de: 'Tedesco',
     translation: translationIT,
   },
   en: {
-    label: "English",
-    lang: "en-EN",
+    label: 'English',
+    it: 'Italian',
+    en: 'English',
+    de: 'German',
+    lang: 'en-EN',
     translation: translationEN,
   },
   de: {
-    label: "Deutsch",
-    lang: "de-DE",
+    label: 'Deutsch',
+    it: 'Italienisch',
+    en: 'Englisch',
+    de: 'Deutsch',
+    lang: 'de-DE',
     translation: translationDE,
   },
 };
-
-export default lang;
