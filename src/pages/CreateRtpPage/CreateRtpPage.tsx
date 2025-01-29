@@ -2,7 +2,6 @@ import { Stack, Box, Typography, Button } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { validationSchema } from './resolver';
 import { useRtps } from 'src/api/useRtps';
 import { CreateRtp } from 'generated/apiClient';
 import { LoadingButton } from '@mui/lab';
@@ -10,11 +9,12 @@ import { PageTitle } from 'src/components/PageTitle';
 import { PayeeSection } from './components/PayeeSection';
 import { PayerSection } from './components/PayerSection';
 import { PaymentNoticeSection } from './components/PaymentNoticeSection';
+import { getValidationSchema } from './resolver';
 
 export const CreateRtpPage = () => {
   const { t } = useTranslation();
   const { control, handleSubmit } = useForm<CreateRtp>({
-    resolver: yupResolver(validationSchema),
+    resolver: yupResolver(getValidationSchema()),
   });
   const { mutate, isPending, isError, error } = useRtps();
 
