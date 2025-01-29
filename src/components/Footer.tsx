@@ -1,13 +1,15 @@
 import { Footer as MUIFooter } from '@pagopa/mui-italia';
 import { useLanguage } from 'src/hooks/useLanguage';
+import { useTranslation } from 'react-i18next';
 
 export const Footer = () => {
+  const { t } = useTranslation();
   const { language, changeLanguage } = useLanguage();
 
   return (
     <MUIFooter
       loggedUser={true}
-      companyLink={{ ariaLabel: 'PagoPA SPA' }}
+      companyLink={{ ariaLabel: t('Footer.companyLinkAriaLabel') }}
       legalInfo={
         <>
           <b>PagoPA S.p.A.</b> - Società per azioni con socio unico - Capitale
@@ -19,45 +21,37 @@ export const Footer = () => {
       }
       postLoginLinks={[
         {
-          label: 'Informativa Privacy',
-          ariaLabel: 'Informativa Privacy',
+          label: t('Footer.postLoginLinks.privacyPolicy.label'),
+          ariaLabel: t('Footer.postLoginLinks.privacyPolicy.ariaLabel'),
           href: '',
           linkType: 'external',
         },
         {
-          label: 'Diritto alla protezione dei dati personali',
-          ariaLabel: 'Diritto alla protezione dei dati personali',
+          label: t('Footer.postLoginLinks.dataProtection.label'),
+          ariaLabel: t('Footer.postLoginLinks.dataProtection.ariaLabel'),
           linkType: 'external',
         },
         {
-          label: 'Termini e condizioni d’uso',
-          ariaLabel: 'Termini e condizioni d’uso',
+          label: t('Footer.postLoginLinks.termsAndConditions.label'),
+          ariaLabel: t('Footer.postLoginLinks.termsAndConditions.ariaLabel'),
           href: '',
           linkType: 'external',
         },
         {
-          label: 'Accessibilità',
-          ariaLabel: 'Accessibilità',
+          label: t('Footer.postLoginLinks.accessibility.label'),
+          ariaLabel: t('Footer.postLoginLinks.accessibility.ariaLabel'),
           href: '',
           linkType: 'external',
         },
       ]}
       preLoginLinks={{
-        aboutUs: {
-          links: [],
-        },
-        resources: {
-          links: [],
-        },
-        followUs: {
-          title: '',
-          socialLinks: [],
-          links: [],
-        },
+        aboutUs: { links: [] },
+        resources: { links: [] },
+        followUs: { title: '', socialLinks: [], links: [] },
       }}
       currentLangCode={language}
       languages={{
-        it: { it: 'Italiano' },
+        it: { it: t('Footer.languages.it') },
       }}
       onLanguageChanged={changeLanguage}
     />

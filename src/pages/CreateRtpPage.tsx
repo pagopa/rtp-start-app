@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import BadgeIcon from '@mui/icons-material/Badge';
 import PaymentsIcon from '@mui/icons-material/Payments';
 import Stack from '@mui/material/Stack';
@@ -73,6 +74,7 @@ const FormSection = ({ title, icon, children }: FormSectionProps) => (
 );
 
 export const CreateRtpPage = () => {
+  const { t } = useTranslation();
   const { control, handleSubmit } = useForm<CreateRtp>({
     resolver: yupResolver(validationSchema),
   });
@@ -81,8 +83,8 @@ export const CreateRtpPage = () => {
   const onSubmit = (data: CreateRtp) => {
     console.debug(data);
     mutate(data, {
-      onSuccess: () => alert('RTP created successfully!'),
-      onError: () => alert('Failed to create RTP'),
+      onSuccess: () => alert(t('CreateRtpPage.rtpCreatedSuccess')),
+      onError: () => alert(t('CreateRtpPage.rtpCreationFailed')),
     });
   };
 
@@ -90,50 +92,63 @@ export const CreateRtpPage = () => {
     <Stack p={3} gap={3}>
       <Stack gap={1}>
         <Typography variant="h4" component="h1">
-          Nuova Richiesta di pagamento
+          {t('CreateRtpPage.title')}
         </Typography>
         <Typography variant="body2">
-          Completa le informazioni necessarie per la creazione di una richiesta
-          di pagamento (SRTP)
+          {t('CreateRtpPage.description')}
         </Typography>
       </Stack>
       <Stack p={3} gap={3} bgcolor="background.paper">
         <Stack justifyContent="flex-start" gap={1}>
           <Typography variant="h6" component="h2">
-            Compila la richiesta con le informazioni necessarie
+            {t('CreateRtpPage.formTitle')}
           </Typography>
           <Typography variant="body2">
-            La creazione di una RTP permette di inviare una richiesta di
-            pagamento direttamente al destinatario, in sostituzione dell’avviso
-            cartaceo o digitale.
+            {t('CreateRtpPage.formDescription')}
           </Typography>
           <Box>
-            <Button variant="naked">Dubbi? Vai alla documentazione</Button>
+            <Button variant="naked">
+              {t('CreateRtpPage.documentationButton')}
+            </Button>
           </Box>
         </Stack>
         {/* Payee Section */}
-        <FormSection title="Ente Creditore" icon={<BadgeIcon />}>
-          <FormField label="Nome" name="payee.name" control={control} />
+        <FormSection
+          title={t('CreateRtpPage.payeeSectionTitle')}
+          icon={<BadgeIcon />}
+        >
+          <FormField
+            label={t('CreateRtpPage.payeeNameLabel')}
+            name="payee.name"
+            control={control}
+          />
           <Stack direction="row" gap={2}>
             <FormField
-              label="Codice fiscale (Payee ID)"
+              label={t('CreateRtpPage.payeeIdLabel')}
               name="payee.payeeId"
               control={control}
             />
             <FormField
-              label="Numero di protocollo ente (PayTrxRef)"
+              label={t('CreateRtpPage.payTrxRefLabel')}
               name="payee.payTrxRef"
               control={control}
             />
           </Stack>
         </FormSection>
 
-        {/* Payer */}
-        <FormSection title="Destinatario" icon={<BadgeIcon />}>
+        {/* Payer Section */}
+        <FormSection
+          title={t('CreateRtpPage.payerSectionTitle')}
+          icon={<BadgeIcon />}
+        >
           <Stack direction="row" gap={2}>
-            <FormField label="Nome" name="payer.name" control={control} />
             <FormField
-              label="Codice fiscale (Payer ID)"
+              label={t('CreateRtpPage.payerNameLabel')}
+              name="payer.name"
+              control={control}
+            />
+            <FormField
+              label={t('CreateRtpPage.payerIdLabel')}
               name="payer.payerId"
               control={control}
             />
@@ -141,21 +156,24 @@ export const CreateRtpPage = () => {
         </FormSection>
 
         {/* Payment Notice Section */}
-        <FormSection title="Dati avviso di pagamento" icon={<PaymentsIcon />}>
+        <FormSection
+          title={t('CreateRtpPage.paymentNoticeSectionTitle')}
+          icon={<PaymentsIcon />}
+        >
           <FormField
-            label="Codice avviso pagoPA"
+            label={t('CreateRtpPage.noticeNumberLabel')}
             name="paymentNotice.noticeNumber"
             control={control}
           />
           <Stack direction="row" gap={2}>
             <FormField
-              label="Importo (euro cents)"
+              label={t('CreateRtpPage.amountLabel')}
               name="paymentNotice.amount"
               type="number"
               control={control}
             />
             <FormField
-              label="Data di scadenza"
+              label={t('CreateRtpPage.expiryDateLabel')}
               name="paymentNotice.expiryDate"
               type="date"
               control={control}
@@ -163,12 +181,12 @@ export const CreateRtpPage = () => {
           </Stack>
           <Stack direction="row" gap={2}>
             <FormField
-              label="Oggetto del pagamento"
+              label={t('CreateRtpPage.subjectLabel')}
               name="paymentNotice.subject"
               control={control}
             />
             <FormField
-              label="Descrizione del pagamento"
+              label={t('CreateRtpPage.descriptionLabel')}
               name="paymentNotice.description"
               control={control}
             />
@@ -184,7 +202,7 @@ export const CreateRtpPage = () => {
         sx={{ alignSelf: 'flex-end' }}
         onClick={handleSubmit(onSubmit)}
       >
-        {'Vai al riepilogo'}
+        {t('CreateRtpPage.submitButton')}
       </LoadingButton>
 
       {isError && (
