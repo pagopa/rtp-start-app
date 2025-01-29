@@ -2,6 +2,7 @@ import { Stack, Box, Typography, Button } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { validationSchema } from './resolver';
 import { useRtps } from 'src/api/useRtps';
 import { CreateRtp } from 'generated/apiClient';
 import { LoadingButton } from '@mui/lab';
@@ -9,22 +10,19 @@ import { PageTitle } from 'src/components/PageTitle';
 import { PayeeSection } from './components/PayeeSection';
 import { PayerSection } from './components/PayerSection';
 import { PaymentNoticeSection } from './components/PaymentNoticeSection';
-import { getValidationSchema } from './resolver';
-import { useNavigate } from '@tanstack/react-router';
 
 export const CreateRtpPage = () => {
   const { t } = useTranslation();
   const { control, handleSubmit } = useForm<CreateRtp>({
-    resolver: yupResolver(getValidationSchema()),
+    resolver: yupResolver(validationSchema),
   });
   const { mutate, isPending, isError, error } = useRtps();
-  const navigate = useNavigate();
 
   const onSubmit = (data: CreateRtp) => {
     console.debug(data);
     mutate(data, {
-      onSuccess: () => navigate({ to: '/ok' }),
-      onError: () => navigate({ to: '/ko' }),
+      onSuccess: () => alert(t('CreateRtpPage.rtpCreatedSuccess')),
+      onError: () => alert(t('CreateRtpPage.rtpCreationFailed')),
     });
   };
 
