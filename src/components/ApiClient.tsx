@@ -1,4 +1,4 @@
-import React from 'react';
+import { Outlet } from 'react-router-dom';
 import { setupInterceptors } from 'src/api/interceptors';
 import { Client } from 'src/models/Client';
 
@@ -9,5 +9,5 @@ type ApiClientProps = {
 export const ApiClient = ({ client }: ApiClientProps) => {
   setupInterceptors(client);
 
-  return <React.Fragment />;
+  return <Outlet />;
 };
