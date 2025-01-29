@@ -4,19 +4,22 @@ import {
   PartyEntity,
   ProductEntity,
 } from '@pagopa/mui-italia';
+import { useTranslation } from 'react-i18next';
 
 export const Header = () => {
+  const { t } = useTranslation();
+
   const rootLink = {
     href: 'https://www.pagopa.it',
-    label: 'PagoPA S.p.A.',
-    ariaLabel: 'Sito PagoPa',
-    title: 'LinkPagoPa',
+    label: t('Header.rootLink.label'),
+    ariaLabel: t('Header.rootLink.ariaLabel'),
+    title: t('Header.rootLink.title'),
   };
 
   const productsList: ProductEntity[] = [
     {
       id: 'test',
-      title: 'Request to Pay',
+      title: t('Header.productsList.requestToPay.title'),
       productUrl: '/',
       linkType: 'external',
     },
@@ -26,8 +29,8 @@ export const Header = () => {
     {
       id: 'test-client',
       logoUrl: '',
-      name: 'Intesa Sanpaolo S.P.A.',
-      productRole: 'Responsabile Tecnico',
+      name: t('Header.partyList.intesaSanpaolo.name'),
+      productRole: t('Header.partyList.intesaSanpaolo.productRole'),
     },
   ];
 
@@ -35,9 +38,9 @@ export const Header = () => {
     return localStorage.getItem('accessToken')
       ? {
         id: 'userId',
-        name: 'marco',
-        surname: 'polo',
-        email: 'gM0gW@example.com',
+        name: t('Header.loggedUser.name'),
+        surname: t('Header.loggedUser.surname'),
+        email: t('Header.loggedUser.email'),
       }
       : false;
   };
