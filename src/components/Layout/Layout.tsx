@@ -1,8 +1,8 @@
-import { Container, useTheme } from "@mui/material";
-import { Box, SxProps } from "@mui/system";
-import React from "react";
-import Footer from "./Footer";
-import Header from "./Header";
+import { Container, useTheme } from '@mui/material';
+import { Box, SxProps } from '@mui/system';
+import React from 'react';
+import { Footer } from './Footer';
+import { Header } from './Header';
 
 interface LayoutProps {
   sx?: SxProps;
@@ -13,10 +13,10 @@ export function Layout({ sx, children }: LayoutProps) {
   return (
     <Box
       sx={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-        height: "100vh",
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        height: '100vh',
         bgcolor: theme.palette.background.default,
       }}
     >
@@ -29,11 +29,10 @@ export function Layout({ sx, children }: LayoutProps) {
           pr: { xs: 2, sm: 6, md: 0 },
           flexGrow: 1,
         }}
-        maxWidth={"sm"}
       >
         {children}
       </Container>
-      <Footer/>
+      <Footer />
     </Box>
   );
 }
