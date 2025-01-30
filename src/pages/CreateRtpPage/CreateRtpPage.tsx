@@ -21,7 +21,6 @@ export const CreateRtpPage = () => {
   const navigate = useNavigate();
 
   const onSubmit = (data: CreateRtp) => {
-    console.debug(data);
     mutate(data, {
       onSuccess: () => navigate({ to: '/ok' }),
       onError: () => navigate({ to: '/ko' }),

@@ -2,7 +2,8 @@ import * as yup from 'yup';
 import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
 
-// In una funzione per ottenere lo schema di validazione con le traduzioni
+// In a function so we can use hooks
+// and translate validation messages
 export const getValidationSchema = () => {
   const { t } = useTranslation();
 

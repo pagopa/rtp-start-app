@@ -22,6 +22,7 @@ export default defineConfig({
     alias: {
       // Add all your absolute paths here
       src: path.resolve(__dirname, "./src/"),
+      generated: path.resolve(__dirname, "./generated/"),
     },
   },
 });
