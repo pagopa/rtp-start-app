@@ -10,6 +10,7 @@ import { PayeeSection } from './components/PayeeSection';
 import { PayerSection } from './components/PayerSection';
 import { PaymentNoticeSection } from './components/PaymentNoticeSection';
 import { getValidationSchema } from './resolver';
+import { useNavigate } from '@tanstack/react-router';
 
 export const CreateRtpPage = () => {
   const { t } = useTranslation();
@@ -17,12 +18,13 @@ export const CreateRtpPage = () => {
     resolver: yupResolver(getValidationSchema()),
   });
   const { mutate, isPending, isError, error } = useRtps();
+  const navigate = useNavigate();
 
   const onSubmit = (data: CreateRtp) => {
     console.debug(data);
     mutate(data, {
-      onSuccess: () => alert(t('CreateRtpPage.rtpCreatedSuccess')),
-      onError: () => alert(t('CreateRtpPage.rtpCreationFailed')),
+      onSuccess: () => navigate({ to: '/ok' }),
+      onError: () => navigate({ to: '/ko' }),
     });
   };
 
