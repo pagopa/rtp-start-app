@@ -6,12 +6,7 @@ export const useToken = () => {
   const auth = useMutation({
     mutationKey: ['getToken'],
     mutationFn: async (data: GetAccessTokenByPassword) =>
-      await client.auth.getAccessTokens(data, {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          Accept: 'application/json;charset=UTF-8',
-        },
-      }),
+      await client.auth.getAccessTokens(data)
   });
 
   return auth;
