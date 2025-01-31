@@ -3881,11 +3881,6 @@ use-sync-external-store@^1.4.0:
   resolved "https://registry.yarnpkg.com/use-sync-external-store/-/use-sync-external-store-1.4.0.tgz#adbc795d8eeb47029963016cefdf89dc799fcebc"
   integrity sha512-9WXSPC5fMv61vaupRkCKCxsPxBocVnwakBEkMIHHpkTTg6icbJtg6jzgtLDm4bl3cSHAca52rYWih0k4K3PfHw==
 
-uuid@^11.0.5:
-  version "11.0.5"
-  resolved "https://registry.yarnpkg.com/uuid/-/uuid-11.0.5.tgz#07b46bdfa6310c92c3fb3953a8720f170427fc62"
-  integrity sha512-508e6IcKLrhxKdBbcA2b4KQZlLVp2+J5UwQ6F7Drckkc5N9ZJwFa4TgWtsww9UG8fGHbm6gbV19TdM5pQ4GaIA==
-
 vite-node@3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/vite-node/-/vite-node-3.0.4.tgz#6db5bc4c182baf04986265d46bc3193c5491f41f"
@@ -4129,8 +4124,3 @@ zod@^3.24.1:
   version "3.24.1"
   resolved "https://registry.yarnpkg.com/zod/-/zod-3.24.1.tgz#27445c912738c8ad1e9de1bea0359fa44d9d35ee"
   integrity sha512-muH7gBL9sI1nciMZV67X5fTKKBLtwpZ5VBp1vsOQzj1MhrBZ4wlVCm3gedKZWLp0Oyel8sIGfeiz54Su+OVT+A==
-
-zodock@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/zodock/-/zodock-0.1.0.tgz#810804758f814629d8402ff8b7a7cf9d84f00559"
-  integrity sha512-EbpysRTYM5CMlPjKqjQPiEt5jVgoVYoMT8QE7gcIkNqrJ1khV/kscWfTWAHEECmvQGZrXoGIQItcMpC+UD779A==

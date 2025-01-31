@@ -1,11 +1,12 @@
 import { TextField } from '@mui/material';
 import { Controller, Control, FieldPath, FieldValues } from 'react-hook-form';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { HTMLInputTypeAttribute } from 'react';
 
 type FormFieldProps<T extends FieldValues> = {
   label: string;
   name: FieldPath<T>;
-  type?: 'text' | 'number' | 'date';
+  type?: HTMLInputTypeAttribute;
   control: Control<T>;
 };
 
