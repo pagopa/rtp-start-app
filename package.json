@@ -29,8 +29,9 @@
 	},
 	"scripts": {
 		"generate-api-client": "swagger-typescript-api -p https://raw.githubusercontent.com/pagopa/rtp-apis/refs/heads/main/src/rtp/api/pagopa/send.openapi.yaml -o ./generated -n apiClient --axios",
+		"generate-auth-client": "swagger-typescript-api -p https://raw.githubusercontent.com/pagopa/mil-auth/refs/heads/main/src/main/resources/META-INF/openapi.yaml -o ./generated/auth --axios --modular",
 		"generate-data-contracts": "swagger-typescript-api  --modular --no-client -p https://raw.githubusercontent.com/pagopa/p4pa-pu-bff/refs/heads/develop/openapi/p4pa-pu-bff.openapi.yaml -o ./generated",
-		"generate": "yarn generate-api-client && yarn generate-data-contracts",
+		"generate": "yarn generate-api-client && yarn generate-auth-client && yarn generate-data-contracts",
 		"start": "yarn generate && vite",
 		"build": "yarn generate && tsc -b && vite build",
 		"preview": "vite preview",
@@ -75,7 +76,6 @@
 		"vite": "^6.0.11",
 		"vite-tsconfig-paths": "^5.0.1",
 		"vitest": "^3.0.4",
-		"vitest-dom": "^0.1.1",
-		"zodock": "^0.1.0"
+		"vitest-dom": "^0.1.1"
 	}
 }

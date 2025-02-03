@@ -1,40 +1,45 @@
 import { TextField } from '@mui/material';
-import { Controller, Control, FieldPath } from 'react-hook-form';
+import { Controller, Control, FieldPath, FieldValues } from 'react-hook-form';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { CreateRtp } from 'generated/apiClient';
+import { HTMLInputTypeAttribute } from 'react';
 
-type FormFieldProps = {
+type FormFieldProps<T extends FieldValues> = {
   label: string;
-  name: FieldPath<CreateRtp>;
-  type?: 'text' | 'number' | 'date';
-  control: Control<CreateRtp>;
+  name: FieldPath<T>;
+  type?: HTMLInputTypeAttribute;
+  control: Control<T>;
 };
 
-export const FormField = ({ label, name, type = 'text', control }: FormFieldProps) => (
-  <Controller
-    name={name}
-    control={control}
-    render={({ field, fieldState: { error } }) =>
-      type === 'date' ? (
-        <DatePicker
-          {...field}
-          label={label}
-          sx={{ width: '100%' }}
-          slotProps={{
-            textField: { error: !!error, helperText: error?.message },
-          }}
-        />
-      ) : (
-        <TextField
-          {...field}
-          label={label}
-          variant="outlined"
-          type={type}
-          fullWidth
-          error={!!error}
-          helperText={error?.message}
-        />
-      )
-    }
-  />
-);
+export const FormField = <T extends FieldValues>({
+  label,
+  name,
+  type = 'text',
+  control,
+}: FormFieldProps<T>) => (
+    <Controller
+      name={name}
+      control={control}
+      render={({ field, fieldState: { error } }) =>
+        type === 'date' ? (
+          <DatePicker
+            {...field}
+            label={label}
+            sx={{ width: '100%' }}
+            slotProps={{
+              textField: { error: !!error, helperText: error?.message },
+            }}
+          />
+        ) : (
+          <TextField
+            {...field}
+            label={label}
+            variant="outlined"
+            type={type}
+            fullWidth
+            error={!!error}
+            helperText={error?.message}
+          />
+        )
+      }
+    />
+  );
