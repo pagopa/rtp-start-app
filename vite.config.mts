@@ -14,6 +14,7 @@ export default defineConfig({
   plugins: [TanStackRouterVite(), react()],
   server: {
     port: 1234,
+
   },
   define: {
     _global: {},

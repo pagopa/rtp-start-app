@@ -6,7 +6,8 @@
 			"title": "Accedi",
 			"username": "Username",
 			"password": "Password",
-			"button": "Login"
+			"button": "Login",
+			"error": "Errore durante la login"
 		},
 		"validation": {
 			"username": {
@@ -19,6 +20,7 @@
 	},
 	"CreateRtpPage": {
 		"title": "Nuova Richiesta di pagamento",
+		"error": "Errore durante la creazione della richiesta di pagamento",
 		"description": "Completa le informazioni necessarie per la creazione di una richiesta di pagamento (SRTP)",
 		"formTitle": "Compila la richiesta con le informazioni necessarie",
 		"formDescription": "La creazione di una RTP permette di inviare una richiesta di pagamento direttamente al destinatario, in sostituzione dell’avviso cartaceo o digitale.",
