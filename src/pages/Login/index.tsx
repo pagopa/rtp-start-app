@@ -4,7 +4,6 @@ import Typography from "@mui/material/Typography";
 import { useNavigate } from "@tanstack/react-router";
 import {
   GetAccessTokenByPassword,
-  PasswordGrantType,
 } from "generated/auth/data-contracts";
 import { useForm } from "react-hook-form";
 import { useToken } from "src/api/useToken";
