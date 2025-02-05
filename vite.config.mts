@@ -14,6 +14,7 @@ export default defineConfig({
   plugins: [TanStackRouterVite(), react()],
   server: {
     port: 1234,
+
   },
   define: {
     _global: {},
@@ -24,5 +25,11 @@ export default defineConfig({
       src: path.resolve(__dirname, "./src/"),
       generated: path.resolve(__dirname, "./generated/"),
     },
+  },
+  test: {
+    globals: true,
+    clearMocks: true,
+    environment: 'jsdom',
+    setupFiles: './vitest.setup.mts'
   },
 });

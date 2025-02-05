@@ -4,7 +4,6 @@ import Typography from "@mui/material/Typography";
 import { useNavigate } from "@tanstack/react-router";
 import {
   GetAccessTokenByPassword,
-  PasswordGrantType,
 } from "generated/auth/data-contracts";
 import { useForm } from "react-hook-form";
 import { useToken } from "src/api/useToken";
@@ -12,6 +11,8 @@ import { FormField } from "src/components/FormField";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { getValidationSchema } from "./resolver";
 import { useTranslation } from "react-i18next";
+import Alert from "@mui/material/Alert";
+import { useAuth } from "src/hooks/useAuth";
 
 type UserCredentials = Pick<GetAccessTokenByPassword, "username" | "password">;
 
@@ -19,24 +20,16 @@ export const Login = () => {
   const { control, handleSubmit } = useForm<UserCredentials>({
     resolver: yupResolver(getValidationSchema()),
   });
-  const { mutate, isPending, isSuccess } = useToken();
+  const auth = useAuth();
+  const { mutate, isPending, isError } = useToken();
   const navigate = useNavigate();
   const { t } = useTranslation();
 
   const onSubmit = (data: UserCredentials) => {
-    const request: GetAccessTokenByPassword = {
-      ...data,
-      client_id: "1ec1f3f4-411b-4dc3-ad1c-68196af7e90c",
-      grant_type: PasswordGrantType.Password,
-    };
-    mutate(request, {
-      onSuccess: ({ data }) => {
-        localStorage.setItem("accessToken", data.access_token);
-      },
-    });
+    mutate(data);
   };
 
-  if (isSuccess) {
+  if (auth.isAuthenticated) {
     navigate({ to: "/" });
   }
 
@@ -64,6 +57,11 @@ export const Login = () => {
           <Typography variant="h6" component="h2">
             {t("Login.form.title")}
           </Typography>
+          {isError && (
+            <Alert variant="outlined" severity="error">
+              {t("Login.form.error")}
+            </Alert>
+          )}
           <Stack gap={3}>
             <FormField
               type="email"
