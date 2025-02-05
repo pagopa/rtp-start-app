@@ -13,7 +13,7 @@ export const useRefreshToken = () => {
         {
           ...data,
           grant_type: RefreshGrantType.RefreshToken,
-          client_id: "1ec1f3f4-411b-4dc3-ad1c-68196af7e90c",
+          client_id: import.meta.env.VITE_AUTH_CLIENT_ID,
         },
         {
           headers: {
