@@ -26,10 +26,4 @@ export default defineConfig({
       generated: path.resolve(__dirname, "./generated/"),
     },
   },
-  test: {
-    globals: true,
-    clearMocks: true,
-    environment: 'jsdom',
-    setupFiles: './vitest.setup.mts'
-  },
 });
