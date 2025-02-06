@@ -1,31 +1,145 @@
 {
-  "rtp":{
-    "noticeNumber": "Codice Avviso",
-    "amount": "Importo",
-    "description": "Descrizione",
-    "payeeCompanyName" : "Nome Ente Creditore",
-    "payee": "Codice Fiscale Ente Creditore",
-    "payerId": "Codice Fiscale Debitore",
-    "expiryDate": "Data",
-    "pageDescription": "Inserisci i dati come mostrato sull'avviso di pagamento.",
-    "pageTitle": "Create a RTP (Request To Pay)"
-  },
-  "paymentNoticePage": {
-    "formButtons": {
-      "cancel": "Indietro",
-      "submit": "Continua"
-    },
-    "formErrors": {
-      "minCf": "Inserisci 11 o 16 cifre",
-      "minCode": "Inserisci 18 cifre",
-      "required": "Campo obbligatorio",
-      "number": "Inserisci un numero valido. Per separare i decimali utilizza il punto (.)"
-      
-    },
-    "formFields": {
-      "billCode": "Codice Avviso",
-      "cf": "Codice Fiscale Ente Creditore"
-    },
-    "helpLink": "Vedi un esempio"
-  }
+	"Login": {
+		"title": "Login",
+		"description": "Per inviare una richiesta di pagamento, accedi con le credenziali ricevute",
+		"form": {
+			"title": "Accedi",
+			"username": "Username",
+			"password": "Password",
+			"button": "Login",
+			"error": "Errore durante la login"
+		},
+		"validation": {
+			"username": {
+				"required": "Username obbligatorio"
+			},
+			"password": {
+				"required": "Password obbligatoria"
+			}
+		}
+	},
+	"CreateRtpPage": {
+		"title": "Nuova Richiesta di pagamento",
+		"error": "Errore durante la creazione della richiesta di pagamento",
+		"description": "Completa le informazioni necessarie per la creazione di una richiesta di pagamento (SRTP)",
+		"formTitle": "Compila la richiesta con le informazioni necessarie",
+		"formDescription": "La creazione di una RTP permette di inviare una richiesta di pagamento direttamente al destinatario, in sostituzione dell’avviso cartaceo o digitale.",
+		"documentationButton": "Dubbi? Vai alla documentazione",
+		"payeeSectionTitle": "Ente Creditore",
+		"payerSectionTitle": "Destinatario",
+		"paymentNoticeSectionTitle": "Dati avviso di pagamento",
+		"payeeNameLabel": "Nome",
+		"payeeIdLabel": "Codice fiscale",
+		"payTrxRefLabel": "Numero di protocollo ente",
+		"payerNameLabel": "Nome",
+		"payerIdLabel": "Codice fiscale",
+		"noticeNumberLabel": "Codice avviso pagoPA",
+		"amountLabel": "Importo",
+		"expiryDateLabel": "Data di scadenza",
+		"subjectLabel": "Oggetto del pagamento",
+		"descriptionLabel": "Descrizione del pagamento",
+		"submitButton": "Vai al riepilogo",
+		"rtpCreatedSuccess": "RTP creata con successo!",
+		"rtpCreationFailed": "Creazione RTP fallita",
+		"validation": {
+			"payee": {
+				"name": {
+					"required": "Il nome del creditore è obbligatorio",
+					"max": "Il nome del creditore non può superare i 140 caratteri"
+				},
+				"payeeId": {
+					"required": "Il codice fiscale del creditore è obbligatorio"
+				},
+				"payTrxRef": {
+					"required": "Il numero di protocollo ente è obbligatorio"
+				}
+			},
+			"payer": {
+				"name": {
+					"required": "Il nome del destinatario è obbligatorio"
+				},
+				"payerId": {
+					"required": "Il codice fiscale del destinatario è obbligatorio"
+				}
+			},
+			"paymentNotice": {
+				"noticeNumber": {
+					"required": "Il codice avviso pagoPA è obbligatorio",
+					"matches": "Il codice avviso pagoPA deve essere composto da 18 cifre"
+				},
+				"amount": {
+					"required": "L'importo è obbligatorio",
+					"positive": "L'importo deve essere positivo",
+					"lessThan": "L'importo deve essere inferiore a 1000000000"
+				},
+				"expiryDate": {
+					"required": "La data di scadenza è obbligatoria"
+				},
+				"subject": {
+					"required": "L'oggetto del pagamento è obbligatorio"
+				},
+				"description": {
+					"required": "La descrizione del pagamento è obbligatoria"
+				}
+			}
+		}
+	},
+	"KO": {
+		"title": "Qualcosa è andato storto",
+		"body": "Il codice fiscale indicato non è attivo",
+		"button": "Torna alla richiesta di pagamento"
+	},
+	"OK": {
+		"title": "La richiesta è stata inviata con successo!",
+		"body": "Puoi gestire le richieste create nella sezione “Richieste di pagamento”",
+		"button": "Crea nuova richiesta"
+	},
+	"Footer": {
+		"companyLinkAriaLabel": "PagoPA SPA",
+		"legalInfo": "<b>PagoPA S.p.A.</b> - Società per azioni con socio unico - Capitale sociale di euro 1,000,000 interamente versato - Sede legale in Roma, Piazza Colonna 370, <br /> CAP 00187 - N. di iscrizione a Registro Imprese di Roma, CF e P.IVA 15376371009",
+		"postLoginLinks": {
+			"privacyPolicy": {
+				"label": "Informativa Privacy",
+				"ariaLabel": "Informativa Privacy"
+			},
+			"dataProtection": {
+				"label": "Diritto alla protezione dei dati personali",
+				"ariaLabel": "Diritto alla protezione dei dati personali"
+			},
+			"termsAndConditions": {
+				"label": "Termini e condizioni d’uso",
+				"ariaLabel": "Termini e condizioni d’uso"
+			},
+			"accessibility": {
+				"label": "Accessibilità",
+				"ariaLabel": "Accessibilità"
+			}
+		},
+		"languages": {
+			"it": "Italiano"
+		}
+	},
+	"Header": {
+		"rootLink": {
+			"label": "PagoPA S.p.A.",
+			"ariaLabel": "Sito PagoPa",
+			"title": "LinkPagoPa"
+		},
+		"productsList": {
+			"requestToPay": {
+				"title": "Request to Pay"
+			}
+		},
+		"partyList": {
+			"intesaSanpaolo": {
+				"name": "Intesa Sanpaolo S.P.A.",
+				"productRole": "Responsabile Tecnico"
+			}
+		},
+		"loggedUser": {
+			"name": "marco",
+			"surname": "polo",
+			"email": "gM0gW@example.com"
+		}
+	}
 }
