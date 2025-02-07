@@ -130,12 +130,6 @@
 				"title": "Request to Pay"
 			}
 		},
-		"partyList": {
-			"intesaSanpaolo": {
-				"name": "Intesa Sanpaolo S.P.A.",
-				"productRole": "Responsabile Tecnico"
-			}
-		},
 		"loggedUser": {
 			"name": "marco",
 			"surname": "polo",
