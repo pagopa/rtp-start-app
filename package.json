@@ -26,7 +26,8 @@
 		"react-i18next": "^15.1.0",
 		"uuid": "^11.0.5",
 		"web-vitals": "^2.1.4",
-		"yup": "^1.6.1"
+		"yup": "^1.6.1",
+		"zustand": "^5.0.3"
 	},
 	"scripts": {
 		"generate-api-client": "swagger-typescript-api -p https://raw.githubusercontent.com/pagopa/rtp-apis/refs/heads/main/src/rtp/api/pagopa/send.openapi.yaml -o ./generated -n apiClient --axios",

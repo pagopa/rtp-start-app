@@ -2,9 +2,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { useNavigate } from "@tanstack/react-router";
-import {
-  GetAccessTokenByPassword,
-} from "generated/auth/data-contracts";
+import { GetAccessTokenByPassword } from "generated/auth/data-contracts";
 import { useForm } from "react-hook-form";
 import { useToken } from "src/api/useToken";
 import { FormField } from "src/components/FormField";
@@ -25,8 +23,15 @@ export const Login = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
 
-  const onSubmit = (data: UserCredentials) => {
-    mutate(data);
+  const onSubmit = (credentials: UserCredentials) => {
+    mutate(credentials, {
+      onSuccess: ({ data }) => {
+        auth.login({
+          accessToken: data.access_token,
+          refreshToken: data.refresh_token,
+        });
+      },
+    });
   };
 
   if (auth.isAuthenticated) {
@@ -62,7 +67,7 @@ export const Login = () => {
               {t("Login.form.error")}
             </Alert>
           )}
-          <Stack gap={3}>
+          <Stack gap={3} component="form">
             <FormField
               type="email"
               label={t("Login.form.username")}
