@@ -8,7 +8,11 @@ parameters:
     type: string
     default: ''
 
-  - name: 'api_url'
+  - name: 'vite_api_url'
+    type: string
+    default: ''
+
+  - name: 'vite_auth_client_id'
     type: string
     default: ''
 
@@ -18,7 +22,8 @@ steps:
     env -i \
       RTP_FE_ENV=${{ parameters.env }} \
       RTP_FE_VERSION=${{ parameters.version }} \
-      RTP_FE_API_URL=${{ parameters.api_url }} \
+      RTP_FE_VITE_API_URL=${{ parameters.vite_api_url }} \
+      RTP_FE_VITE_AUTH_CLIENT_ID=${{ parameters.vite_auth_client_id }} \
       bash env.sh
 
   displayName: 'Populate environment file'
