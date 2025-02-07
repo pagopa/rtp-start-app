@@ -48,7 +48,8 @@ stages:
             parameters:
               env: 'DEV'
               version: '$(Build.SourceBranchName):$(Build.SourceVersion)'
-              api_url: 'https://api-rtp.dev.cstar.pagopa.it/rtp/v1'
+              vite_api_url: 'https://api-rtp.dev.cstar.pagopa.it/rtp'
+              vite_auth_client_id: '1ec1f3f4-411b-4dc3-ad1c-68196af7e90c'
 
           - script: |
               npm run build
@@ -89,7 +90,7 @@ stages:
   - stage: build_uat_artifact
     dependsOn: []
     displayName: 'Build UAT artifact'
-    condition: 
+    condition:
       and(
         succeeded(),
         or(
@@ -110,7 +111,8 @@ stages:
             parameters:
               env: 'UAT'
               version: '$(Build.SourceBranchName):$(Build.SourceVersion)'
-              api_url: 'https://api-rtp.uat.cstar.pagopa.it/rtp/v1'
+              vite_api_url: 'https://api-rtp.dev.cstar.pagopa.it/rtp'
+              vite_auth_client_id: '1ec1f3f4-411b-4dc3-ad1c-68196af7e90c'
 
           - script: |
               npm run build
@@ -118,7 +120,7 @@ stages:
 
           - publish: dist
             artifact: Bundle_UAT
-  
+
   - stage: deploy_uat
     displayName: 'Deploy to UAT'
     dependsOn: [ 'build_uat_artifact' ]
@@ -148,11 +150,11 @@ stages:
               scriptLocation: inlineScript
               inlineScript: |
                 az cdn endpoint purge -g $(UAT_STORAGE_ACCOUNT_RG) -n $(UAT_CDN_ENDPOINT) --profile-name $(UAT_CDN_PROFILE) --content-paths "/*"
-            
+
   - stage: build_prod_artifact
     displayName: 'Build PROD artifact'
     dependsOn: [ "deploy_uat" ]
-    condition: 
+    condition:
       and(
         or(
           contains(variables['Build.SourceBranch'], 'refs/tags/'),
@@ -172,7 +174,8 @@ stages:
             parameters:
               env: 'PROD'
               version: '$(Build.SourceBranchName):$(Build.SourceVersion)'
-              api_url: 'https://api-rtp.cstar.pagopa.it/rtp/v1'
+              vite_api_url: 'https://api-rtp.dev.cstar.pagopa.it/rtp'
+              vite_auth_client_id: '1ec1f3f4-411b-4dc3-ad1c-68196af7e90c'
 
           - script: |
               npm run build
@@ -194,7 +197,7 @@ stages:
           timeoutInMinutes: 4320 # 3 days
           inputs:
             onTimeout: 'skip'
-  
+
   - stage: deploy_prod
     displayName: 'Deploy to PROD'
     dependsOn: [ 'prod_approve' ]
@@ -224,4 +227,4 @@ stages:
               scriptLocation: inlineScript
               inlineScript: |
                 az cdn endpoint purge -g $(PROD_STORAGE_ACCOUNT_RG) -n $(PROD_CDN_ENDPOINT) --profile-name $(PROD_CDN_PROFILE) --content-paths "/*"
-            
+
