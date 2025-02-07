@@ -1,7 +1,35 @@
-import { AppState } from 'src/models/AppState';
+import { create } from "zustand";
 
-export const useAuth = (): AppState['auth'] => {
-  const token = localStorage.getItem('accessToken');
-
-  return { isAuthenticated: !!token };
+export type Auth = {
+  login: ({
+    accessToken,
+    refreshToken,
+  }: {
+    accessToken: string;
+    refreshToken?: string;
+  }) => void;
+  logout: () => void;
+  isAuthenticated: boolean;
 };
+
+export const useAuth = create<Auth>((set) => ({
+  isAuthenticated: localStorage.getItem("accessToken") !== null,
+  login: ({
+    accessToken,
+    refreshToken,
+  }: {
+    accessToken: string;
+    refreshToken?: string;
+  }) => {
+    set({ isAuthenticated: true });
+    localStorage.setItem("accessToken", accessToken);
+    if (refreshToken) {
+      localStorage.setItem("refreshToken", refreshToken);
+    }
+  },
+  logout: () => {
+    set({ isAuthenticated: false });
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+  },
+}));

@@ -1,15 +1,25 @@
 import {
   HeaderAccount,
   HeaderProduct,
+  JwtUser,
   PartyEntity,
   ProductEntity,
 } from "@pagopa/mui-italia";
 import { useNavigate } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
+import { useAuth } from "src/hooks/useAuth";
 
 export const Header = () => {
   const { t } = useTranslation();
   const navigation = useNavigate();
+  const auth = useAuth();
+
+  const MockUser: JwtUser = {
+    id: "userId",
+    name: t("Header.loggedUser.name"),
+    surname: t("Header.loggedUser.surname"),
+    email: t("Header.loggedUser.email"),
+  };
 
   const rootLink = {
     href: "https://www.pagopa.it",
@@ -36,20 +46,8 @@ export const Header = () => {
     },
   ];
 
-  const isUserLoggedIn = () => {
-    return localStorage.getItem("accessToken")
-      ? {
-        id: "userId",
-        name: t("Header.loggedUser.name"),
-        surname: t("Header.loggedUser.surname"),
-        email: t("Header.loggedUser.email"),
-      }
-      : false;
-  };
-
   const logout = () => {
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("refreshToken");
+    auth.logout();
     navigation({ to: "/login" });
   };
 
@@ -59,7 +57,7 @@ export const Header = () => {
         rootLink={rootLink}
         enableAssistanceButton={false}
         onAssistanceClick={() => null}
-        loggedUser={isUserLoggedIn()}
+        loggedUser={auth.isAuthenticated ? MockUser : false}
         onLogout={logout}
       />
       <HeaderProduct productsList={productsList} partyList={partyList} />
