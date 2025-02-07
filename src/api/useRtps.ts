@@ -3,6 +3,7 @@ import { client } from "./client";
 import { CreateRtp } from "generated/apiClient";
 import { v4 as uuidv4 } from "uuid";
 import { AxiosError } from "axios";
+import { CONTENT_TYPE } from "src/models/Requests";
 
 export const useRtps = () => {
   const rtp = useMutation({
@@ -12,7 +13,7 @@ export const useRtps = () => {
         headers: {
           version: "v1",
           requestId: uuidv4(),
-          "content-type": "text/json",
+          "content-type": CONTENT_TYPE.JSON,
         },
       }),
     onError: (error: AxiosError) => {
