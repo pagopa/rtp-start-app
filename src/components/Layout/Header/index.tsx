@@ -37,15 +37,6 @@ export const Header = () => {
     },
   ];
 
-  const partyList: PartyEntity[] = [
-    {
-      id: "test-client",
-      logoUrl: "",
-      name: t("Header.partyList.intesaSanpaolo.name"),
-      productRole: t("Header.partyList.intesaSanpaolo.productRole"),
-    },
-  ];
-
   const logout = () => {
     auth.logout();
     navigation({ to: "/login" });
@@ -60,7 +51,7 @@ export const Header = () => {
         loggedUser={auth.isAuthenticated ? MockUser : false}
         onLogout={logout}
       />
-      <HeaderProduct productsList={productsList} partyList={partyList} />
+      <HeaderProduct productsList={productsList} />
     </>
   );
 };
