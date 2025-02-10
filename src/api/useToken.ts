@@ -5,6 +5,7 @@ import {
   OfflineAccessScope,
   PasswordGrantType,
 } from "generated/auth/data-contracts";
+import { ACCEPT_FORMAT, CONTENT_TYPE } from "src/models/Requests";
 
 export const useToken = () => {
   const auth = useMutation({
@@ -21,8 +22,8 @@ export const useToken = () => {
         },
         {
           headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-            Accept: "application/json;charset=UTF-8",
+            "Content-Type": CONTENT_TYPE.URL_ENCODED,
+            Accept: ACCEPT_FORMAT.JSON,
           },
         },
       ),
