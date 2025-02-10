@@ -2,7 +2,6 @@ import {
   HeaderAccount,
   HeaderProduct,
   JwtUser,
-  PartyEntity,
   ProductEntity,
 } from "@pagopa/mui-italia";
 import { useNavigate } from "@tanstack/react-router";
