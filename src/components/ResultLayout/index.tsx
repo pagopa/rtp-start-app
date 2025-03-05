@@ -6,11 +6,12 @@ type ResultPageProps = {
   title: string;
   body: string;
   buttonText: string;
+  deleteButtonText?: string
 };
 
-export const ResultLayout = ({ image, title, body, buttonText }: ResultPageProps) => {
+export const ResultLayout = ({ image, title, body, buttonText, deleteButtonText }: ResultPageProps) => {
   return (
-    <Stack justifyContent="center" py={4}>
+    <Stack justifyContent="center" alignItems="center" minHeight="100%" py={4}>
       <Stack alignItems="center" gap={4} maxWidth={'sm'} alignSelf="center">
         <Stack gap={4} alignItems="center">
           <img src={image} alt="result-image" />
@@ -23,13 +24,27 @@ export const ResultLayout = ({ image, title, body, buttonText }: ResultPageProps
             </Typography>
           </Stack>
         </Stack>
-        <Stack pr={8} pl={8} sx={{ width: '100%', height: '100%' }}>
+        <Stack px={8} direction="row" gap={2} sx={{ width: '100%', height: '100%' }}>
+          {
+            deleteButtonText &&
+            <Button
+              type="button"
+              variant="outlined"
+              color="error"
+              style={{
+                height: '100%',
+                minHeight: 45,
+              }}
+            >
+              {deleteButtonText}
+            </Button>
+          }
+
           <Link to="/">
             <Button
               type="button"
               variant="contained"
               style={{
-                width: '100%',
                 height: '100%',
                 minHeight: 45,
               }}

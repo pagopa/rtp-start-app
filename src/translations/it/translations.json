@@ -38,7 +38,7 @@
 		"expiryDateLabel": "Data di scadenza",
 		"subjectLabel": "Oggetto del pagamento",
 		"descriptionLabel": "Descrizione del pagamento",
-		"submitButton": "Vai al riepilogo",
+		"submitButton": "Crea richiesta",
 		"rtpCreatedSuccess": "RTP creata con successo!",
 		"rtpCreationFailed": "Creazione RTP fallita",
 		"validation": {
@@ -91,7 +91,8 @@
 	},
 	"OK": {
 		"title": "La richiesta è stata inviata con successo!",
-		"body": "Puoi gestire le richieste create nella sezione “Richieste di pagamento”",
+		"body": "Conserva l’id della richiesta, ti servirà in caso di assistenza",
+		"deleteButton": "Cancella richiesta",
 		"button": "Crea nuova richiesta"
 	},
 	"Footer": {

@@ -11,6 +11,7 @@ export default function OKPage() {
       title={t('OK.title')}
       body={t('OK.body')}
       buttonText={t('OK.button')}
+      deleteButtonText={t('OK.deleteButton')}
     />
   );
 }
