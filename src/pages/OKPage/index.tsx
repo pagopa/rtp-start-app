@@ -12,6 +12,7 @@ export default function OKPage() {
       body={t('OK.body')}
       buttonText={t('OK.button')}
       deleteButtonText={t('OK.deleteButton')}
+      rtpCode='IDABC1234567891011121'
     />
   );
 }
