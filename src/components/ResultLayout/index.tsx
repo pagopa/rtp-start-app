@@ -1,6 +1,8 @@
 import { Button, Stack, Typography } from '@mui/material';
 import { Link } from '@tanstack/react-router';
 import CopyClipboard from '../CopyClipboard';
+import { useDialog } from 'src/stores/dialog.store';
+import { DialogType, getDialogData } from 'src/utils/dialog.utils';
 
 type ResultPageProps = {
   image: string;
@@ -12,6 +14,9 @@ type ResultPageProps = {
 };
 
 export const ResultLayout = ({ image, title, body, buttonText, deleteButtonText, rtpCode }: ResultPageProps) => {
+  
+  const { openDialog } = useDialog(); 
+  
   return (
     <Stack justifyContent="center" py={4}>
       <Stack alignItems="center" direction={"column"} gap={"30px"} maxWidth={'sm'} alignSelf="center">
@@ -31,7 +36,7 @@ export const ResultLayout = ({ image, title, body, buttonText, deleteButtonText,
             </Typography>
           </Stack>
         </Stack>
-        <Stack px={8} gap={2} direction="row" sx={{width: '100%', height: '100%'}}>
+        <Stack direction={{ xs: "column", sm: "row" }} px={8} gap={2} sx={{width: "100%", height: "100%"}}>
           {
             deleteButtonText &&
             <Button
@@ -39,9 +44,10 @@ export const ResultLayout = ({ image, title, body, buttonText, deleteButtonText,
               variant="outlined"
               color="error"
               style={{
-                height: '100%',
+                height: "100%",
                 minHeight: 45,
               }}
+              onClick={() => openDialog(getDialogData(DialogType.DELETE, rtpCode))}
             >
               {deleteButtonText}
             </Button>
@@ -52,7 +58,8 @@ export const ResultLayout = ({ image, title, body, buttonText, deleteButtonText,
               type="button"
               variant="contained"
               style={{
-                height: '100%',
+                width: "100%",
+                height: "100%",
                 minHeight: 45,
               }}
             >

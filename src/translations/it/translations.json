@@ -136,5 +136,13 @@
 			"surname": "polo",
 			"email": "gM0gW@example.com"
 		}
+	},
+	"Dialogs": {
+		"delete": {
+			"title": "Vuoi cancellare la richiesta?",
+			"description": "Proseguendo, la richiesta di pagamento appena creata verrà cancellata.",
+			"confirmAction": "Cancella richiesta",
+			"declineAction": "Indietro"
+		}
 	}
 }
