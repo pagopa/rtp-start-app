@@ -23,11 +23,11 @@ export const ResultLayout = ({ image, title, body, buttonText, deleteButtonText,
         <Stack gap={"30px"} alignItems="center">
           <img src={image} alt="result-image" />
           <Stack gap={"30px"} alignItems="center" textAlign="center" maxWidth="448px">
-            <Typography variant="h4" component="h1">
+            <Typography variant="h4" component="h1" px={deleteButtonText ? 4 : 0}>
               {title}
             </Typography>
 
-            {rtpCode &&
+            {rtpCode && deleteButtonText &&
               <CopyClipboard textToCopy={rtpCode} />
             }
 
@@ -36,7 +36,7 @@ export const ResultLayout = ({ image, title, body, buttonText, deleteButtonText,
             </Typography>
           </Stack>
         </Stack>
-        <Stack direction={{ xs: "column", sm: "row" }} px={8} gap={2} sx={{width: "100%", height: "100%"}}>
+        <Stack direction={{ xs: "column", sm: deleteButtonText ? "row" : "column"}} px={8} gap={2} sx={{width: "100%", height: "100%"}}>
           {
             deleteButtonText &&
             <Button

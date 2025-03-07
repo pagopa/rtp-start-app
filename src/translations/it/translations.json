@@ -90,10 +90,18 @@
 		"button": "Torna alla richiesta di pagamento"
 	},
 	"OK": {
-		"title": "La richiesta è stata inviata con successo!",
-		"body": "Conserva l’id della richiesta, ti servirà in caso di assistenza",
-		"deleteButton": "Cancella richiesta",
-		"button": "Crea nuova richiesta"
+		"default": {
+			"title": "La richiesta è stata inviata con successo!",
+			"body": "Conserva l’id della richiesta, ti servirà in caso di assistenza",
+			"deleteButton": "Cancella richiesta",
+			"button": "Crea nuova richiesta"
+		},
+		"deleted": {
+			"title": "La richiesta è stata cancellata ",
+			"body": "",
+			"button": "Crea nuova richiesta",
+			"deleteButton": ""
+		}
 	},
 	"Footer": {
 		"companyLinkAriaLabel": "PagoPA SPA",
