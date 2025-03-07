@@ -4,9 +4,11 @@ export type Auth = {
   login: ({
     accessToken,
     refreshToken,
+    user,
   }: {
     accessToken: string;
     refreshToken?: string;
+    user: string;
   }) => void;
   logout: () => void;
   isAuthenticated: boolean;
@@ -17,12 +19,15 @@ export const useAuth = create<Auth>((set) => ({
   login: ({
     accessToken,
     refreshToken,
+    user,
   }: {
     accessToken: string;
     refreshToken?: string;
+    user: string;
   }) => {
     set({ isAuthenticated: true });
     localStorage.setItem("accessToken", accessToken);
+    localStorage.setItem("user", user);
     if (refreshToken) {
       localStorage.setItem("refreshToken", refreshToken);
     }
@@ -31,5 +36,6 @@ export const useAuth = create<Auth>((set) => ({
     set({ isAuthenticated: false });
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
+    localStorage.removeItem("user");
   },
 }));

@@ -4,6 +4,7 @@ import {
   JwtUser,
   ProductEntity,
 } from "@pagopa/mui-italia";
+import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import { useNavigate } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "src/hooks/useAuth";
@@ -15,8 +16,8 @@ export const Header = () => {
 
   const MockUser: JwtUser = {
     id: "userId",
-    name: t("Header.loggedUser.name"),
-    surname: t("Header.loggedUser.surname"),
+    name: localStorage.getItem('user') || '',
+    surname: ' ',
     email: t("Header.loggedUser.email"),
   };
 
@@ -44,11 +45,21 @@ export const Header = () => {
   return (
     <>
       <HeaderAccount
+        enableDropdown={true}
         rootLink={rootLink}
         enableAssistanceButton={false}
         onAssistanceClick={() => null}
         loggedUser={auth.isAuthenticated ? MockUser : false}
-        onLogout={logout}
+
+        userActions={[{
+          id: "logout",
+          label: "Esci",
+          onClick: () => {
+            logout();
+          },
+          icon: <LogoutRoundedIcon fontSize="small" color="inherit" />
+        }]}
+
       />
       <HeaderProduct productsList={productsList} />
     </>

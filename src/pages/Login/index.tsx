@@ -11,6 +11,7 @@ import { getValidationSchema } from "./resolver";
 import { useTranslation } from "react-i18next";
 import Alert from "@mui/material/Alert";
 import { useAuth } from "src/hooks/useAuth";
+import { userEmail } from "src/utils/userEmail.utils";
 
 type UserCredentials = Pick<GetAccessTokenByPassword, "username" | "password">;
 
@@ -29,6 +30,7 @@ export const Login = () => {
         auth.login({
           accessToken: data.access_token,
           refreshToken: data.refresh_token,
+          user: userEmail(credentials.username),
         });
       },
     });
@@ -79,6 +81,7 @@ export const Login = () => {
               label={t("Login.form.password")}
               name="password"
               control={control}
+              autocompleteOff={true}
             />
             <LoadingButton
               type="submit"
