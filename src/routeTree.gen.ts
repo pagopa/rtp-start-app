@@ -20,6 +20,7 @@ import { Route as IndexImport } from './routes/index'
 
 const OkLazyImport = createFileRoute('/ok')()
 const KoLazyImport = createFileRoute('/ko')()
+const IdOkLazyImport = createFileRoute('/$id/ok')()
 
 // Create/Update Routes
 
@@ -46,6 +47,12 @@ const IndexRoute = IndexImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
 } as any)
+
+const IdOkLazyRoute = IdOkLazyImport.update({
+  id: '/$id/ok',
+  path: '/$id/ok',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/$id.ok.lazy').then((d) => d.Route))
 
 // Populate the FileRoutesByPath interface
 
@@ -79,6 +86,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OkLazyImport
       parentRoute: typeof rootRoute
     }
+    '/$id/ok': {
+      id: '/$id/ok'
+      path: '/$id/ok'
+      fullPath: '/$id/ok'
+      preLoaderRoute: typeof IdOkLazyImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -89,6 +103,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/ko': typeof KoLazyRoute
   '/ok': typeof OkLazyRoute
+  '/$id/ok': typeof IdOkLazyRoute
 }
 
 export interface FileRoutesByTo {
@@ -96,6 +111,7 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/ko': typeof KoLazyRoute
   '/ok': typeof OkLazyRoute
+  '/$id/ok': typeof IdOkLazyRoute
 }
 
 export interface FileRoutesById {
@@ -104,14 +120,15 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/ko': typeof KoLazyRoute
   '/ok': typeof OkLazyRoute
+  '/$id/ok': typeof IdOkLazyRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/ko' | '/ok'
+  fullPaths: '/' | '/login' | '/ko' | '/ok' | '/$id/ok'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/ko' | '/ok'
-  id: '__root__' | '/' | '/login' | '/ko' | '/ok'
+  to: '/' | '/login' | '/ko' | '/ok' | '/$id/ok'
+  id: '__root__' | '/' | '/login' | '/ko' | '/ok' | '/$id/ok'
   fileRoutesById: FileRoutesById
 }
 
@@ -120,6 +137,7 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   KoLazyRoute: typeof KoLazyRoute
   OkLazyRoute: typeof OkLazyRoute
+  IdOkLazyRoute: typeof IdOkLazyRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -127,6 +145,7 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   KoLazyRoute: KoLazyRoute,
   OkLazyRoute: OkLazyRoute,
+  IdOkLazyRoute: IdOkLazyRoute,
 }
 
 export const routeTree = rootRoute
@@ -142,7 +161,8 @@ export const routeTree = rootRoute
         "/",
         "/login",
         "/ko",
-        "/ok"
+        "/ok",
+        "/$id/ok"
       ]
     },
     "/": {
@@ -156,6 +176,9 @@ export const routeTree = rootRoute
     },
     "/ok": {
       "filePath": "ok.lazy.tsx"
+    },
+    "/$id/ok": {
+      "filePath": "$id.ok.lazy.tsx"
     }
   }
 }
