@@ -1,4 +1,5 @@
 import { Button, Stack, Typography } from "@mui/material";
+import { useNavigate } from "@tanstack/react-router";
 import { Trans, useTranslation } from "react-i18next";
 import { useDialog } from "src/stores/dialog.store";
 
@@ -10,10 +11,12 @@ export default function DialogRtpDelete({rtpId}: DialogRtpDeleteProps) {
 
   const { closeDialog } = useDialog();
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const handleRtpDeletion = () => {
     console.log("DELETE ", rtpId);
     closeDialog();
+    navigate({to: "/ok"});
   };
 
   return (
