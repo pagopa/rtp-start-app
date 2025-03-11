@@ -1,14 +1,28 @@
 import { Button, Stack, Typography } from '@mui/material';
-import { Link } from '@tanstack/react-router';
+import { useNavigate } from '@tanstack/react-router';
+import { useAuth } from 'src/hooks/useAuth';
 
 type ResultPageProps = {
   image: string;
   title: string;
   body: string;
   buttonText: string;
+  type?: "default" | "unauthorized"
 };
 
-export const ResultLayout = ({ image, title, body, buttonText }: ResultPageProps) => {
+export const ResultLayout = ({ image, title, body, buttonText, type = "default" }: ResultPageProps) => {
+
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    if(type === 'unauthorized') {
+      useAuth.getState().logout();
+      navigate({to: '/login'});
+    } else {
+      navigate({to: '/'});
+    }
+  };
+
   return (
     <Stack justifyContent="center" py={4}>
       <Stack alignItems="center" gap={4} maxWidth={'sm'} alignSelf="center">
@@ -24,19 +38,17 @@ export const ResultLayout = ({ image, title, body, buttonText }: ResultPageProps
           </Stack>
         </Stack>
         <Stack pr={8} pl={8} sx={{ width: '100%', height: '100%' }}>
-          <Link to="/">
-            <Button
-              type="button"
-              variant="contained"
-              style={{
-                width: '100%',
-                height: '100%',
-                minHeight: 45,
-              }}
-            >
-              {buttonText}
-            </Button>
-          </Link>
+          <Button onClick={handleClick}
+            type="button"
+            variant="contained"
+            style={{
+              width: '100%',
+              height: '100%',
+              minHeight: 45,
+            }}
+          >
+            {buttonText}
+          </Button>
         </Stack>
       </Stack>
     </Stack>

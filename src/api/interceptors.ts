@@ -1,6 +1,7 @@
 import { Client } from "../models/Client";
-import { AxiosError, InternalAxiosRequestConfig } from "axios";
+import axios, { AxiosError, InternalAxiosRequestConfig } from "axios";
 import { useRefreshToken } from "./useRefreshToken";
+import { invalidateSession } from "src/utils/auth.utils";
 
 export const setupInterceptors = (client: Client) => {
   const refreshToken = useRefreshToken();
@@ -18,13 +19,36 @@ export const setupInterceptors = (client: Client) => {
   );
   client.instance.interceptors.response.use(
     (response) => response,
-    (error) => {
-      if (error.response.status === 401) {
-        const refresh_token = localStorage.getItem("refreshToken");
-        if (refresh_token) {
-          refreshToken.mutate({ refresh_token });
-        } else throw error;
-      } else throw error;
+    async (error) => {
+      const originalRequest = error.config;
+
+      if (error.response.status === 401 && !originalRequest._retry) {
+        originalRequest._retry = true;
+
+        try {
+          const currentRefreshToken = localStorage.getItem('refreshToken');
+          if(currentRefreshToken) {
+            const response = await refreshToken.mutateAsync({ refresh_token: currentRefreshToken });
+            const { access_token, refresh_token } = response.data;
+            localStorage.setItem('accessToken', access_token);
+            if(refresh_token) {
+              localStorage.setItem('refreshToken', refresh_token);
+            }
+
+            // Retry the original request
+            originalRequest.headers.Authorization = `Bearer ${access_token}`;
+            return axios(originalRequest);
+          } else {
+            invalidateSession();
+          }
+
+        } catch {
+          invalidateSession();
+        }
+
+      }
+
+      return Promise.reject(error);
     },
   );
 };
