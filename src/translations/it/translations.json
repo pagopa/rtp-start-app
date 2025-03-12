@@ -85,9 +85,16 @@
 		}
 	},
 	"KO": {
-		"title": "Qualcosa è andato storto",
-		"body": "Il codice fiscale indicato non è attivo",
-		"button": "Torna alla richiesta di pagamento"
+		"default": {
+			"title": "Qualcosa è andato storto",
+			"body": "Il codice fiscale indicato non è attivo",
+			"button": "Torna alla richiesta di pagamento"
+		},
+		"unauthorized": {
+			"title": "Qualcosa è andato storto",
+			"body": "La tua sessione è scaduta. Accedi nuovamente per continuare.",
+			"button": "Torna alla login"
+		}
 	},
 	"OK": {
 		"title": "La richiesta è stata inviata con successo!",
