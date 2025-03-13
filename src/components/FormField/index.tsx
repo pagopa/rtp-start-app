@@ -38,6 +38,7 @@ export const FormField = <T extends FieldValues>({
             fullWidth
             error={!!error}
             helperText={error?.message}
+            onChange={(e) => field.onChange(e.target.value.toUpperCase())}
           />
         )
       }
