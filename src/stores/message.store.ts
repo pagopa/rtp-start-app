@@ -1,13 +1,19 @@
 import { create } from 'zustand';
 
+export type MessageStatus = "default" | "unauthorized" | "deleted";
+
+export type IMessage = {
+  value: MessageStatus
+}
+
 export type MessageStore = {
-  messageStatus: string;
-  setMessageStatus: (value: string) => void;
+  messageStatus: MessageStatus;
+  setMessageStatus: (value: MessageStatus) => void;
 }
 
 const useMessageStore = create<MessageStore>((set) => ({
-  messageStatus: 'deleted',
-  setMessageStatus: (value: string) => set({ messageStatus: value }),
+  messageStatus: "default",
+  setMessageStatus: (value: MessageStatus) => set({ messageStatus: value }),
 }));
 
 export default useMessageStore;

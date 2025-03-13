@@ -1,8 +1,9 @@
 import { Button, Stack, Typography } from '@mui/material';
-import { Link } from '@tanstack/react-router';
 import CopyClipboard from '../CopyClipboard';
 import { useDialog } from 'src/stores/dialog.store';
 import { DialogType, getDialogData } from 'src/utils/dialog.utils';
+import { useNavigate } from '@tanstack/react-router';
+import { useAuth } from 'src/hooks/useAuth';
 
 type ResultPageProps = {
   image: string;
@@ -11,12 +12,23 @@ type ResultPageProps = {
   buttonText: string;
   deleteButtonText?: string;
   rtpCode?: string;
+  type?: "default" | "unauthorized"
 };
 
-export const ResultLayout = ({ image, title, body, buttonText, deleteButtonText, rtpCode }: ResultPageProps) => {
-  
-  const { openDialog } = useDialog(); 
-  
+export const ResultLayout = ({ image, title, body, buttonText, deleteButtonText, rtpCode, type = "default" }: ResultPageProps) => {
+
+  const navigate = useNavigate();
+  const { openDialog } = useDialog();
+
+  const handleClick = () => {
+    if(type === 'unauthorized') {
+      useAuth.getState().logout();
+      navigate({to: '/login'});
+    } else {
+      navigate({to: '/'});
+    }
+  };
+
   return (
     <Stack justifyContent="center" py={4}>
       <Stack alignItems="center" direction={"column"} gap={"30px"} maxWidth={'sm'} alignSelf="center">
@@ -53,19 +65,17 @@ export const ResultLayout = ({ image, title, body, buttonText, deleteButtonText,
             </Button>
           }
 
-          <Link to="/">
-            <Button
-              type="button"
-              variant="contained"
-              style={{
-                width: "100%",
-                height: "100%",
-                minHeight: 45,
-              }}
-            >
-              {buttonText}
-            </Button>
-          </Link>
+          <Button
+            onClick={handleClick}
+            type="button"
+            variant="contained"
+            style={{
+              height: "100%",
+              minHeight: 45,
+            }}
+          >
+            {buttonText}
+          </Button>
         </Stack>
       </Stack>
     </Stack>
