@@ -2,6 +2,7 @@ import { Client } from "../models/Client";
 import axios, { AxiosError, InternalAxiosRequestConfig } from "axios";
 import { useRefreshToken } from "./useRefreshToken";
 import { invalidateSession } from "src/utils/auth.utils";
+import useMessageStore from "src/stores/message.store";
 
 export const setupInterceptors = (client: Client) => {
   const refreshToken = useRefreshToken();
@@ -48,6 +49,7 @@ export const setupInterceptors = (client: Client) => {
 
       }
 
+      useMessageStore.getState().setMessageStatus("default", error.response.status);
       return Promise.reject(error);
     },
   );
