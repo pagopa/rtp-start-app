@@ -73,12 +73,14 @@ export const Login = () => {
               label={t("Login.form.username")}
               name="username"
               control={control}
+              isUppercase={false}
             />
             <FormField
               type="password"
               label={t("Login.form.password")}
               name="password"
               control={control}
+              isUppercase={false}
             />
             <LoadingButton
               type="submit"

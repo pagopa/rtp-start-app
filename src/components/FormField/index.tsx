@@ -8,6 +8,7 @@ type FormFieldProps<T extends FieldValues> = {
   name: FieldPath<T>;
   type?: HTMLInputTypeAttribute;
   control: Control<T>;
+  isUppercase?: boolean
 };
 
 export const FormField = <T extends FieldValues>({
@@ -15,6 +16,7 @@ export const FormField = <T extends FieldValues>({
   name,
   type = 'text',
   control,
+  isUppercase = true, 
 }: FormFieldProps<T>) => (
     <Controller
       name={name}
@@ -38,6 +40,7 @@ export const FormField = <T extends FieldValues>({
             fullWidth
             error={!!error}
             helperText={error?.message}
+            onChange={(e) => field.onChange(isUppercase ? e.target.value.toUpperCase() : e.target.value)}
           />
         )
       }
