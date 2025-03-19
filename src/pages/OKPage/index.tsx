@@ -5,7 +5,7 @@ import useMessageStore from 'src/stores/message.store';
 
 export default function OKPage() {
   const { t } = useTranslation();
-  const { messageStatus } = useMessageStore(); 
+  const { messageStatus } = useMessageStore();
   
   return (
     <ResultLayout
@@ -13,6 +13,7 @@ export default function OKPage() {
       title={t(`OK.${messageStatus}.title`) || ''}
       body={t(`OK.${messageStatus}.body`)}
       buttonText={t(`OK.${messageStatus}.button`)}
+      type={messageStatus}
     />
   );
 }

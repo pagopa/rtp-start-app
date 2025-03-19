@@ -11,11 +11,12 @@ export default function ConfirmedPage() {
   return(
     <ResultLayout
       image={ok}
-      title={t(`OK.default.title`) || ''}
-      body={t(`OK.default.body`)}
-      buttonText={t(`OK.default.button`)}
-      deleteButtonText={t(`OK.default.deleteButton`)}
+      title={t(`OK.rtpParams.title`) || ''}
+      body={t(`OK.rtpParams.body`)}
+      buttonText={t(`OK.rtpParams.button`)}
+      deleteButtonText={t(`OK.rtpParams.deleteButton`)}
       rtpCode={id}
+      type={"rtpParams"}
     />
   );
 }

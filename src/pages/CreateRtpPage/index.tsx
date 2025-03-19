@@ -11,6 +11,8 @@ import { PayerSection } from "./components/PayerSection";
 import { PaymentNoticeSection } from "./components/PaymentNoticeSection";
 import { getValidationSchema } from "./resolver";
 import { useNavigate } from "@tanstack/react-router";
+import { getRtpIdFromLocationHeader } from "src/utils/headerRtpId.utils";
+import { AxiosResponse } from "axios";
 
 export const CreateRtpPage = () => {
   const theme = useTheme();
@@ -24,8 +26,14 @@ export const CreateRtpPage = () => {
 
   const onSubmit = (data: CreateRtp) => {
     mutate(data, {
-      onSuccess: () => {
-        navigate({ to: "/ok" });
+      onSuccess: (response: AxiosResponse) => {
+        const location = response.headers['location'];
+        const rtpId = getRtpIdFromLocationHeader(location);
+        if(rtpId) {
+          navigate({ to: `/${rtpId}/ok` });
+        } else {
+          navigate({ to: "/ok" });
+        }
       },
       onError: (error) => {
         if (error?.response?.status && (error?.response?.status>= 500)) {

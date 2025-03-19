@@ -104,6 +104,12 @@
 	"OK": {
 		"default": {
 			"title": "La richiesta è stata inviata con successo!",
+			"body": "",
+			"deleteButton": "",
+			"button": "Crea nuova richiesta"
+		},
+		"rtpParams": {
+			"title": "La richiesta è stata inviata con successo!",
 			"body": "Conserva l’id della richiesta, ti servirà in caso di assistenza",
 			"deleteButton": "Cancella richiesta",
 			"button": "Crea nuova richiesta"
