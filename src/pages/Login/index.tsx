@@ -75,6 +75,7 @@ export const Login = () => {
               label={t("Login.form.username")}
               name="username"
               control={control}
+              isUppercase={false}
             />
             <FormField
               type="password"
@@ -82,6 +83,7 @@ export const Login = () => {
               name="password"
               control={control}
               autocompleteOff={true}
+              isUppercase={false}
             />
             <LoadingButton
               type="submit"

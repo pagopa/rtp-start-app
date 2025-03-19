@@ -1,19 +1,18 @@
 import { create } from 'zustand';
 
+export type CodeError = "422" | "504" | "generic";
 export type MessageStatus = "default" | "unauthorized" | "deleted";
-
-export type IMessage = {
-  value: MessageStatus
-}
 
 export type MessageStore = {
   messageStatus: MessageStatus;
-  setMessageStatus: (value: MessageStatus) => void;
+  codeError: CodeError | undefined;
+  setMessageStatus: (value: MessageStatus, codeError?: CodeError) => void;
 }
 
 const useMessageStore = create<MessageStore>((set) => ({
-  messageStatus: "default",
-  setMessageStatus: (value: MessageStatus) => set({ messageStatus: value }),
+  messageStatus: 'default',
+  codeError: 'generic',
+  setMessageStatus: (value: MessageStatus, codeError?: CodeError) => set({ messageStatus: value, codeError: codeError}),
 }));
 
 export default useMessageStore;

@@ -87,8 +87,13 @@
 	"KO": {
 		"default": {
 			"title": "Qualcosa è andato storto",
-			"body": "Il codice fiscale indicato non è attivo",
-			"button": "Torna alla richiesta di pagamento"
+			"body": {
+				"422": "Il codice fiscale indicato non è attivo",
+				"500": "Internal Server Error",
+				"504": "Gateway Timeout",
+				"generic": "Errore generico"
+			},
+			"button": "Torna ad inserimento"
 		},
 		"unauthorized": {
 			"title": "Qualcosa è andato storto",

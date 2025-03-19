@@ -4,6 +4,7 @@ import { useDialog } from 'src/stores/dialog.store';
 import { DialogType, getDialogData } from 'src/utils/dialog.utils';
 import { useNavigate } from '@tanstack/react-router';
 import { useAuth } from 'src/hooks/useAuth';
+import { MessageStatus } from 'src/stores/message.store';
 
 type ResultPageProps = {
   image: string;
@@ -12,7 +13,7 @@ type ResultPageProps = {
   buttonText: string;
   deleteButtonText?: string;
   rtpCode?: string;
-  type?: "default" | "unauthorized"
+  type?: MessageStatus
 };
 
 export const ResultLayout = ({ image, title, body, buttonText, deleteButtonText, rtpCode, type = "default" }: ResultPageProps) => {
