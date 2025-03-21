@@ -85,7 +85,7 @@ describe('useRtps', () => {
       headers: {
         version: 'v1',
         requestId: 'mocked-uuid',
-        'content-type': 'text/json',
+        'content-type': 'application/json',
       },
     });
   });

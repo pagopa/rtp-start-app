@@ -1,11 +1,11 @@
 import { useTranslation } from 'react-i18next';
 import ko from '../../assets/images/ko.svg';
 import { ResultLayout } from 'src/components/ResultLayout';
-import useMessageStore, { CodeError } from 'src/stores/message.store';
+import useMessageStore, { CodeError, MessageStatus } from 'src/stores/message.store';
 
 export default function KOPage() {
   const { t } = useTranslation();
-  const { messageStatus, codeError } = useMessageStore() as { messageStatus: "default" | "unauthorized" | undefined, codeError: CodeError };
+  const { messageStatus, codeError } = useMessageStore() as { messageStatus: MessageStatus | undefined, codeError: CodeError };
 
   return (
     <ResultLayout

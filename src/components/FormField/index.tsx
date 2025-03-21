@@ -8,7 +8,9 @@ type FormFieldProps<T extends FieldValues> = {
   name: FieldPath<T>;
   type?: HTMLInputTypeAttribute;
   control: Control<T>;
-  isUppercase?: boolean
+  isUppercase?: boolean;
+  textHelper?: string;
+  autocompleteOff?: boolean
 };
 
 export const FormField = <T extends FieldValues>({
@@ -16,6 +18,8 @@ export const FormField = <T extends FieldValues>({
   name,
   type = 'text',
   control,
+  textHelper,
+  autocompleteOff = false,
   isUppercase = true, 
 }: FormFieldProps<T>) => (
     <Controller
@@ -30,6 +34,7 @@ export const FormField = <T extends FieldValues>({
             slotProps={{
               textField: { error: !!error, helperText: error?.message },
             }}
+            value={field.value ?? null}
           />
         ) : (
           <TextField
@@ -39,7 +44,9 @@ export const FormField = <T extends FieldValues>({
             type={type}
             fullWidth
             error={!!error}
-            helperText={error?.message}
+            helperText={error ? error?.message : textHelper}
+            autoComplete={`${autocompleteOff}`}
+            value={field.value ?? ''}
             onChange={(e) => field.onChange(isUppercase ? e.target.value.toUpperCase() : e.target.value)}
           />
         )

@@ -1,4 +1,4 @@
-import { Stack, Box, Typography, Button, Alert } from "@mui/material";
+import { Stack, Box, Typography, Button, Alert, useMediaQuery, useTheme } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -11,8 +11,12 @@ import { PayerSection } from "./components/PayerSection";
 import { PaymentNoticeSection } from "./components/PaymentNoticeSection";
 import { getValidationSchema } from "./resolver";
 import { useNavigate } from "@tanstack/react-router";
+import { getRtpIdFromLocationHeader } from "src/utils/headerRtpId.utils";
+import { AxiosResponse } from "axios";
 
 export const CreateRtpPage = () => {
+  const theme = useTheme();
+  const md = useMediaQuery(theme.breakpoints.down('md'));
   const { t } = useTranslation();
   const { control, handleSubmit } = useForm<CreateRtp>({
     resolver: yupResolver(getValidationSchema()),
@@ -22,8 +26,14 @@ export const CreateRtpPage = () => {
 
   const onSubmit = (data: CreateRtp) => {
     mutate(data, {
-      onSuccess: () => {
-        navigate({ to: "/ok" });
+      onSuccess: (response: AxiosResponse) => {
+        const location = response.headers['location'];
+        const rtpId = getRtpIdFromLocationHeader(location);
+        if(rtpId) {
+          navigate({ to: `/${rtpId}/ok` });
+        } else {
+          navigate({ to: "/ok" });
+        }
       },
       onError: (error) => {
         if (error?.response?.status && (error?.response?.status>= 500)) {
@@ -59,16 +69,15 @@ export const CreateRtpPage = () => {
       </Stack>
       <Stack
         gap={2}
-        direction="row"
+        direction={md ? "column" : "row"}
         justifyContent={isError ? "space-between" : "flex-end"}
-        alignItems="center"
-        height={50}
+        alignItems={md ? "stretch" : "center"}
       >
         {isError && (
           <Alert
             variant="outlined"
             severity="error"
-            sx={{ flex: 0.7, height: "100%" }}
+            sx={{ flexGrow: 1, height: "100%" }}
           >
             {t("CreateRtpPage.error")}
           </Alert>
@@ -79,7 +88,13 @@ export const CreateRtpPage = () => {
           color="primary"
           disabled={isPending}
           loading={isPending}
-          sx={{ alignSelf: "flex-end", height: "100%", flex: 0.3 }}
+          sx={{
+            alignSelf: md ? "flex-end" : "center",
+            height: "100%",
+            display: "inline-block",
+            width: md ? "auto" : "fit-content",
+            minHeight: "50px"
+          }}
           onClick={handleSubmit(onSubmit)}
         >
           {t("CreateRtpPage.submitButton")}

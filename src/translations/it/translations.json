@@ -38,7 +38,7 @@
 		"expiryDateLabel": "Data di scadenza",
 		"subjectLabel": "Oggetto del pagamento",
 		"descriptionLabel": "Descrizione del pagamento",
-		"submitButton": "Vai al riepilogo",
+		"submitButton": "Crea richiesta",
 		"rtpCreatedSuccess": "RTP creata con successo!",
 		"rtpCreationFailed": "Creazione RTP fallita",
 		"validation": {
@@ -102,9 +102,24 @@
 		}
 	},
 	"OK": {
-		"title": "La richiesta è stata inviata con successo!",
-		"body": "Puoi gestire le richieste create nella sezione “Richieste di pagamento”",
-		"button": "Crea nuova richiesta"
+		"default": {
+			"title": "La richiesta è stata inviata con successo!",
+			"body": "",
+			"deleteButton": "",
+			"button": "Crea nuova richiesta"
+		},
+		"rtpParams": {
+			"title": "La richiesta è stata inviata con successo!",
+			"body": "Conserva l’id della richiesta, ti servirà in caso di assistenza",
+			"deleteButton": "Cancella richiesta",
+			"button": "Crea nuova richiesta"
+		},
+		"deleted": {
+			"title": "La richiesta è stata cancellata ",
+			"body": "",
+			"button": "Crea nuova richiesta",
+			"deleteButton": ""
+		}
 	},
 	"Footer": {
 		"companyLinkAriaLabel": "PagoPA SPA",
@@ -146,6 +161,14 @@
 			"name": "marco",
 			"surname": "polo",
 			"email": "gM0gW@example.com"
+		}
+	},
+	"Dialogs": {
+		"delete": {
+			"title": "Vuoi cancellare la richiesta?",
+			"description": "Proseguendo, la richiesta di pagamento appena creata verrà cancellata.",
+			"confirmAction": "Cancella richiesta",
+			"declineAction": "Indietro"
 		}
 	}
 }

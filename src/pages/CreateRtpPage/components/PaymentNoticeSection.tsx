@@ -22,6 +22,7 @@ export const PaymentNoticeSection = ({ control }: PaymentNoticeSectionProps) => 
         label={t('CreateRtpPage.noticeNumberLabel')}
         name="paymentNotice.noticeNumber"
         control={control}
+        textHelper='Numero di 18 cifre'
       />
       <Stack direction="row" gap={2}>
         <FormField
@@ -42,11 +43,13 @@ export const PaymentNoticeSection = ({ control }: PaymentNoticeSectionProps) => 
           label={t('CreateRtpPage.subjectLabel')}
           name="paymentNotice.subject"
           control={control}
+          textHelper='Massimo 140 caratteri'
         />
         <FormField
           label={t('CreateRtpPage.descriptionLabel')}
           name="paymentNotice.description"
           control={control}
+          textHelper='Massimo 140 caratteri'
         />
       </Stack>
     </FormSection>

@@ -9,6 +9,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import 'src/translations/i18n';
 import { checkoutTheme } from 'src/style';
 import { AppState } from 'src/models/AppState';
+import DialogComponent from 'src/components/Dialogs/Dialog';
 
 interface RouterContext {
   auth: AppState['auth'];
@@ -28,6 +29,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
         <CssBaseline />
         <Layout>
           <Outlet />
+          <DialogComponent />
         </Layout>
       </ThemeProvider>
       {/*<TanStackRouterDevtools /> */}
