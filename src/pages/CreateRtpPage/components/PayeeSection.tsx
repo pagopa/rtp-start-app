@@ -23,7 +23,7 @@ export const PayeeSection = ({ control }: PayeeSectionProps) => {
         name="payee.name"
         control={control}
       />
-      <Stack direction="row" gap={2}>
+      <Stack direction="row" gap={2} my={1}>
         <FormField
           label={t('CreateRtpPage.payeeIdLabel')}
           name="payee.payeeId"

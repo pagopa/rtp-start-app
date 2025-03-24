@@ -41,6 +41,14 @@
 		"submitButton": "Crea richiesta",
 		"rtpCreatedSuccess": "RTP creata con successo!",
 		"rtpCreationFailed": "Creazione RTP fallita",
+		"textHelper": {
+			"paymentNotice": {
+				"amount": "Importo massimo di 1.000.000.000",
+				"description": "Massimo 140 caratteri",
+				"subject": "Massimo 140 caratteri",
+				"noticeNumber": "Numero di 18 cifre"
+			}
+		},
 		"validation": {
 			"payee": {
 				"name": {
@@ -69,8 +77,8 @@
 				},
 				"amount": {
 					"required": "L'importo è obbligatorio",
-					"positive": "L'importo deve essere positivo",
-					"lessThan": "L'importo deve essere inferiore a 1000000000"
+					"greaterThanZero": "L'importo deve essere maggiore di zero",
+					"lessThan": "L'importo deve essere inferiore a 1.000.000.000"
 				},
 				"expiryDate": {
 					"required": "La data di scadenza è obbligatoria"
