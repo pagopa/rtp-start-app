@@ -32,6 +32,7 @@ describe("invalidateSession", () => {
 
     expect(localStorage.getItem('accessToken')).toBeNull();
     expect(localStorage.getItem('refreshToken')).toBeNull();
+    expect(localStorage.getItem('errro')).toBeNull();
 
     expect(setMessageStatusMock).toHaveBeenCalledWith('unauthorized');
 
