@@ -18,7 +18,7 @@ export const PayerSection = ({ control }: PayerSectionProps) => {
       title={t('CreateRtpPage.payerSectionTitle')}
       icon={<BadgeIcon />}
     >
-      <Stack direction="row" gap={2}>
+      <Stack direction="row" gap={2} mb={1}>
         <FormField
           label={t('CreateRtpPage.payerNameLabel')}
           name="payer.name"

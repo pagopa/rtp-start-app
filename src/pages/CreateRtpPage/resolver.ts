@@ -34,11 +34,21 @@ export const getValidationSchema = () => {
         .matches(/^\d{18}$/, t('CreateRtpPage.validation.paymentNotice.noticeNumber.matches'))
         .required(t('CreateRtpPage.validation.paymentNotice.noticeNumber.required')),
       amount: yup
-        .number()
-        .transform((value) => (value ?? 0) * 100)
-        .positive(t('CreateRtpPage.validation.paymentNotice.amount.positive'))
-        .required(t('CreateRtpPage.validation.paymentNotice.amount.required'))
-        .lessThan(1000000000, t('CreateRtpPage.validation.paymentNotice.amount.lessThan')),
+        .mixed<number>()
+        .transform((value) => {
+          const normalizedValue = value?.replace(',', '.'); 
+          return normalizedValue ? parseFloat(normalizedValue) : 0;
+        })
+        .test('greater-than-zero',
+          t('CreateRtpPage.validation.paymentNotice.amount.greaterThanZero'),
+          (value) => (value !== undefined) && (value > 0)
+        )
+        .test(
+          'max-amount',
+          t('CreateRtpPage.validation.paymentNotice.amount.lessThan'),
+          (value) => (value !== undefined) && (value <= 999999999.99)
+        )
+        .required(t('CreateRtpPage.validation.paymentNotice.amount.required')),
       expiryDate: yup
         .string()
         .required(t('CreateRtpPage.validation.paymentNotice.expiryDate.required'))
