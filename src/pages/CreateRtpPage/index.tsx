@@ -25,7 +25,15 @@ export const CreateRtpPage = () => {
   const navigate = useNavigate();
 
   const onSubmit = (data: CreateRtp) => {
-    mutate(data, {
+    const formattedData: CreateRtp = {
+      ...data,
+      paymentNotice: {
+        ...data.paymentNotice,
+        amount: Math.round(data.paymentNotice.amount * 100),
+      },
+    };
+
+    mutate(formattedData, {
       onSuccess: (response: AxiosResponse) => {
         const location = response.headers['location'];
         const rtpId = getRtpIdFromLocationHeader(location);

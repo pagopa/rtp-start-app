@@ -40,15 +40,15 @@ export const setupInterceptors = (client: Client) => {
             originalRequest.headers.Authorization = `Bearer ${access_token}`;
             return axios(originalRequest);
           } else {
-            invalidateSession();
+            return invalidateSession();
           }
 
         } catch {
-          invalidateSession();
+          return invalidateSession();
         }
 
       }
-
+      
       useMessageStore.getState().setMessageStatus("default", error.response.status);
       return Promise.reject(error);
     },
