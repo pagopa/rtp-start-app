@@ -1,6 +1,8 @@
-import { Button, Stack, Typography } from "@mui/material";
+import LoadingButton from "@mui/lab/LoadingButton";
+import { Alert, Button, Stack, Typography } from "@mui/material";
 import { useNavigate } from "@tanstack/react-router";
 import { Trans, useTranslation } from "react-i18next";
+import { useCancelRtp } from "src/api/useCancelRtp";
 import { useDialog } from "src/stores/dialog.store";
 import useMessageStore from "src/stores/message.store";
 
@@ -14,12 +16,16 @@ export default function DialogRtpDelete({rtpId}: DialogRtpDeleteProps) {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { setMessageStatus } = useMessageStore();
+  const { mutate, isPending, isError } = useCancelRtp();
 
   const handleRtpDeletion = () => {
-    console.log("DELETE ", rtpId);
-    setMessageStatus("deleted");
-    closeDialog();
-    navigate({to: "/ok"});
+    mutate(rtpId, {
+      onSuccess: () => {
+        setMessageStatus("deleted");
+        closeDialog();
+        navigate({to: "/ok"});
+      },
+    });
   };
 
   return (
@@ -28,8 +34,19 @@ export default function DialogRtpDelete({rtpId}: DialogRtpDeleteProps) {
         <Trans i18nKey={"Dialogs.delete.description"} />
       </Typography>
 
+      {isError &&
+        <Alert
+          variant="outlined"
+          severity="error"
+          sx={{ flexGrow: 1, height: "100%", mb: "32px" }}
+        >
+          {t("CancelRtp.error")}
+        </Alert>
+      }
+
       <Stack direction={{ xs: "column", sm: "row" }} justifyContent={"end"} gap={2}>
         <Button
+          disabled={isPending}
           type="button"
           variant="outlined"
           color="primary"
@@ -45,7 +62,8 @@ export default function DialogRtpDelete({rtpId}: DialogRtpDeleteProps) {
           <Trans i18nKey={"Dialogs.delete.declineAction"} />
         </Button>
 
-        <Button
+        <LoadingButton
+          loading={isPending}
           type="button"
           variant="contained"
           color="primary"
@@ -59,7 +77,7 @@ export default function DialogRtpDelete({rtpId}: DialogRtpDeleteProps) {
           aria-label={t("Dialogs.delete.confirmAction")}
         >
           <Trans i18nKey={"Dialogs.delete.confirmAction"} />
-        </Button>
+        </LoadingButton>
       </Stack>
     </>
   );

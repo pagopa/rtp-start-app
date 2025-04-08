@@ -2,6 +2,7 @@ import { router } from "src/main";
 import useMessageStore from "src/stores/message.store";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { invalidateSession } from "../auth.utils";
+import { useDialogStore } from "src/stores/dialog.store";
 
 vi.mock("src/main", () => ({
   router: {
@@ -19,6 +20,15 @@ vi.mock("src/stores/message.store", () => {
   };
 });
 
+vi.mock("src/stores/dialog.store", () => ({
+  useDialogStore: {
+    getState: vi.fn().mockReturnValue({
+      dialog: true,
+      closeDialog: vi.fn(),
+    }),
+  },
+}));
+
 describe("invalidateSession", () => {
   beforeEach(() => {
     localStorage.clear();
@@ -27,6 +37,7 @@ describe("invalidateSession", () => {
 
   it("should remove tokens and update the message status", () => {
     const setMessageStatusMock = useMessageStore.getState().setMessageStatus;
+    const closeDialogMock = useDialogStore.getState().closeDialog;
 
     invalidateSession();
 
@@ -35,7 +46,7 @@ describe("invalidateSession", () => {
     expect(localStorage.getItem('user')).toBeNull();
 
     expect(setMessageStatusMock).toHaveBeenCalledWith('unauthorized');
-
+    expect(closeDialogMock).toHaveBeenCalled();
     expect(router.navigate).toHaveBeenCalledWith({ to: '/ko' });
   });
 });
