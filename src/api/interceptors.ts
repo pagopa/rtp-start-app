@@ -1,11 +1,11 @@
 import { Client } from "../models/Client";
 import axios, { AxiosError, InternalAxiosRequestConfig } from "axios";
-import { useRefreshToken } from "./useRefreshToken";
 import { invalidateSession } from "src/utils/auth.utils";
 import useMessageStore from "src/stores/message.store";
+import { refreshToken } from "./useRefreshToken";
 
 export const setupInterceptors = (client: Client) => {
-  const refreshToken = useRefreshToken();
+
   client.instance.interceptors.request.use(
     (request: InternalAxiosRequestConfig) => {
       const accessToken = window.localStorage.getItem("accessToken");
@@ -23,14 +23,13 @@ export const setupInterceptors = (client: Client) => {
     async (error) => {
       const originalRequest = error.config;
 
-      if (error.response.status === 401 && !originalRequest._retry) {
+      if (error?.response?.status === 401 && !originalRequest._retry) {
         originalRequest._retry = true;
 
         try {
           const currentRefreshToken = localStorage.getItem('refreshToken');
           if(currentRefreshToken) {
-            const response = await refreshToken.mutateAsync({ refresh_token: currentRefreshToken });
-            const { access_token, refresh_token } = response.data;
+            const { access_token, refresh_token } = await refreshToken(currentRefreshToken);
             localStorage.setItem('accessToken', access_token);
             if(refresh_token) {
               localStorage.setItem('refreshToken', refresh_token);
@@ -40,16 +39,19 @@ export const setupInterceptors = (client: Client) => {
             originalRequest.headers.Authorization = `Bearer ${access_token}`;
             return axios(originalRequest);
           } else {
-            return invalidateSession();
+            invalidateSession();
+            return Promise.reject(error);
           }
 
         } catch {
-          return invalidateSession();
+          invalidateSession();
+          return Promise.reject(error);
         }
 
       }
-      
-      useMessageStore.getState().setMessageStatus("default", error.response.status);
+
+      const message = error?.response?.status === 401 ? "unauthorized" : "default";
+      useMessageStore.getState().setMessageStatus(message, error?.response?.status);
       return Promise.reject(error);
     },
   );

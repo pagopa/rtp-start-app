@@ -92,6 +92,9 @@
 			}
 		}
 	},
+	"CancelRtp": {
+		"error": "Errore durante la cancellazione della richiesta di pagamento"
+	},
 	"KO": {
 		"default": {
 			"title": "Qualcosa è andato storto",

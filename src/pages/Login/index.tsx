@@ -12,6 +12,7 @@ import { useTranslation } from "react-i18next";
 import Alert from "@mui/material/Alert";
 import { useAuth } from "src/hooks/useAuth";
 import { userEmail } from "src/utils/userEmail.utils";
+import { useEffect } from "react";
 
 type UserCredentials = Pick<GetAccessTokenByPassword, "username" | "password">;
 
@@ -36,9 +37,11 @@ export const Login = () => {
     });
   };
 
-  if (auth.isAuthenticated) {
-    navigate({ to: "/" });
-  }
+  useEffect(() => {
+    if (auth.isAuthenticated) {
+      navigate({ to: "/" });
+    }
+  }, [auth.isAuthenticated, navigate]);
 
   return (
     <Stack justifyContent="center" alignItems="center" py={4} gap={4}>
