@@ -49,8 +49,8 @@ stages:
               env: 'DEV'
               version: '$(Build.SourceBranchName):$(Build.SourceVersion)'
               vite_api_url: 'https://api-rtp.dev.cstar.pagopa.it/rtp'
-              vite_auth_url: 'https://api-mcshared.dev.cstar.pagopa.it/auth'
-              vite_auth_client_id: '1ec1f3f4-411b-4dc3-ad1c-68196af7e90c'
+              vite_auth_url: 'https://api-mcshared.dev.cstar.pagopa.it/auth-itn/realms/srtp/protocol/openid-connect'
+              vite_auth_client_id: 'internal-test-webform'
 
           - script: |
               npm run build
@@ -113,8 +113,8 @@ stages:
               env: 'UAT'
               version: '$(Build.SourceBranchName):$(Build.SourceVersion)'
               vite_api_url: 'https://api-rtp.uat.cstar.pagopa.it/rtp'
-              vite_auth_url: 'https://api-mcshared.uat.cstar.pagopa.it/auth'
-              vite_auth_client_id: '1ec1f3f4-411b-4dc3-ad1c-68196af7e90c'
+              vite_auth_url: 'https://api-mcshared.uat.cstar.pagopa.it/auth-itn/realms/srtp/protocol/openid-connect'
+              vite_auth_client_id: 'internal-test-webform'
 
           - script: |
               npm run build
@@ -177,8 +177,8 @@ stages:
               env: 'PROD'
               version: '$(Build.SourceBranchName):$(Build.SourceVersion)'
               vite_api_url: 'https://api-rtp.cstar.pagopa.it/rtp'
-              vite_auth_url: 'https://api-mcshared.cstar.pagopa.it/auth'
-              vite_auth_client_id: '1ec1f3f4-411b-4dc3-ad1c-68196af7e90c'
+              vite_auth_url: 'https://api-mcshared.cstar.pagopa.it/auth-itn/realms/srtp/protocol/openid-connect'
+              vite_auth_client_id: 'internal-test-webform'
 
           - script: |
               npm run build
