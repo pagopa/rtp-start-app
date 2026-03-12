@@ -50,7 +50,7 @@ stages:
               version: '$(Build.SourceBranchName):$(Build.SourceVersion)'
               vite_api_url: 'https://api-rtp.dev.cstar.pagopa.it/rtp'
               vite_auth_url: 'https://api-mcshared.dev.cstar.pagopa.it/auth-itn/realms/srtp/protocol/openid-connect'
-              vite_auth_client_id: '15376371009'
+              vite_auth_client_id: 'internal-test-webform'
 
           - script: |
               npm run build
