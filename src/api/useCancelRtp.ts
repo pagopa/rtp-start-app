@@ -13,7 +13,7 @@ export const useCancelRtp = () => {
     mutationKey: ["cancelRtp"],
     mutationFn: ({ rtpId, reason }: CancelRtpParams) =>
       client.api.instance.post(
-        `/rtps/${rtpId}/cancel`,
+        `/rtps/cancel`,
         { resourceId: rtpId, reason },
         {
           headers: {
