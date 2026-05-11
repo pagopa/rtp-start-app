@@ -8,9 +8,10 @@ import useMessageStore from "src/stores/message.store";
 
 export type DialogRtpDeleteProps = {
     rtpId: string;
+    reason: string;
 }
 
-export default function DialogRtpDelete({rtpId}: DialogRtpDeleteProps) {
+export default function DialogRtpDelete({rtpId, reason}: DialogRtpDeleteProps) {
 
   const { closeDialog } = useDialog();
   const { t } = useTranslation();
@@ -19,7 +20,7 @@ export default function DialogRtpDelete({rtpId}: DialogRtpDeleteProps) {
   const { mutate, isPending, isError } = useCancelRtp();
 
   const handleRtpDeletion = () => {
-    mutate(rtpId, {
+    mutate({ rtpId, reason }, {
       onSuccess: () => {
         setMessageStatus("deleted");
         closeDialog();

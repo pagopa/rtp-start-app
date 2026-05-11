@@ -17,7 +17,7 @@ describe('getDialogData', () => {
 
     expect(result.title).toBe('Eliminazione in corso...');
     
-    const expectedProps: DialogRtpDeleteProps = { rtpId };
+    const expectedProps: DialogRtpDeleteProps = { rtpId, reason: '' };
     expect(result.content).toEqual(React.createElement(DialogRtpDelete, expectedProps));
   });
 
