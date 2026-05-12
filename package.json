@@ -30,7 +30,7 @@
 		"zustand": "^5.0.3"
 	},
 	"scripts": {
-		"generate-api-client": "swagger-typescript-api -p https://raw.githubusercontent.com/pagopa/rtp-apis/refs/heads/main/src/rtp/api/pagopa/send.openapi.yaml -o ./generated -n apiClient --axios",
+		"generate-api-client": "swagger-typescript-api -p https://raw.githubusercontent.com/pagopa/cstar-securehub-infra-api-spec/refs/heads/main/src/srtp/api/pagopa/send.openapi.yaml -o ./generated -n apiClient --axios",
 		"generate-auth-client": "swagger-typescript-api -p https://raw.githubusercontent.com/pagopa/mil-auth/refs/heads/main/src/main/resources/META-INF/openapi.yaml -o ./generated/auth --axios --modular",
 		"generate-data-contracts": "swagger-typescript-api  --modular --no-client -p https://raw.githubusercontent.com/pagopa/p4pa-pu-bff/refs/heads/develop/openapi/p4pa-pu-bff.openapi.yaml -o ./generated",
 		"generate": "yarn generate-api-client && yarn generate-auth-client && yarn generate-data-contracts",
