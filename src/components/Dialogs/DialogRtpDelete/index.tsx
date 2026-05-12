@@ -2,7 +2,8 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import { Alert, Button, Stack, Typography } from "@mui/material";
 import { useNavigate } from "@tanstack/react-router";
 import { Trans, useTranslation } from "react-i18next";
-import { CancelReason, useCancelRtp } from "src/api/useCancelRtp";
+import { CancelReason } from "generated/apiClient";
+import { useCancelRtp } from "src/api/useCancelRtp";
 import { useDialog } from "src/stores/dialog.store";
 import useMessageStore from "src/stores/message.store";
 

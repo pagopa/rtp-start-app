@@ -1,9 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
 import { client } from "./client";
 import { v4 as uuidv4 } from "uuid";
-import { CONTENT_TYPE } from "src/models/Requests";
+import { CancelReason } from "generated/apiClient";
 
-export type CancelReason = 'MODT' | 'PAID';
+export type { CancelReason };
 
 export type CancelRtpParams = {
   rtpId: string;
@@ -14,14 +14,12 @@ export const useCancelRtp = () => {
   return useMutation({
     mutationKey: ["cancelRtp"],
     mutationFn: ({ rtpId, reason }: CancelRtpParams) =>
-      client.api.instance.post(
-        `/rtps/cancel`,
+      client.api.rtps.cancelRtp(
         { resourceId: rtpId, reason },
         {
           headers: {
             version: "v1",
             requestId: uuidv4(),
-            "content-type": CONTENT_TYPE.JSON,
           },
         }
       ),

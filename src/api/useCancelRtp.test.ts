@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, Mock, beforeEach } from 'vitest';
 import { useMutation } from '@tanstack/react-query';
 import { useCancelRtp, CancelRtpParams } from './useCancelRtp';
+import { CancelReason } from 'generated/apiClient';
 import { client } from './client';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -11,8 +12,8 @@ vi.mock('@tanstack/react-query', () => ({
 vi.mock('./client', () => ({
   client: {
     api: {
-      instance: {
-        post: vi.fn(),
+      rtps: {
+        cancelRtp: vi.fn(),
       },
     },
   },
@@ -41,38 +42,35 @@ describe('useCancelRtp', () => {
     });
   });
 
-  it('should call client.api.instance.post with correct URL, body and headers for MODT', async () => {
-    const params: CancelRtpParams = { rtpId: 'test-rtp-id', reason: 'MODT' };
+  it('should call client.api.rtps.cancelRtp with correct body and headers for MODT', async () => {
+    const params: CancelRtpParams = { rtpId: 'test-rtp-id', reason: CancelReason.MODT };
 
     useCancelRtp();
 
     const mutationFn = (useMutation as Mock).mock.calls[0][0].mutationFn;
     await mutationFn(params);
 
-    expect(client.api.instance.post).toHaveBeenCalledWith(
-      '/rtps/cancel',
-      { resourceId: 'test-rtp-id', reason: 'MODT' },
+    expect(client.api.rtps.cancelRtp).toHaveBeenCalledWith(
+      { resourceId: 'test-rtp-id', reason: CancelReason.MODT },
       {
         headers: {
           version: 'v1',
           requestId: 'mocked-uuid',
-          'content-type': 'application/json',
         },
       }
     );
   });
 
-  it('should call client.api.instance.post with correct URL, body and headers for PAID', async () => {
-    const params: CancelRtpParams = { rtpId: 'test-rtp-id', reason: 'PAID' };
+  it('should call client.api.rtps.cancelRtp with correct body and headers for PAID', async () => {
+    const params: CancelRtpParams = { rtpId: 'test-rtp-id', reason: CancelReason.PAID };
 
     useCancelRtp();
 
     const mutationFn = (useMutation as Mock).mock.calls[0][0].mutationFn;
     await mutationFn(params);
 
-    expect(client.api.instance.post).toHaveBeenCalledWith(
-      '/rtps/cancel',
-      { resourceId: 'test-rtp-id', reason: 'PAID' },
+    expect(client.api.rtps.cancelRtp).toHaveBeenCalledWith(
+      { resourceId: 'test-rtp-id', reason: CancelReason.PAID },
       expect.objectContaining({ headers: expect.any(Object) })
     );
   });

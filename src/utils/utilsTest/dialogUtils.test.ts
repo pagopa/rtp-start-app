@@ -2,6 +2,7 @@ import { i18nTestSetup } from 'src/__tests__/i18nTestSetup';
 import DialogRtpDelete, { DialogRtpDeleteProps } from 'src/components/Dialogs/DialogRtpDelete';
 import { describe, it, expect, beforeEach } from 'vitest';
 import { getDialogData, DialogType } from '../dialog.utils';
+import { CancelReason } from 'generated/apiClient';
 import React from 'react';
 
 describe('getDialogData', () => {
@@ -13,7 +14,7 @@ describe('getDialogData', () => {
 
   it('should return correct data for DELETE dialog type', () => {
     const rtpId = '123';
-    const reason = 'MODT' as const;
+    const reason = CancelReason.MODT;
     const result = getDialogData(DialogType.DELETE, rtpId, reason);
 
     expect(result.title).toBe('Eliminazione in corso...');

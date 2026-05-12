@@ -1,7 +1,7 @@
 import i18next from "i18next";
 import { ReactNode } from "react";
 import DialogRtpDelete from "src/components/Dialogs/DialogRtpDelete";
-import { CancelReason } from "src/api/useCancelRtp";
+import { CancelReason } from "generated/apiClient";
 
 export enum DialogType {
   DELETE = 'delete',

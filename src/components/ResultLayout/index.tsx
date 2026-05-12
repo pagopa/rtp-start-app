@@ -5,7 +5,7 @@ import { DialogType, getDialogData } from 'src/utils/dialog.utils';
 import { useNavigate } from '@tanstack/react-router';
 import { useAuth } from 'src/hooks/useAuth';
 import { MessageStatus } from 'src/stores/message.store';
-import { CancelReason } from 'src/api/useCancelRtp';
+import { CancelReason } from 'generated/apiClient';
 
 type ResultPageProps = {
   image: string;
@@ -73,7 +73,7 @@ export const ResultLayout = ({ image, title, body, buttonText, cancelModtButtonT
                   color="error"
                   fullWidth
                   style={{ minHeight: 45 }}
-                  onClick={() => openDialog(getDialogData(DialogType.DELETE, rtpCode, 'MODT' as CancelReason))}
+                  onClick={() => openDialog(getDialogData(DialogType.DELETE, rtpCode, CancelReason.MODT))}
                 >
                   {cancelModtButtonText}
                 </Button>
@@ -85,7 +85,7 @@ export const ResultLayout = ({ image, title, body, buttonText, cancelModtButtonT
                   color="error"
                   fullWidth
                   style={{ minHeight: 45 }}
-                  onClick={() => openDialog(getDialogData(DialogType.DELETE, rtpCode, 'PAID' as CancelReason))}
+                  onClick={() => openDialog(getDialogData(DialogType.DELETE, rtpCode, CancelReason.PAID))}
                 >
                   {cancelPaidButtonText}
                 </Button>
