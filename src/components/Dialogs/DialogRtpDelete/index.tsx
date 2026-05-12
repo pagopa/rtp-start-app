@@ -2,13 +2,13 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import { Alert, Button, Stack, Typography } from "@mui/material";
 import { useNavigate } from "@tanstack/react-router";
 import { Trans, useTranslation } from "react-i18next";
-import { useCancelRtp } from "src/api/useCancelRtp";
+import { CancelReason, useCancelRtp } from "src/api/useCancelRtp";
 import { useDialog } from "src/stores/dialog.store";
 import useMessageStore from "src/stores/message.store";
 
 export type DialogRtpDeleteProps = {
     rtpId: string;
-    reason: string;
+    reason: CancelReason;
 }
 
 export default function DialogRtpDelete({rtpId, reason}: DialogRtpDeleteProps) {

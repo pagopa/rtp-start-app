@@ -3,9 +3,11 @@ import { client } from "./client";
 import { v4 as uuidv4 } from "uuid";
 import { CONTENT_TYPE } from "src/models/Requests";
 
+export type CancelReason = 'MODT' | 'PAID';
+
 export type CancelRtpParams = {
   rtpId: string;
-  reason: string;
+  reason: CancelReason;
 };
 
 export const useCancelRtp = () => {
