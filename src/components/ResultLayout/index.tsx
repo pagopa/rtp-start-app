@@ -5,21 +5,25 @@ import { DialogType, getDialogData } from 'src/utils/dialog.utils';
 import { useNavigate } from '@tanstack/react-router';
 import { useAuth } from 'src/hooks/useAuth';
 import { MessageStatus } from 'src/stores/message.store';
+import { CancelReason } from 'generated/apiClient';
 
 type ResultPageProps = {
   image: string;
   title: string;
   body: string;
   buttonText: string;
-  deleteButtonText?: string;
+  cancelModtButtonText?: string;
+  cancelPaidButtonText?: string;
   rtpCode?: string;
   type?: MessageStatus
 };
 
-export const ResultLayout = ({ image, title, body, buttonText, deleteButtonText, rtpCode, type = "default" }: ResultPageProps) => {
+export const ResultLayout = ({ image, title, body, buttonText, cancelModtButtonText, cancelPaidButtonText, rtpCode, type = "default" }: ResultPageProps) => {
 
   const navigate = useNavigate();
   const { openDialog } = useDialog();
+
+  const hasCancelButtons = (cancelModtButtonText || cancelPaidButtonText) && rtpCode;
 
   const handleClick = () => {
     if(type === 'unauthorized') {
@@ -36,11 +40,11 @@ export const ResultLayout = ({ image, title, body, buttonText, deleteButtonText,
         <Stack gap={"30px"} alignItems="center">
           <img src={image} alt="result-image" />
           <Stack gap={"30px"} alignItems="center" textAlign="center" maxWidth="448px">
-            <Typography variant="h4" component="h1" px={deleteButtonText ? 4 : 0}>
+            <Typography variant="h4" component="h1">
               {title}
             </Typography>
 
-            {rtpCode && deleteButtonText &&
+            {rtpCode && hasCancelButtons &&
               <CopyClipboard textToCopy={rtpCode} />
             }
 
@@ -49,34 +53,45 @@ export const ResultLayout = ({ image, title, body, buttonText, deleteButtonText,
             </Typography>
           </Stack>
         </Stack>
-        <Stack direction={{ xs: "column", sm: deleteButtonText ? "row" : "column"}} px={8} gap={2} sx={{width: "100%", height: "100%"}}>
-          {
-            deleteButtonText &&
-            <Button
-              type="button"
-              variant="outlined"
-              color="error"
-              style={{
-                height: "100%",
-                minHeight: 45,
-              }}
-              onClick={() => openDialog(getDialogData(DialogType.DELETE, rtpCode))}
-            >
-              {deleteButtonText}
-            </Button>
-          }
 
+        <Stack direction="column" px={8} gap={2} sx={{width: "100%"}}>
           <Button
             onClick={handleClick}
             type="button"
             variant="contained"
-            style={{
-              height: "100%",
-              minHeight: 45,
-            }}
+            style={{ minHeight: 45 }}
           >
             {buttonText}
           </Button>
+
+          {hasCancelButtons && (
+            <Stack direction={{ xs: "column", sm: "row" }} gap={2}>
+              {cancelModtButtonText && (
+                <Button
+                  type="button"
+                  variant="outlined"
+                  color="error"
+                  fullWidth
+                  style={{ minHeight: 45 }}
+                  onClick={() => openDialog(getDialogData(DialogType.DELETE, rtpCode, CancelReason.MODT))}
+                >
+                  {cancelModtButtonText}
+                </Button>
+              )}
+              {cancelPaidButtonText && (
+                <Button
+                  type="button"
+                  variant="outlined"
+                  color="error"
+                  fullWidth
+                  style={{ minHeight: 45 }}
+                  onClick={() => openDialog(getDialogData(DialogType.DELETE, rtpCode, CancelReason.PAID))}
+                >
+                  {cancelPaidButtonText}
+                </Button>
+              )}
+            </Stack>
+          )}
         </Stack>
       </Stack>
     </Stack>

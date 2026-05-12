@@ -2,15 +2,17 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import { Alert, Button, Stack, Typography } from "@mui/material";
 import { useNavigate } from "@tanstack/react-router";
 import { Trans, useTranslation } from "react-i18next";
+import { CancelReason } from "generated/apiClient";
 import { useCancelRtp } from "src/api/useCancelRtp";
 import { useDialog } from "src/stores/dialog.store";
 import useMessageStore from "src/stores/message.store";
 
 export type DialogRtpDeleteProps = {
     rtpId: string;
+    reason: CancelReason;
 }
 
-export default function DialogRtpDelete({rtpId}: DialogRtpDeleteProps) {
+export default function DialogRtpDelete({rtpId, reason}: DialogRtpDeleteProps) {
 
   const { closeDialog } = useDialog();
   const { t } = useTranslation();
@@ -19,7 +21,7 @@ export default function DialogRtpDelete({rtpId}: DialogRtpDeleteProps) {
   const { mutate, isPending, isError } = useCancelRtp();
 
   const handleRtpDeletion = () => {
-    mutate(rtpId, {
+    mutate({ rtpId, reason }, {
       onSuccess: () => {
         setMessageStatus("deleted");
         closeDialog();

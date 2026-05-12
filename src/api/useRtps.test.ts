@@ -1,17 +1,15 @@
-import { describe, it, expect, vi, Mock, beforeEach } from 'vitest';
+import { describe, it, expect, vi, Mock } from 'vitest';
 import { useMutation } from '@tanstack/react-query';
 import { useRtps } from './useRtps';
 import { client } from './client';
 import { CreateRtp } from 'generated/apiClient';
 import { AxiosError } from 'axios';
-import { v4 as uuidv4 } from 'uuid';
+import { setupMutationMocks, MOCKED_UUID } from './testUtils';
 
-// Mock @tanstack/react-query
 vi.mock('@tanstack/react-query', () => ({
   useMutation: vi.fn(),
 }));
 
-// Mock client
 vi.mock('./client', () => ({
   client: {
     api: {
@@ -22,25 +20,12 @@ vi.mock('./client', () => ({
   },
 }));
 
-// Mock uuid
 vi.mock('uuid', () => ({
   v4: vi.fn(),
 }));
 
 describe('useRtps', () => {
-  const mutateMock = vi.fn();
-  const mutationResult = { mutate: mutateMock };
-
-  beforeEach(() => {
-    // Reset mocks before each test
-    vi.clearAllMocks();
-
-    // Mock useMutation to return a controlled result
-    (useMutation as Mock).mockReturnValue(mutationResult);
-
-    // Mock uuidv4 to return a fixed value for testing
-    (uuidv4 as Mock).mockReturnValue('mocked-uuid');
-  });
+  const mutationResult = setupMutationMocks();
 
   it('should call useMutation with the correct mutationKey and mutationFn', () => {
     useRtps();
@@ -84,7 +69,7 @@ describe('useRtps', () => {
     expect(client.api.rtps.createRtp).toHaveBeenCalledWith(testData, {
       headers: {
         version: 'v1',
-        requestId: 'mocked-uuid',
+        requestId: MOCKED_UUID,
         'content-type': 'application/json',
       },
     });

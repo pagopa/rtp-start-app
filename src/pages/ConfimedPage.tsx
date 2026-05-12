@@ -14,7 +14,8 @@ export default function ConfirmedPage() {
       title={t(`OK.rtpParams.title`) || ''}
       body={t(`OK.rtpParams.body`)}
       buttonText={t(`OK.rtpParams.button`)}
-      deleteButtonText={t(`OK.rtpParams.deleteButton`)}
+      cancelModtButtonText={t(`OK.rtpParams.cancelModtButton`)}
+      cancelPaidButtonText={t(`OK.rtpParams.cancelPaidButton`)}
       rtpCode={id}
       type={"rtpParams"}
     />
