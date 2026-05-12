@@ -42,8 +42,11 @@ describe('useCancelRtp', () => {
     });
   });
 
-  it('should call client.api.rtps.cancelRtp with correct body and headers for MODT', async () => {
-    const params: CancelRtpParams = { rtpId: 'test-rtp-id', reason: CancelReason.MODT };
+  it.each([
+    { reason: CancelReason.MODT },
+    { reason: CancelReason.PAID },
+  ])('should call client.api.rtps.cancelRtp with correct body and headers for $reason', async ({ reason }) => {
+    const params: CancelRtpParams = { rtpId: 'test-rtp-id', reason };
 
     useCancelRtp();
 
@@ -51,27 +54,13 @@ describe('useCancelRtp', () => {
     await mutationFn(params);
 
     expect(client.api.rtps.cancelRtp).toHaveBeenCalledWith(
-      { resourceId: 'test-rtp-id', reason: CancelReason.MODT },
+      { resourceId: 'test-rtp-id', reason },
       {
         headers: {
           version: 'v1',
           requestId: 'mocked-uuid',
         },
       }
-    );
-  });
-
-  it('should call client.api.rtps.cancelRtp with correct body and headers for PAID', async () => {
-    const params: CancelRtpParams = { rtpId: 'test-rtp-id', reason: CancelReason.PAID };
-
-    useCancelRtp();
-
-    const mutationFn = (useMutation as Mock).mock.calls[0][0].mutationFn;
-    await mutationFn(params);
-
-    expect(client.api.rtps.cancelRtp).toHaveBeenCalledWith(
-      { resourceId: 'test-rtp-id', reason: CancelReason.PAID },
-      expect.objectContaining({ headers: expect.any(Object) })
     );
   });
 
