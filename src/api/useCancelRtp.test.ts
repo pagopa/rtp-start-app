@@ -1,9 +1,9 @@
-import { describe, it, expect, vi, Mock, beforeEach } from 'vitest';
+import { describe, it, expect, vi, Mock } from 'vitest';
 import { useMutation } from '@tanstack/react-query';
 import { useCancelRtp, CancelRtpParams } from './useCancelRtp';
 import { CancelReason } from 'generated/apiClient';
 import { client } from './client';
-import { v4 as uuidv4 } from 'uuid';
+import { setupMutationMocks, MOCKED_UUID } from './testUtils';
 
 vi.mock('@tanstack/react-query', () => ({
   useMutation: vi.fn(),
@@ -24,14 +24,7 @@ vi.mock('uuid', () => ({
 }));
 
 describe('useCancelRtp', () => {
-  const mutateMock = vi.fn();
-  const mutationResult = { mutate: mutateMock };
-
-  beforeEach(() => {
-    vi.clearAllMocks();
-    (useMutation as Mock).mockReturnValue(mutationResult);
-    (uuidv4 as Mock).mockReturnValue('mocked-uuid');
-  });
+  const mutationResult = setupMutationMocks();
 
   it('should call useMutation with the correct mutationKey and mutationFn', () => {
     useCancelRtp();
@@ -58,7 +51,7 @@ describe('useCancelRtp', () => {
       {
         headers: {
           version: 'v1',
-          requestId: 'mocked-uuid',
+          requestId: MOCKED_UUID,
         },
       }
     );
@@ -70,3 +63,4 @@ describe('useCancelRtp', () => {
     expect(result).toBe(mutationResult);
   });
 });
+
