@@ -4010,9 +4010,7 @@ vitest-dom@^0.1.1:
     redent "^4.0.0"
 
 vitest@^3.0.4:
-  version "3.0.4"
-  resolved "https://registry.npmjs.org/vitest/-/vitest-3.0.4.tgz"
-  integrity sha512-6XG8oTKy2gnJIFTHP6LD7ExFeNLxiTkK3CfMvT7IfR8IN+BYICCf0lXUQmX7i7JoxUP8QmeP4mTnWXgflu4yjw==
+  version "3.0.5"
   dependencies:
     "@vitest/expect" "3.0.4"
     "@vitest/mocker" "3.0.4"
