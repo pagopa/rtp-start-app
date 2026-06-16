@@ -124,8 +124,10 @@
 			"title": "La richiesta è stata inviata con successo!",
 			"body": "Conserva l’id della richiesta, ti servirà in caso di assistenza",
 			"deleteButton": "Cancella richiesta",
-			"cancelModtButton": "Cancella MODT",
-			"cancelPaidButton": "Cancella PAID",
+			"cancelModtButtonV3": "Cancella MODT v3.2",
+			"cancelModtButtonV4": "Cancella MODT v4.0",
+			"cancelPaidButtonV3": "Cancella PAID v3.2",
+			"cancelPaidButtonV4": "Cancella PAID v4.0",
 			"button": "Crea nuova richiesta"
 		},
 		"deleted": {
