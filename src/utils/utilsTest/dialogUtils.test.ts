@@ -15,11 +15,12 @@ describe('getDialogData', () => {
   it('should return correct data for DELETE dialog type', () => {
     const rtpId = '123';
     const reason = CancelReason.MODT;
-    const result = getDialogData(DialogType.DELETE, rtpId, reason);
+    const version = 'v1';
+    const result = getDialogData(DialogType.DELETE, rtpId, reason, version);
 
     expect(result.title).toBe('Eliminazione in corso...');
     
-    const expectedProps: DialogRtpDeleteProps = { rtpId, reason };
+    const expectedProps: DialogRtpDeleteProps = { rtpId, reason, version };
     expect(result.content).toEqual(React.createElement(DialogRtpDelete, expectedProps));
   });
 

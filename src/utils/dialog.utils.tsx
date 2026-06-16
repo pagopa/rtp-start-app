@@ -12,12 +12,12 @@ export type DialogData = {
   content: ReactNode;
 };
 
-export function getDialogData(dialogType: string, rtpId?: string, reason?: CancelReason): DialogData {
+export function getDialogData(dialogType: string, rtpId?: string, reason?: CancelReason, version?: string): DialogData {
   switch (dialogType) {
   case DialogType.DELETE:
     return {
       title: i18next.t('Dialogs.delete.title'),
-      content: <DialogRtpDelete rtpId={rtpId!} reason={reason!} />,
+      content: <DialogRtpDelete rtpId={rtpId!} reason={reason!} version={version!} />,
     };
   default:
     throw new Error(`Tipo di dialogo non supportato: ${dialogType}`);

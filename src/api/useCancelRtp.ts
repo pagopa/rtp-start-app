@@ -8,17 +8,18 @@ export type { CancelReason };
 export type CancelRtpParams = {
   rtpId: string;
   reason: CancelReason;
+  version?: string;
 };
 
 export const useCancelRtp = () => {
   return useMutation({
     mutationKey: ["cancelRtp"],
-    mutationFn: ({ rtpId, reason }: CancelRtpParams) =>
+    mutationFn: ({ rtpId, reason, version = "v1" }: CancelRtpParams) =>
       client.api.rtps.cancelRtp(
         { resourceId: rtpId, reason },
         {
           headers: {
-            version: "v1",
+            version,
             requestId: uuidv4(),
           },
         }
