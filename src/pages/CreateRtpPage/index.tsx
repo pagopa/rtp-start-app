@@ -24,7 +24,7 @@ export const CreateRtpPage = () => {
   const { mutate, isPending, isError } = useRtps();
   const navigate = useNavigate();
 
-  const onSubmit = (data: CreateRtp) => {
+  const onSubmit = (data: CreateRtp, version: string) => {
     const formattedData: CreateRtp = {
       ...data,
       paymentNotice: {
@@ -33,7 +33,7 @@ export const CreateRtpPage = () => {
       },
     };
 
-    mutate(formattedData, {
+    mutate({ data: formattedData, version }, {
       onSuccess: (response: AxiosResponse) => {
         const location = response.headers['location'];
         const rtpId = getRtpIdFromLocationHeader(location);
@@ -90,23 +90,38 @@ export const CreateRtpPage = () => {
             {t("CreateRtpPage.error")}
           </Alert>
         )}
-        <LoadingButton
-          type="submit"
-          variant="contained"
-          color="primary"
-          disabled={isPending}
-          loading={isPending}
-          sx={{
-            alignSelf: md ? "flex-end" : "center",
-            height: "100%",
-            display: "inline-block",
-            width: md ? "auto" : "fit-content",
-            minHeight: "50px"
-          }}
-          onClick={handleSubmit(onSubmit)}
-        >
-          {t("CreateRtpPage.submitButton")}
-        </LoadingButton>
+        <Stack direction={md ? "column" : "row"} gap={2} sx={{ width: md ? "100%" : "auto" }}>
+          <LoadingButton
+            type="button"
+            variant="outlined"
+            color="primary"
+            disabled={isPending}
+            loading={isPending}
+            sx={{
+              height: "100%",
+              minHeight: "50px",
+              width: md ? "100%" : "auto"
+            }}
+            onClick={handleSubmit((data) => onSubmit(data, "v1"))}
+          >
+            {t("CreateRtpPage.submitButtonV3")}
+          </LoadingButton>
+          <LoadingButton
+            type="button"
+            variant="contained"
+            color="primary"
+            disabled={isPending}
+            loading={isPending}
+            sx={{
+              height: "100%",
+              minHeight: "50px",
+              width: md ? "100%" : "auto"
+            }}
+            onClick={handleSubmit((data) => onSubmit(data, "v2"))}
+          >
+            {t("CreateRtpPage.submitButtonV4")}
+          </LoadingButton>
+        </Stack>
       </Stack>
     </Stack>
   );

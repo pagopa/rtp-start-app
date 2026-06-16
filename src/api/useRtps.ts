@@ -8,10 +8,10 @@ import { CONTENT_TYPE } from "src/models/Requests";
 export const useRtps = () => {
   const rtp = useMutation({
     mutationKey: ["createRtp"],
-    mutationFn: async (data: CreateRtp) =>
+    mutationFn: async ({ data, version = "v1" }: { data: CreateRtp; version?: string }) =>
       await client.api.rtps.createRtp(data, {
         headers: {
-          version: "v1",
+          version,
           requestId: uuidv4(),
           "content-type": CONTENT_TYPE.JSON,
         },

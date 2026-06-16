@@ -38,7 +38,8 @@
 		"expiryDateLabel": "Data di scadenza",
 		"subjectLabel": "Oggetto del pagamento",
 		"descriptionLabel": "Descrizione del pagamento",
-		"submitButton": "Crea richiesta",
+		"submitButtonV3": "Invia RTP v3.2",
+		"submitButtonV4": "Invia RTP v4.0",
 		"rtpCreatedSuccess": "RTP creata con successo!",
 		"rtpCreationFailed": "Creazione RTP fallita",
 		"textHelper": {
