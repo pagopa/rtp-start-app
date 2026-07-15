@@ -131,7 +131,7 @@
 			"button": "Crea nuova richiesta"
 		},
 		"deleted": {
-			"title": "La richiesta è stata cancellata ",
+			"title": "La richiesta di cancellazione è stata inviata con successo ",
 			"body": "",
 			"button": "Crea nuova richiesta",
 			"deleteButton": ""
