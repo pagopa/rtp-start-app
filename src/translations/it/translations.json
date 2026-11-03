@@ -25,6 +25,8 @@
 		"formTitle": "Compila la richiesta con le informazioni necessarie",
 		"formDescription": "La creazione di una RTP permette di inviare una richiesta di pagamento direttamente al destinatario, in sostituzione dell’avviso cartaceo o digitale.",
 		"documentationButton": "Dubbi? Vai alla documentazione",
+		"statusUpdateButton": "Status Update",
+		"statusUpdateCancelButton": "Status Update Cancel",
 		"payeeSectionTitle": "Ente Creditore",
 		"payerSectionTitle": "Destinatario",
 		"paymentNoticeSectionTitle": "Dati avviso di pagamento",
@@ -95,6 +97,31 @@
 	},
 	"CancelRtp": {
 		"error": "Errore durante la cancellazione della richiesta di pagamento"
+	},
+	"StatusUpdatePage": {
+		"statusUpdate": {
+			"title": "Status Update",
+			"description": "Richiedi l'aggiornamento dello stato di una richiesta di pagamento (SRTP)",
+			"submitButton": "Invia Status Update v4.0"
+		},
+		"statusUpdateCancel": {
+			"title": "Status Update Cancel",
+			"description": "Richiedi l'aggiornamento dello stato di una richiesta di cancellazione (SRTP)",
+			"submitButton": "Invia Status Update Cancel v4.0"
+		},
+		"epcNotice": "Funzionalità disponibile solo per EPC 4.0",
+		"resourceIdLabel": "Resource ID",
+		"backButton": "Torna alla creazione",
+		"success": "Richiesta inviata con successo per la risorsa {{resourceId}}",
+		"reason": "Reason code: {{reason}}",
+		"noReason": "Nessun reason code restituito",
+		"error": "Errore durante l'invio della richiesta di status update",
+		"validation": {
+			"resourceId": {
+				"required": "Il Resource ID è obbligatorio",
+				"uuid": "Il Resource ID deve essere un UUID valido"
+			}
+		}
 	},
 	"KO": {
 		"default": {

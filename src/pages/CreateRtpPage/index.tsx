@@ -53,10 +53,33 @@ export const CreateRtpPage = () => {
 
   return (
     <Stack p={3} gap={3} component="form">
-      <PageTitle
-        title={t("CreateRtpPage.title")}
-        description={t("CreateRtpPage.description")}
-      />
+      <Stack
+        direction={md ? "column" : "row"}
+        justifyContent="space-between"
+        alignItems={md ? "stretch" : "flex-start"}
+        gap={2}
+      >
+        <PageTitle
+          title={t("CreateRtpPage.title")}
+          description={t("CreateRtpPage.description")}
+        />
+        <Stack direction={md ? "column" : "row"} gap={2}>
+          <Button
+            type="button"
+            variant="outlined"
+            onClick={() => navigate({ to: "/status-update" })}
+          >
+            {t("CreateRtpPage.statusUpdateButton")}
+          </Button>
+          <Button
+            type="button"
+            variant="outlined"
+            onClick={() => navigate({ to: "/status-update/cancel" })}
+          >
+            {t("CreateRtpPage.statusUpdateCancelButton")}
+          </Button>
+        </Stack>
+      </Stack>
       <Stack p={3} gap={3} bgcolor="background.paper">
         <Stack justifyContent="flex-start" gap={1}>
           <Typography variant="h6" component="h2">
