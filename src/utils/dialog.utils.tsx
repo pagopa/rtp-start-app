@@ -2,6 +2,7 @@ import i18next from "i18next";
 import { ReactNode } from "react";
 import DialogRtpDelete from "src/components/Dialogs/DialogRtpDelete";
 import { CancelReason } from "generated/apiClient";
+import { RtpVersion } from "src/models/RtpVersion";
 
 export enum DialogType {
   DELETE = 'delete',
@@ -12,7 +13,7 @@ export type DialogData = {
   content: ReactNode;
 };
 
-export function getDialogData(dialogType: string, rtpId?: string, reason?: CancelReason, version?: string): DialogData {
+export function getDialogData(dialogType: string, rtpId?: string, reason?: CancelReason, version?: RtpVersion): DialogData {
   switch (dialogType) {
   case DialogType.DELETE:
     return {

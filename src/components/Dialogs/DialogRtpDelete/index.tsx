@@ -6,11 +6,12 @@ import { CancelReason } from "generated/apiClient";
 import { useCancelRtp } from "src/api/useCancelRtp";
 import { useDialog } from "src/stores/dialog.store";
 import useMessageStore from "src/stores/message.store";
+import { RtpVersion } from "src/models/RtpVersion";
 
 export type DialogRtpDeleteProps = {
     rtpId: string;
     reason: CancelReason;
-    version: string;
+    version: RtpVersion;
 }
 
 export default function DialogRtpDelete({rtpId, reason, version}: DialogRtpDeleteProps) {
@@ -26,7 +27,7 @@ export default function DialogRtpDelete({rtpId, reason, version}: DialogRtpDelet
       onSuccess: () => {
         setMessageStatus("deleted");
         closeDialog();
-        navigate({to: "/ok"});
+        navigate({ to: "/ok", search: { rtpId, version } });
       },
     });
   };

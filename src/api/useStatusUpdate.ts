@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import { AxiosError, AxiosResponse } from "axios";
 import { RtpStatusUpdateCancelResult, RtpStatusUpdateResult } from "generated/apiClient";
 import { CONTENT_TYPE } from "src/models/Requests";
+import { RtpVersion } from "src/models/RtpVersion";
 
 export type StatusUpdateType = "statusUpdate" | "statusUpdateCancel";
 
@@ -11,8 +12,8 @@ export type StatusUpdateParams = {
   resourceId: string;
 };
 
-// Status update is available only for EPC 4.0, which maps to API version v2
-export const STATUS_UPDATE_VERSION = "v2";
+// Status update is available only for EPC 4.0
+export const STATUS_UPDATE_VERSION = RtpVersion.V4;
 
 export const useStatusUpdate = (type: StatusUpdateType) => {
   return useMutation({

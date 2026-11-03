@@ -13,30 +13,30 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as OkImport } from './routes/ok'
 import { Route as LoginImport } from './routes/login'
 import { Route as IndexImport } from './routes/index'
 import { Route as StatusUpdateIndexImport } from './routes/status-update.index'
 import { Route as StatusUpdateCancelImport } from './routes/status-update.cancel'
+import { Route as IdOkImport } from './routes/$id.ok'
 
 // Create Virtual Routes
 
-const OkLazyImport = createFileRoute('/ok')()
 const KoLazyImport = createFileRoute('/ko')()
-const IdOkLazyImport = createFileRoute('/$id/ok')()
 
 // Create/Update Routes
-
-const OkLazyRoute = OkLazyImport.update({
-  id: '/ok',
-  path: '/ok',
-  getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/ok.lazy').then((d) => d.Route))
 
 const KoLazyRoute = KoLazyImport.update({
   id: '/ko',
   path: '/ko',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/ko.lazy').then((d) => d.Route))
+
+const OkRoute = OkImport.update({
+  id: '/ok',
+  path: '/ok',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/ok.lazy').then((d) => d.Route))
 
 const LoginRoute = LoginImport.update({
   id: '/login',
@@ -56,17 +56,17 @@ const StatusUpdateIndexRoute = StatusUpdateIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const IdOkLazyRoute = IdOkLazyImport.update({
-  id: '/$id/ok',
-  path: '/$id/ok',
-  getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/$id.ok.lazy').then((d) => d.Route))
-
 const StatusUpdateCancelRoute = StatusUpdateCancelImport.update({
   id: '/status-update/cancel',
   path: '/status-update/cancel',
   getParentRoute: () => rootRoute,
 } as any)
+
+const IdOkRoute = IdOkImport.update({
+  id: '/$id/ok',
+  path: '/$id/ok',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/$id.ok.lazy').then((d) => d.Route))
 
 // Populate the FileRoutesByPath interface
 
@@ -86,6 +86,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginImport
       parentRoute: typeof rootRoute
     }
+    '/ok': {
+      id: '/ok'
+      path: '/ok'
+      fullPath: '/ok'
+      preLoaderRoute: typeof OkImport
+      parentRoute: typeof rootRoute
+    }
     '/ko': {
       id: '/ko'
       path: '/ko'
@@ -93,11 +100,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof KoLazyImport
       parentRoute: typeof rootRoute
     }
-    '/ok': {
-      id: '/ok'
-      path: '/ok'
-      fullPath: '/ok'
-      preLoaderRoute: typeof OkLazyImport
+    '/$id/ok': {
+      id: '/$id/ok'
+      path: '/$id/ok'
+      fullPath: '/$id/ok'
+      preLoaderRoute: typeof IdOkImport
       parentRoute: typeof rootRoute
     }
     '/status-update/cancel': {
@@ -105,13 +112,6 @@ declare module '@tanstack/react-router' {
       path: '/status-update/cancel'
       fullPath: '/status-update/cancel'
       preLoaderRoute: typeof StatusUpdateCancelImport
-      parentRoute: typeof rootRoute
-    }
-    '/$id/ok': {
-      id: '/$id/ok'
-      path: '/$id/ok'
-      fullPath: '/$id/ok'
-      preLoaderRoute: typeof IdOkLazyImport
       parentRoute: typeof rootRoute
     }
     '/status-update/': {
@@ -129,20 +129,20 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
+  '/ok': typeof OkRoute
   '/ko': typeof KoLazyRoute
-  '/ok': typeof OkLazyRoute
+  '/$id/ok': typeof IdOkRoute
   '/status-update/cancel': typeof StatusUpdateCancelRoute
-  '/$id/ok': typeof IdOkLazyRoute
   '/status-update': typeof StatusUpdateIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
+  '/ok': typeof OkRoute
   '/ko': typeof KoLazyRoute
-  '/ok': typeof OkLazyRoute
+  '/$id/ok': typeof IdOkRoute
   '/status-update/cancel': typeof StatusUpdateCancelRoute
-  '/$id/ok': typeof IdOkLazyRoute
   '/status-update': typeof StatusUpdateIndexRoute
 }
 
@@ -150,10 +150,10 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
+  '/ok': typeof OkRoute
   '/ko': typeof KoLazyRoute
-  '/ok': typeof OkLazyRoute
+  '/$id/ok': typeof IdOkRoute
   '/status-update/cancel': typeof StatusUpdateCancelRoute
-  '/$id/ok': typeof IdOkLazyRoute
   '/status-update/': typeof StatusUpdateIndexRoute
 }
 
@@ -162,28 +162,28 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/login'
-    | '/ko'
     | '/ok'
-    | '/status-update/cancel'
+    | '/ko'
     | '/$id/ok'
+    | '/status-update/cancel'
     | '/status-update'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/login'
-    | '/ko'
     | '/ok'
-    | '/status-update/cancel'
+    | '/ko'
     | '/$id/ok'
+    | '/status-update/cancel'
     | '/status-update'
   id:
     | '__root__'
     | '/'
     | '/login'
-    | '/ko'
     | '/ok'
-    | '/status-update/cancel'
+    | '/ko'
     | '/$id/ok'
+    | '/status-update/cancel'
     | '/status-update/'
   fileRoutesById: FileRoutesById
 }
@@ -191,20 +191,20 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LoginRoute: typeof LoginRoute
+  OkRoute: typeof OkRoute
   KoLazyRoute: typeof KoLazyRoute
-  OkLazyRoute: typeof OkLazyRoute
+  IdOkRoute: typeof IdOkRoute
   StatusUpdateCancelRoute: typeof StatusUpdateCancelRoute
-  IdOkLazyRoute: typeof IdOkLazyRoute
   StatusUpdateIndexRoute: typeof StatusUpdateIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LoginRoute: LoginRoute,
+  OkRoute: OkRoute,
   KoLazyRoute: KoLazyRoute,
-  OkLazyRoute: OkLazyRoute,
+  IdOkRoute: IdOkRoute,
   StatusUpdateCancelRoute: StatusUpdateCancelRoute,
-  IdOkLazyRoute: IdOkLazyRoute,
   StatusUpdateIndexRoute: StatusUpdateIndexRoute,
 }
 
@@ -220,10 +220,10 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/login",
-        "/ko",
         "/ok",
-        "/status-update/cancel",
+        "/ko",
         "/$id/ok",
+        "/status-update/cancel",
         "/status-update/"
       ]
     },
@@ -233,17 +233,17 @@ export const routeTree = rootRoute
     "/login": {
       "filePath": "login.tsx"
     },
+    "/ok": {
+      "filePath": "ok.tsx"
+    },
     "/ko": {
       "filePath": "ko.lazy.tsx"
     },
-    "/ok": {
-      "filePath": "ok.lazy.tsx"
+    "/$id/ok": {
+      "filePath": "$id.ok.tsx"
     },
     "/status-update/cancel": {
       "filePath": "status-update.cancel.tsx"
-    },
-    "/$id/ok": {
-      "filePath": "$id.ok.lazy.tsx"
     },
     "/status-update/": {
       "filePath": "status-update.index.tsx"

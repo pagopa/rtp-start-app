@@ -11,13 +11,15 @@ import { getValidationSchema } from "./resolver";
 
 type StatusUpdatePageProps = {
   type: StatusUpdateType;
+  defaultResourceId?: string;
 };
 
-export const StatusUpdatePage = ({ type }: StatusUpdatePageProps) => {
+export const StatusUpdatePage = ({ type, defaultResourceId }: StatusUpdatePageProps) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { control, handleSubmit } = useForm<StatusUpdateParams>({
     resolver: yupResolver(getValidationSchema()),
+    defaultValues: { resourceId: defaultResourceId ?? "" },
   });
   const { mutate, isPending, isError, isSuccess, data, reset } = useStatusUpdate(type);
 

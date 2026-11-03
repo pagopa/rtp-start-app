@@ -4,6 +4,7 @@ import { describe, it, expect, beforeEach } from 'vitest';
 import { getDialogData, DialogType } from '../dialog.utils';
 import { CancelReason } from 'generated/apiClient';
 import React from 'react';
+import { RtpVersion } from 'src/models/RtpVersion';
 
 describe('getDialogData', () => {
   beforeEach(() => {
@@ -15,7 +16,7 @@ describe('getDialogData', () => {
   it('should return correct data for DELETE dialog type', () => {
     const rtpId = '123';
     const reason = CancelReason.MODT;
-    const version = 'v1';
+    const version = RtpVersion.V3;
     const result = getDialogData(DialogType.DELETE, rtpId, reason, version);
 
     expect(result.title).toBe('Eliminazione in corso...');
