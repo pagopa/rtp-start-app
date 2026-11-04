@@ -1,11 +1,11 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import { RtpVersion } from "src/models/RtpVersion";
-import { MessageStatus } from "src/stores/message.store";
+import useMessageStore from "src/stores/message.store";
+import { OkResult } from "src/models/OkResult";
 import OKPage from ".";
 
 const useSearchMock = vi.fn();
-let messageStatus: MessageStatus = "default";
 
 vi.mock("@tanstack/react-router", () => ({
   useNavigate: () => vi.fn(),
@@ -17,10 +17,6 @@ vi.mock("react-i18next", () => ({
     t: (key: string, params?: Record<string, string>) =>
       params ? `${key} ${JSON.stringify(params)}` : key,
   }),
-}));
-
-vi.mock("src/stores/message.store", () => ({
-  default: () => ({ messageStatus }),
 }));
 
 vi.mock("src/components/CopyClipboard", () => ({
@@ -35,9 +31,8 @@ vi.mock("src/components/StatusUpdateButton", () => ({
 
 const RTP_ID = "588a3f73-02c3-4fd4-b2bf-5dfa1a17c3bc";
 
-const renderPage = (status: MessageStatus, search: Record<string, string | undefined> = {}) => {
-  messageStatus = status;
-  useSearchMock.mockReturnValue(search);
+const renderPage = (result: OkResult | undefined, search: Record<string, string | undefined> = {}) => {
+  useSearchMock.mockReturnValue({ result, ...search });
   return render(<OKPage />);
 };
 
@@ -87,5 +82,23 @@ describe("OKPage", () => {
     renderPage(status, search);
 
     expect(screen.queryByTestId("status-update-button")).not.toBeInTheDocument();
+  });
+
+  it("defaults to the generic success page when the URL has no result", () => {
+    renderPage(undefined);
+
+    expect(screen.getByText("OK.default.title")).toBeInTheDocument();
+  });
+
+  // The API interceptor resets the message store on every failed request (e.g. a 404 on
+  // Status Update Cancel): the page must keep showing the cancellation and the retry button
+  it("keeps the cancellation page when a failed request resets the message store", () => {
+    renderPage("deleted", { rtpId: RTP_ID, version: RtpVersion.V4 });
+
+    act(() => useMessageStore.getState().setMessageStatus("default"));
+
+    expect(screen.getByText("OK.deleted.title")).toBeInTheDocument();
+    expect(screen.queryByText("OK.default.title")).not.toBeInTheDocument();
+    expect(screen.getByTestId("status-update-button")).toBeInTheDocument();
   });
 });

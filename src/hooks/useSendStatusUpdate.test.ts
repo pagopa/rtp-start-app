@@ -5,7 +5,6 @@ import { useSendStatusUpdate } from "./useSendStatusUpdate";
 
 const navigateMock = vi.fn();
 const mutateMock = vi.fn();
-const setMessageStatusMock = vi.fn();
 const useStatusUpdateMock = vi.fn();
 
 vi.mock("@tanstack/react-router", () => ({
@@ -14,10 +13,6 @@ vi.mock("@tanstack/react-router", () => ({
 
 vi.mock("src/api/useStatusUpdate", () => ({
   useStatusUpdate: (...args: unknown[]) => useStatusUpdateMock(...args),
-}));
-
-vi.mock("src/stores/message.store", () => ({
-  default: () => ({ setMessageStatus: setMessageStatusMock }),
 }));
 
 const RTP_ID = "588a3f73-02c3-4fd4-b2bf-5dfa1a17c3bc";
@@ -53,15 +48,14 @@ describe("useSendStatusUpdate", () => {
   it.each([
     { type: "statusUpdate" as const, status: "statusUpdated" },
     { type: "statusUpdateCancel" as const, status: "statusUpdateCancelled" },
-  ])("on $type success sets $status and goes to the OK page with the reason code", ({ type, status }) => {
+  ])("on $type success goes to the OK page with result $status and the reason code", ({ type, status }) => {
     const { onSuccess } = sendAndGetCallbacks(type);
 
     onSuccess({ data: { resourceId: RTP_ID, reason: "AC04" } });
 
-    expect(setMessageStatusMock).toHaveBeenCalledWith(status);
     expect(navigateMock).toHaveBeenCalledWith({
       to: "/ok",
-      search: { rtpId: RTP_ID, version: RtpVersion.V4, reason: "AC04" },
+      search: { result: status, rtpId: RTP_ID, version: RtpVersion.V4, reason: "AC04" },
     });
   });
 
@@ -72,7 +66,7 @@ describe("useSendStatusUpdate", () => {
 
     expect(navigateMock).toHaveBeenCalledWith({
       to: "/ok",
-      search: { rtpId: RTP_ID, version: RtpVersion.V4, reason: undefined },
+      search: { result: "statusUpdated", rtpId: RTP_ID, version: RtpVersion.V4, reason: undefined },
     });
   });
 
@@ -93,6 +87,5 @@ describe("useSendStatusUpdate", () => {
     onError(error);
 
     expect(navigateMock).not.toHaveBeenCalled();
-    expect(setMessageStatusMock).not.toHaveBeenCalled();
   });
 });

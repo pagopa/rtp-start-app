@@ -5,7 +5,6 @@ import { Trans, useTranslation } from "react-i18next";
 import { CancelReason } from "generated/apiClient";
 import { useCancelRtp } from "src/api/useCancelRtp";
 import { useDialog } from "src/stores/dialog.store";
-import useMessageStore from "src/stores/message.store";
 import { RtpVersion } from "src/models/RtpVersion";
 
 export type DialogRtpDeleteProps = {
@@ -19,15 +18,13 @@ export default function DialogRtpDelete({rtpId, reason, version}: DialogRtpDelet
   const { closeDialog } = useDialog();
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { setMessageStatus } = useMessageStore();
   const { mutate, isPending, isError } = useCancelRtp();
 
   const handleRtpDeletion = () => {
     mutate({ rtpId, reason, version }, {
       onSuccess: () => {
-        setMessageStatus("deleted");
         closeDialog();
-        navigate({ to: "/ok", search: { rtpId, version } });
+        navigate({ to: "/ok", search: { result: "deleted", rtpId, version } });
       },
     });
   };

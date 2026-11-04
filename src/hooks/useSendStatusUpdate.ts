@@ -1,9 +1,9 @@
 import { useNavigate } from '@tanstack/react-router';
 import { StatusUpdateType, useStatusUpdate } from 'src/api/useStatusUpdate';
 import { RtpVersion } from 'src/models/RtpVersion';
-import useMessageStore, { MessageStatus } from 'src/stores/message.store';
+import { OkResult } from 'src/models/OkResult';
 
-const SUCCESS_STATUS: Record<StatusUpdateType, MessageStatus> = {
+const SUCCESS_RESULT: Record<StatusUpdateType, OkResult> = {
   statusUpdate: 'statusUpdated',
   statusUpdateCancel: 'statusUpdateCancelled',
 };
@@ -11,17 +11,20 @@ const SUCCESS_STATUS: Record<StatusUpdateType, MessageStatus> = {
 // Sends a status update and shows the success page (or the KO page on a server error)
 export const useSendStatusUpdate = (type: StatusUpdateType) => {
   const navigate = useNavigate();
-  const { setMessageStatus } = useMessageStore();
   const { mutate, isPending, isError } = useStatusUpdate(type);
 
   const send = (resourceId: string) =>
     mutate({ resourceId }, {
       onSuccess: (response) => {
-        setMessageStatus(SUCCESS_STATUS[type]);
         navigate({
           to: '/ok',
-          // Status update is available only for EPC 4.0
-          search: { rtpId: resourceId, version: RtpVersion.V4, reason: response.data?.reason ?? undefined },
+          search: {
+            result: SUCCESS_RESULT[type],
+            rtpId: resourceId,
+            // Status update is available only for EPC 4.0
+            version: RtpVersion.V4,
+            reason: response.data?.reason ?? undefined,
+          },
         });
       },
       onError: (error) => {

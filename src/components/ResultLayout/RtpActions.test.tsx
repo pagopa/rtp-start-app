@@ -9,7 +9,6 @@ const navigateMock = vi.fn();
 const openDialogMock = vi.fn();
 const getDialogDataMock = vi.fn();
 const mutateMock = vi.fn();
-const setMessageStatusMock = vi.fn();
 let mutationState = { isPending: false, isError: false };
 
 vi.mock("@tanstack/react-router", () => ({
@@ -22,10 +21,6 @@ vi.mock("src/stores/dialog.store", () => ({
 
 vi.mock("src/api/useStatusUpdate", () => ({
   useStatusUpdate: () => ({ mutate: mutateMock, ...mutationState }),
-}));
-
-vi.mock("src/stores/message.store", () => ({
-  default: () => ({ setMessageStatus: setMessageStatusMock }),
 }));
 
 vi.mock("src/utils/dialog.utils", () => ({
@@ -90,10 +85,9 @@ describe("RtpActions", () => {
 
     mutateMock.mock.calls[0][1].onSuccess({ data: { resourceId: RTP_ID, reason: "AC04" } });
 
-    expect(setMessageStatusMock).toHaveBeenCalledWith("statusUpdated");
     expect(navigateMock).toHaveBeenCalledWith({
       to: "/ok",
-      search: { rtpId: RTP_ID, version: RtpVersion.V4, reason: "AC04" },
+      search: { result: "statusUpdated", rtpId: RTP_ID, version: RtpVersion.V4, reason: "AC04" },
     });
   });
 
