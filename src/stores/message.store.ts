@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 
 export type CodeError = "422" | "504" | "generic";
-export type MessageStatus = "default" | "unauthorized" | "deleted" | "rtpParams";
+export type MessageStatus = "default" | "unauthorized" | "deleted" | "rtpParams" | "statusUpdated" | "statusUpdateCancelled";
 
 export type MessageStore = {
   messageStatus: MessageStatus;

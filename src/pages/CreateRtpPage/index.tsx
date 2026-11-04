@@ -13,6 +13,7 @@ import { getValidationSchema } from "./resolver";
 import { useNavigate } from "@tanstack/react-router";
 import { getRtpIdFromLocationHeader } from "src/utils/headerRtpId.utils";
 import { AxiosResponse } from "axios";
+import { RtpVersion } from "src/models/RtpVersion";
 
 export const CreateRtpPage = () => {
   const theme = useTheme();
@@ -24,7 +25,7 @@ export const CreateRtpPage = () => {
   const { mutate, isPending, isError } = useRtps();
   const navigate = useNavigate();
 
-  const onSubmit = (data: CreateRtp, version: string) => {
+  const onSubmit = (data: CreateRtp, version: RtpVersion) => {
     const formattedData: CreateRtp = {
       ...data,
       paymentNotice: {
@@ -38,7 +39,7 @@ export const CreateRtpPage = () => {
         const location = response.headers['location'];
         const rtpId = getRtpIdFromLocationHeader(location);
         if(rtpId) {
-          navigate({ to: `/${rtpId}/ok` });
+          navigate({ to: "/$id/ok", params: { id: rtpId }, search: { version } });
         } else {
           navigate({ to: "/ok" });
         }
@@ -53,10 +54,33 @@ export const CreateRtpPage = () => {
 
   return (
     <Stack p={3} gap={3} component="form">
-      <PageTitle
-        title={t("CreateRtpPage.title")}
-        description={t("CreateRtpPage.description")}
-      />
+      <Stack
+        direction={md ? "column" : "row"}
+        justifyContent="space-between"
+        alignItems={md ? "stretch" : "flex-start"}
+        gap={2}
+      >
+        <PageTitle
+          title={t("CreateRtpPage.title")}
+          description={t("CreateRtpPage.description")}
+        />
+        <Stack direction={md ? "column" : "row"} gap={2}>
+          <Button
+            type="button"
+            variant="outlined"
+            onClick={() => navigate({ to: "/status-update" })}
+          >
+            {t("CreateRtpPage.statusUpdateButton")}
+          </Button>
+          <Button
+            type="button"
+            variant="outlined"
+            onClick={() => navigate({ to: "/status-update/cancel" })}
+          >
+            {t("CreateRtpPage.statusUpdateCancelButton")}
+          </Button>
+        </Stack>
+      </Stack>
       <Stack p={3} gap={3} bgcolor="background.paper">
         <Stack justifyContent="flex-start" gap={1}>
           <Typography variant="h6" component="h2">
@@ -102,7 +126,7 @@ export const CreateRtpPage = () => {
               minHeight: "50px",
               width: md ? "100%" : "auto"
             }}
-            onClick={handleSubmit((data) => onSubmit(data, "v1"))}
+            onClick={handleSubmit((data) => onSubmit(data, RtpVersion.V3))}
           >
             {t("CreateRtpPage.submitButtonV3")}
           </LoadingButton>
@@ -117,7 +141,7 @@ export const CreateRtpPage = () => {
               minHeight: "50px",
               width: md ? "100%" : "auto"
             }}
-            onClick={handleSubmit((data) => onSubmit(data, "v2"))}
+            onClick={handleSubmit((data) => onSubmit(data, RtpVersion.V4))}
           >
             {t("CreateRtpPage.submitButtonV4")}
           </LoadingButton>
