@@ -1,6 +1,8 @@
-import { Button } from '@mui/material';
-import { useNavigate } from '@tanstack/react-router';
+import { Alert } from '@mui/material';
+import LoadingButton from '@mui/lab/LoadingButton';
+import { useTranslation } from 'react-i18next';
 import { StatusUpdateType } from 'src/api/useStatusUpdate';
+import { useSendStatusUpdate } from 'src/hooks/useSendStatusUpdate';
 
 type StatusUpdateButtonProps = {
   type: StatusUpdateType;
@@ -8,24 +10,28 @@ type StatusUpdateButtonProps = {
   label: string;
 };
 
-const ROUTES = {
-  statusUpdate: '/status-update',
-  statusUpdateCancel: '/status-update/cancel',
-} as const;
-
-// Opens the status update form with the RTP id prefilled
+// Sends the status update right away and shows the success page, like the cancellation flow
 export const StatusUpdateButton = ({ type, rtpId, label }: StatusUpdateButtonProps) => {
-  const navigate = useNavigate();
+  const { t } = useTranslation();
+  const { send, isPending, isError } = useSendStatusUpdate(type);
 
   return (
-    <Button
-      type="button"
-      variant="outlined"
-      fullWidth
-      style={{ minHeight: 45 }}
-      onClick={() => navigate({ to: ROUTES[type], search: { resourceId: rtpId } })}
-    >
-      {label}
-    </Button>
+    <>
+      <LoadingButton
+        type="button"
+        variant="outlined"
+        fullWidth
+        style={{ minHeight: 45 }}
+        loading={isPending}
+        onClick={() => send(rtpId)}
+      >
+        {label}
+      </LoadingButton>
+      {isError && (
+        <Alert variant="outlined" severity="error">
+          {t('StatusUpdatePage.error')}
+        </Alert>
+      )}
+    </>
   );
 };

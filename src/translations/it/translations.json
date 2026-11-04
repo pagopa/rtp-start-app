@@ -112,9 +112,6 @@
 		"epcNotice": "Funzionalità disponibile solo per EPC 4.0",
 		"resourceIdLabel": "Resource ID",
 		"backButton": "Torna alla creazione",
-		"success": "Richiesta inviata con successo per la risorsa {{resourceId}}",
-		"reason": "Reason code: {{reason}}",
-		"noReason": "Nessun reason code restituito",
 		"error": "Errore durante l'invio della richiesta di status update",
 		"validation": {
 			"resourceId": {
@@ -164,6 +161,22 @@
 			"button": "Crea nuova richiesta",
 			"deleteButton": "",
 			"statusUpdateCancelButtonV4": "Status Update Cancel v4.0"
+		},
+		"statusUpdated": {
+			"title": "La richiesta di Status Update è stata inviata con successo!",
+			"body": "",
+			"button": "Crea nuova richiesta",
+			"deleteButton": "",
+			"reason": "Reason code: {{reason}}",
+			"noReason": "Nessun reason code restituito"
+		},
+		"statusUpdateCancelled": {
+			"title": "La richiesta di Status Update Cancel è stata inviata con successo!",
+			"body": "",
+			"button": "Crea nuova richiesta",
+			"deleteButton": "",
+			"reason": "Reason code: {{reason}}",
+			"noReason": "Nessun reason code restituito"
 		}
 	},
 	"Footer": {

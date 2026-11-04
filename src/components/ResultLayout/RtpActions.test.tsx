@@ -8,6 +8,9 @@ import { RtpActions } from "./RtpActions";
 const navigateMock = vi.fn();
 const openDialogMock = vi.fn();
 const getDialogDataMock = vi.fn();
+const mutateMock = vi.fn();
+const setMessageStatusMock = vi.fn();
+let mutationState = { isPending: false, isError: false };
 
 vi.mock("@tanstack/react-router", () => ({
   useNavigate: () => navigateMock,
@@ -15,6 +18,14 @@ vi.mock("@tanstack/react-router", () => ({
 
 vi.mock("src/stores/dialog.store", () => ({
   useDialog: () => ({ openDialog: openDialogMock }),
+}));
+
+vi.mock("src/api/useStatusUpdate", () => ({
+  useStatusUpdate: () => ({ mutate: mutateMock, ...mutationState }),
+}));
+
+vi.mock("src/stores/message.store", () => ({
+  default: () => ({ setMessageStatus: setMessageStatusMock }),
 }));
 
 vi.mock("src/utils/dialog.utils", () => ({
@@ -27,6 +38,7 @@ const RTP_ID = "588a3f73-02c3-4fd4-b2bf-5dfa1a17c3bc";
 describe("RtpActions", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    mutationState = { isPending: false, isError: false };
   });
 
   it("shows only the v3.2 cancel buttons for an RTP sent with v3.2", () => {
@@ -63,14 +75,41 @@ describe("RtpActions", () => {
     expect(openDialogMock).toHaveBeenCalled();
   });
 
-  it("navigates to the status update form with the RTP id prefilled", () => {
+  it("sends the status update with the RTP id when clicking Status Update", () => {
     render(<RtpActions rtpId={RTP_ID} version={RtpVersion.V4} />);
 
     fireEvent.click(screen.getByText("OK.rtpParams.statusUpdateButtonV4"));
 
+    expect(mutateMock).toHaveBeenCalledWith({ resourceId: RTP_ID }, expect.any(Object));
+    expect(navigateMock).not.toHaveBeenCalled();
+  });
+
+  it("navigates to the success page with the reason code on success", () => {
+    render(<RtpActions rtpId={RTP_ID} version={RtpVersion.V4} />);
+    fireEvent.click(screen.getByText("OK.rtpParams.statusUpdateButtonV4"));
+
+    mutateMock.mock.calls[0][1].onSuccess({ data: { resourceId: RTP_ID, reason: "AC04" } });
+
+    expect(setMessageStatusMock).toHaveBeenCalledWith("statusUpdated");
     expect(navigateMock).toHaveBeenCalledWith({
-      to: "/status-update",
-      search: { resourceId: RTP_ID },
+      to: "/ok",
+      search: { rtpId: RTP_ID, version: RtpVersion.V4, reason: "AC04" },
     });
+  });
+
+  it("navigates to the KO page on a server error", () => {
+    render(<RtpActions rtpId={RTP_ID} version={RtpVersion.V4} />);
+    fireEvent.click(screen.getByText("OK.rtpParams.statusUpdateButtonV4"));
+
+    mutateMock.mock.calls[0][1].onError({ response: { status: 500 } });
+
+    expect(navigateMock).toHaveBeenCalledWith({ to: "/ko" });
+  });
+
+  it("shows an error alert when the status update fails", () => {
+    mutationState = { isPending: false, isError: true };
+    render(<RtpActions rtpId={RTP_ID} version={RtpVersion.V4} />);
+
+    expect(screen.getByText("StatusUpdatePage.error")).toBeInTheDocument();
   });
 });

@@ -6,7 +6,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslation } from "react-i18next";
 import { PageTitle } from "src/components/PageTitle";
 import { FormField } from "src/components/FormField";
-import { StatusUpdateParams, StatusUpdateType, useStatusUpdate } from "src/api/useStatusUpdate";
+import { StatusUpdateParams, StatusUpdateType } from "src/api/useStatusUpdate";
+import { useSendStatusUpdate } from "src/hooks/useSendStatusUpdate";
 import { getValidationSchema } from "./resolver";
 
 type StatusUpdatePageProps = {
@@ -21,20 +22,9 @@ export const StatusUpdatePage = ({ type, defaultResourceId }: StatusUpdatePagePr
     resolver: yupResolver(getValidationSchema()),
     defaultValues: { resourceId: defaultResourceId ?? "" },
   });
-  const { mutate, isPending, isError, isSuccess, data, reset } = useStatusUpdate(type);
+  const { send, isPending, isError } = useSendStatusUpdate(type);
 
-  const onSubmit = (params: StatusUpdateParams) => {
-    reset();
-    mutate(params, {
-      onError: (error) => {
-        if (error?.response?.status && error.response.status >= 500) {
-          navigate({ to: "/ko" });
-        }
-      },
-    });
-  };
-
-  const result = data?.data;
+  const onSubmit = ({ resourceId }: StatusUpdateParams) => send(resourceId);
 
   return (
     <Stack p={3} gap={3}>
@@ -61,18 +51,6 @@ export const StatusUpdatePage = ({ type, defaultResourceId }: StatusUpdatePagePr
         {isError && (
           <Alert variant="outlined" severity="error">
             {t("StatusUpdatePage.error")}
-          </Alert>
-        )}
-        {isSuccess && result && (
-          <Alert variant="outlined" severity="success">
-            <Typography variant="body2">
-              {t("StatusUpdatePage.success", { resourceId: result.resourceId })}
-            </Typography>
-            <Typography variant="body2" fontWeight={600}>
-              {result.reason
-                ? t("StatusUpdatePage.reason", { reason: result.reason })
-                : t("StatusUpdatePage.noReason")}
-            </Typography>
           </Alert>
         )}
         <Stack direction="row" justifyContent="flex-end">

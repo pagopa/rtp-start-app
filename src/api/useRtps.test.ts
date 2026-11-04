@@ -37,42 +37,53 @@ describe('useRtps', () => {
     });
   });
 
-  it('should call client.api.rtps.createRtp with the correct parameters', async () => {
-    const testData: CreateRtp = {
-      payee: {
-        payeeId: '77777777777', // Valid PayeeId
-        name: 'Comune di Roma',
-        payTrxRef: 'ABC/124',
-      },
-      payer: {
-        payerId: 'ABCDEF12G34H567I', // Valid PayerId
-        name: 'Mario Rossi',
-      },
-      paymentNotice: {
-        noticeNumber: '311111111112222222', // Valid NoticeNumber
-        amount: 10000, // Valid AmountEuroCents
-        description: 'Payment for TARI 2025',
-        subject: 'TARI 2025',
-        expiryDate: '2024-12-03', // Valid ISO 8601 date
-      },
-    };
+  const testData: CreateRtp = {
+    payee: {
+      payeeId: '77777777777', // Valid PayeeId
+      name: 'Comune di Roma',
+      payTrxRef: 'ABC/124',
+    },
+    payer: {
+      payerId: 'ABCDEF12G34H567I', // Valid PayerId
+      name: 'Mario Rossi',
+    },
+    paymentNotice: {
+      noticeNumber: '311111111112222222', // Valid NoticeNumber
+      amount: 10000, // Valid AmountEuroCents
+      description: 'Payment for TARI 2025',
+      subject: 'TARI 2025',
+      expiryDate: '2024-12-03', // Valid ISO 8601 date
+    },
+  };
 
+  const expectedOptions = (version: string) => ({
+    headers: {
+      version,
+      requestId: MOCKED_UUID,
+      'content-type': 'application/json',
+    },
+  });
+
+  it('should call client.api.rtps.createRtp with the v1 (EPC 3.2) version by default', async () => {
     useRtps();
 
     // Get the mutation function passed to useMutation
     const mutationFn = (useMutation as Mock).mock.calls[0][0].mutationFn;
 
-    // Call the mutation function with test data
-    await mutationFn(testData);
+    // Call the mutation function with test data and no version
+    await mutationFn({ data: testData });
 
-    // Verify that client.api.rtps.createRtp was called with the correct parameters
-    expect(client.api.rtps.createRtp).toHaveBeenCalledWith(testData, {
-      headers: {
-        version: 'v1',
-        requestId: MOCKED_UUID,
-        'content-type': 'application/json',
-      },
-    });
+    expect(client.api.rtps.createRtp).toHaveBeenCalledWith(testData, expectedOptions('v1'));
+  });
+
+  it('should call client.api.rtps.createRtp with the given version', async () => {
+    useRtps();
+
+    const mutationFn = (useMutation as Mock).mock.calls[0][0].mutationFn;
+
+    await mutationFn({ data: testData, version: 'v2' });
+
+    expect(client.api.rtps.createRtp).toHaveBeenCalledWith(testData, expectedOptions('v2'));
   });
 
   it('should return the result of useMutation', () => {
@@ -93,6 +104,6 @@ describe('useRtps', () => {
     const mutationFn = (useMutation as Mock).mock.calls[0][0].mutationFn;
 
     // Call the mutation function and expect it to throw
-    await expect(mutationFn({} as CreateRtp)).rejects.toThrow(error);
+    await expect(mutationFn({ data: {} as CreateRtp })).rejects.toThrow(error);
   });
 });

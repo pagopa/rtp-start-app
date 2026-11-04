@@ -10,7 +10,8 @@ export const getValidationSchema = () => {
     resourceId: yup
       .string()
       .trim()
-      .uuid(t('StatusUpdatePage.validation.resourceId.uuid'))
-      .required(t('StatusUpdatePage.validation.resourceId.required')),
+      // required first, so an empty field shows "required" instead of "invalid UUID"
+      .required(t('StatusUpdatePage.validation.resourceId.required'))
+      .uuid(t('StatusUpdatePage.validation.resourceId.uuid')),
   });
 };
