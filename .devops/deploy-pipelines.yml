@@ -79,6 +79,8 @@ stages:
               scriptLocation: inlineScript
               inlineScript: |
                 az storage blob sync --container '$web' --account-name $(DEV_STORAGE_ACCOUNT_NAME) --source "$(Pipeline.Workspace)/Bundle"
+                # index.html must always be revalidated, otherwise browsers keep a stale copy pointing to deleted chunks
+                az storage blob update --container-name '$web' --account-name $(DEV_STORAGE_ACCOUNT_NAME) --name index.html --content-cache-control "no-cache, must-revalidate"
 
           - task: AzureCLI@1
             displayName: 'Purge CDN endpoint'
@@ -144,6 +146,8 @@ stages:
               scriptLocation: inlineScript
               inlineScript: |
                 az storage blob sync --container '$web' --account-name $(UAT_STORAGE_ACCOUNT_NAME) --source "$(Pipeline.Workspace)/Bundle_UAT"
+                # index.html must always be revalidated, otherwise browsers keep a stale copy pointing to deleted chunks
+                az storage blob update --container-name '$web' --account-name $(UAT_STORAGE_ACCOUNT_NAME) --name index.html --content-cache-control "no-cache, must-revalidate"
 
           - task: AzureCLI@1
             displayName: 'Purge CDN endpoint'
@@ -222,6 +226,8 @@ stages:
               scriptLocation: inlineScript
               inlineScript: |
                 az storage blob sync --container '$web' --account-name $(PROD_STORAGE_ACCOUNT_NAME) --source "$(Pipeline.Workspace)/Bundle_PROD"
+                # index.html must always be revalidated, otherwise browsers keep a stale copy pointing to deleted chunks
+                az storage blob update --container-name '$web' --account-name $(PROD_STORAGE_ACCOUNT_NAME) --name index.html --content-cache-control "no-cache, must-revalidate"
 
           - task: AzureCLI@1
             displayName: 'Purge CDN endpoint'
