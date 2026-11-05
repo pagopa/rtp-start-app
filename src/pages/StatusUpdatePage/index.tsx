@@ -1,4 +1,4 @@
-import { Alert, Button, Stack, Typography } from "@mui/material";
+import { Alert, Button, Divider, Stack, Typography } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { useNavigate } from "@tanstack/react-router";
 import { useForm } from "react-hook-form";
@@ -9,6 +9,7 @@ import { FormField } from "src/components/FormField";
 import { StatusUpdateParams, StatusUpdateType } from "src/api/useStatusUpdate";
 import { useSendStatusUpdate } from "src/hooks/useSendStatusUpdate";
 import { getValidationSchema } from "./resolver";
+import { CancelRequestStep } from "./CancelRequestStep";
 
 type StatusUpdatePageProps = {
   type: StatusUpdateType;
@@ -25,6 +26,10 @@ export const StatusUpdatePage = ({ type, defaultResourceId }: StatusUpdatePagePr
   const { send, isPending, isError } = useSendStatusUpdate(type);
 
   const onSubmit = ({ resourceId }: StatusUpdateParams) => send(resourceId);
+  const isCancel = type === "statusUpdateCancel";
+
+  const withValidResourceId = (callback: (resourceId: string) => void) =>
+    handleSubmit(({ resourceId }) => callback(resourceId))();
 
   return (
     <Stack p={3} gap={3}>
@@ -48,6 +53,16 @@ export const StatusUpdatePage = ({ type, defaultResourceId }: StatusUpdatePagePr
           isUppercase={false}
           autocompleteOff
         />
+        {isCancel && (
+          <>
+            <Alert variant="outlined" severity="warning">
+              {t("StatusUpdatePage.statusUpdateCancel.cancelRequiredNotice")}
+            </Alert>
+            <CancelRequestStep withValidResourceId={withValidResourceId} />
+            <Divider />
+            <Typography variant="h6">{t("StatusUpdatePage.statusUpdateCancel.stepTitle")}</Typography>
+          </>
+        )}
         {isError && (
           <Alert variant="outlined" severity="error">
             {t("StatusUpdatePage.error")}
