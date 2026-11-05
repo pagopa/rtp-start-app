@@ -12,6 +12,7 @@ describe('handlePreloadError', () => {
 
   afterEach(() => {
     vi.useRealTimers();
+    vi.restoreAllMocks();
   });
 
   it('reloads the page and prevents the error', () => {
@@ -44,5 +45,31 @@ describe('handlePreloadError', () => {
     handlePreloadError(createEvent(), reload);
 
     expect(reload).toHaveBeenCalledTimes(2);
+  });
+
+  it('does not reload when the guard cannot be saved', () => {
+    vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
+      throw new Error('storage blocked');
+    });
+    const reload = vi.fn();
+    const event = createEvent();
+
+    handlePreloadError(event, reload);
+
+    expect(reload).not.toHaveBeenCalled();
+    expect(event.defaultPrevented).toBe(false);
+  });
+
+  it('does not reload when the guard cannot be read', () => {
+    vi.spyOn(Storage.prototype, 'getItem').mockImplementation(() => {
+      throw new Error('storage blocked');
+    });
+    const reload = vi.fn();
+    const event = createEvent();
+
+    handlePreloadError(event, reload);
+
+    expect(reload).not.toHaveBeenCalled();
+    expect(event.defaultPrevented).toBe(false);
   });
 });
