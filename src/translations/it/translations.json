@@ -107,7 +107,16 @@
 		"statusUpdateCancel": {
 			"title": "Status Update Cancel",
 			"description": "Richiedi l'aggiornamento dello stato di una richiesta di cancellazione (SRTP)",
-			"submitButton": "Invia Status Update Cancel v4.0"
+			"submitButton": "Invia Status Update Cancel v4.0",
+			"cancelRequiredNotice": "Prima di inviare la Status Update Cancel è necessario aver inviato una richiesta di cancellazione per lo stesso Resource ID.",
+			"stepTitle": "2. Invia Status Update Cancel"
+		},
+		"cancelStep": {
+			"title": "1. Invia richiesta di cancellazione (opzionale)",
+			"description": "Se non hai ancora cancellato la richiesta, puoi inviare qui la cancellazione e poi proseguire con la Status Update Cancel.",
+			"modtButton": "Cancella MODT v4.0",
+			"paidButton": "Cancella PAID v4.0",
+			"success": "Richiesta di cancellazione {{reason}} inviata con successo. Ora puoi inviare la Status Update Cancel."
 		},
 		"epcNotice": "Funzionalità disponibile solo per EPC 4.0",
 		"resourceIdLabel": "Resource ID",

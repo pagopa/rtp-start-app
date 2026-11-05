@@ -9,6 +9,10 @@ import "dayjs/locale/it";
 import { createRouter, RouterProvider } from "@tanstack/react-router";
 import { useAuth } from "./hooks/useAuth";
 import { routeTree } from "./routeTree.gen";
+import { registerChunkReload } from "./utils/chunkReload.utils";
+
+// Reload the page when a chunk of a previous deploy is no longer available
+registerChunkReload();
 
 const queryClient = new QueryClient();
 
