@@ -3722,9 +3722,7 @@ swagger-schema-official@2.0.0-bab6bed:
   integrity sha512-rCC0NWGKr/IJhtRuPq/t37qvZHI/mH4I4sxflVM+qgVe5Z2uOCivzWaVbuioJaB61kvm5UvB7b49E+oBY0M8jA==
 
 swagger-typescript-api@^13.0.23:
-  version "13.0.23"
-  resolved "https://registry.npmjs.org/swagger-typescript-api/-/swagger-typescript-api-13.0.23.tgz"
-  integrity sha512-HhoIepxlFEU7Ol42Gh8/tvwhSxdkHcweX2tRkNhbZYBiEA+rK3C6N85MnwoeQR5XbidE3Kz8mLOqIerVGgR9uw==
+  version "13.12.2"
   dependencies:
     "@types/swagger-schema-official" "^2.0.25"
     consola "^3.2.3"
